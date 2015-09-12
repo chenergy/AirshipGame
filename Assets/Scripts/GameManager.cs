@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GlobalGameController : MonoBehaviour {
+public class GameManager : MonoBehaviour {
 	public GameObject airshipPrefab;
 
-	public static GlobalGameController instance = null;
+	public static GameManager instance = null;
 
 	// Use this for initialization
 	void Awake () {
