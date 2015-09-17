@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public class PartyMenuCharacter : MonoBehaviour
@@ -14,17 +15,8 @@ public class PartyMenuCharacter : MonoBehaviour
 	public Text mpCurText;
 	public Text mpMaxText;
 
-	// Use this for initialization
-	/*void Start ()
-	{
 	
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	
-	}*/
+
 	public void SetPartyCharacter (Character character){
 		this.nameText.text = character.Name;
 		this.hpImage.fillAmount = 1.0f;
