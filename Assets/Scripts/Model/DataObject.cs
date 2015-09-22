@@ -27,7 +27,7 @@ public class DataObject
 		// Stored references to party members (in binary and serialized object data).
 		this.savedPartyMembers = new int[] {0, 0, 0, 0};
 
-		//
+		// 
 		this.savedCharacterData = new SavedCharacterData[2];
 		this.savedCharacterData [0] = new SavedCharacterData (0, 0);
 		this.savedCharacterData [1] = new SavedCharacterData (10, 10);
