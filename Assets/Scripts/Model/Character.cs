@@ -20,7 +20,7 @@ public class Character
 	public int curHp = 0;
 	public int curMp = 0;
 
-	private List<Ability> abilities;
+	private A_Ability ability = null;
 
 
 	public Character (Sprite icon, string name, int maxHp, int maxMp, int curHp, int curMp) {
@@ -30,11 +30,23 @@ public class Character
 		this.maxMp = maxMp;
 		this.curHp = curHp;
 		this.curMp = curMp;
-		this.abilities = new List<Ability> ();
 	}
 
-	public void AddAbility (Ability ability){
-		this.abilities.Add (ability);
+
+	public void SetAbility (A_Ability ability){
+		this.ability = ability;
+	}
+
+
+	public void ActivateAbility () {
+		if (this.ability != null)
+			this.ability.Activate ();
+	}
+
+
+	public void UseAbility (){
+		if (this.ability != null)
+			this.ability.Use ();
 	}
 }
 

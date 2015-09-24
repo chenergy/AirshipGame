@@ -7,7 +7,11 @@ using System.IO;
 
 public class DataManager
 {
+	// Assigned properties for character display.
 	private SO_Characters characterProperties;
+
+	// Dictionary for accessing associated ability functionality.
+	private Dictionary <GameEnum.AbilityName, A_Ability> abilitiesDict;
 
 	// Loaded data object that is serialized and deserialized.
 	private DataObject dataObject = new DataObject ();
@@ -25,6 +29,9 @@ public class DataManager
 		Debug.Log (Application.persistentDataPath);
 
 		this.characterProperties = characterProperties;
+
+		this.abilitiesDict = new Dictionary<GameEnum.AbilityName, A_Ability> ();
+		this.abilitiesDict.Add (GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, new Ability_StraightShot (5, 1.0f));
 
 		// Deserialize data from binary.
 		this.Load ();

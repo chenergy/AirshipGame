@@ -29,5 +29,10 @@ public class PartyMenuCharacter : MonoBehaviour
 		this.hpText.text = string.Format ("{0} / {1}", character.curHp.ToString(), character.maxHp.ToString ());
 		this.mpText.text = string.Format ("{0} / {1}", character.curMp.ToString(), character.maxMp.ToString ());
 	}
+
+
+	public void OnPointerDown (){
+		this.menuCharacter.ActivateAbility ();
+	}
 }
 
