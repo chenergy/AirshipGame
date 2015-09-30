@@ -24,5 +24,14 @@ public class Airship : MonoBehaviour
 	void OnDrawGizmos (){
 		Gizmos.DrawLine (this.transform.position, this.transform.position + this.transform.forward * 10);
 	}
+
+
+	public void Rotate (float degrees){
+		this.transform.Rotate (0, -degrees * 0.1f, 0);
+	}
+
+	public void UpdateSpeed (float newSpeed){
+		this.speed = newSpeed;
+	}
 }
 

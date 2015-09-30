@@ -6,8 +6,9 @@ using System.Collections;
 
 public class Steering : MonoBehaviour
 {
+	public InputHandler input;
 	public RectTransform rectTransform;
-	public Transform target;
+	//public Transform target;
 
 	private Vector2 lastLocation;
 
@@ -47,7 +48,9 @@ public class Steering : MonoBehaviour
 		float angleBetween = Vector3.Angle (v1, v2) * Mathf.Sign(Vector3.Cross (v1, v2).z);
 		this.rectTransform.Rotate (0, 0, angleBetween);
 
-		this.target.Rotate (0, -angleBetween * 0.1f, 0);
+		//this.target.Rotate (0, -angleBetween * 0.1f, 0);
+		this.input.RotateAirship (angleBetween);
+
 		this.lastLocation = ped.position;
 	}
 

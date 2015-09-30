@@ -15,12 +15,39 @@ public class Character
 		get { return this.name; }
 	}
 
-	public int maxHp = 0;
-	public int maxMp = 0;
-	public int curHp = 0;
-	public int curMp = 0;
+	private int maxHp = 0;
+	public int MaxHp {
+		get { return this.maxHp; }
+	}
+
+	private int maxMp = 0;
+	public int MaxMp {
+		get { return this.maxMp; }
+	}
+
+	private int curHp = 0;
+	public int CurHp {
+		get { return this.curHp; }
+	}
+
+	private int curMp = 0;
+	public int CurMp {
+		get { return this.curMp; }
+	}
+	
+	private float curCooldown = 1.0f;
+	public float CurCooldown {
+		get { return this.curCooldown; }
+	}
+
+	private float maxCooldown = 1.0f;
+	public float MaxCooldown {
+		get { return this.maxCooldown; }
+	}
 
 	private A_Ability ability = null;
+
+
 
 
 	public Character (Sprite icon, string name, int maxHp, int maxMp, int curHp, int curMp) {
@@ -39,14 +66,42 @@ public class Character
 
 
 	public void ActivateAbility () {
-		if (this.ability != null)
-			this.ability.Activate ();
+		if (this.ability != null) {
+			if (this.CanUseAbility()){
+				this.ability.Activate ();
+			}
+		}
 	}
 
 
-	public void UseAbility (){
-		if (this.ability != null)
-			this.ability.Use ();
+	public void UseAbility (Vector3 target){
+		if (this.ability != null) {
+			if (this.CanUseAbility()){
+				this.curMp -= this.ability.ManaCost;
+				this.ability.Use (target);
+			}
+		}
 	}
+
+
+	public bool CanUseAbility (){
+		if ((this.curCooldown >= this.maxCooldown) && (this.curMp >= this.ability.ManaCost))
+			return true;
+		return false;
+	}
+
+
+	/*public int GetAbilityManaCost (){
+		if (this.ability != null)
+			return this.ability.ManaCost;
+		return 0;
+	}
+
+
+	public float GetAbilityCooldown (){
+		if (this.ability != null)
+			return this.ability.Cooldown;
+		return 0;
+	}*/
 }
 

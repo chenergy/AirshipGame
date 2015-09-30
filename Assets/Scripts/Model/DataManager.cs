@@ -31,10 +31,17 @@ public class DataManager
 		this.characterProperties = characterProperties;
 
 		this.abilitiesDict = new Dictionary<GameEnum.AbilityName, A_Ability> ();
-		this.abilitiesDict.Add (GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, new Ability_StraightShot (5, 1.0f));
+		this.abilitiesDict.Add (GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, new Ability_StraightShot (0, 1.0f));
 
 		// Deserialize data from binary.
 		this.Load ();
+	}
+
+
+	public A_Ability GetAbility (GameEnum.AbilityName abilityName){
+		if (this.abilitiesDict.ContainsKey (abilityName))
+			return this.abilitiesDict [abilityName];
+		return null;
 	}
 
 

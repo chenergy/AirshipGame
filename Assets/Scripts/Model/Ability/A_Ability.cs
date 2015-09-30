@@ -4,7 +4,14 @@ using System.Collections;
 public abstract class A_Ability
 {
 	protected int manaCost;
+	public int ManaCost {
+		get { return this.manaCost; }
+	}
+
 	protected float cooldown;
+	public float Cooldown {
+		get { return this.cooldown; }
+	}
 
 	protected A_Ability (int manaCost, float cooldown){
 		this.manaCost = manaCost;
@@ -17,10 +24,6 @@ public abstract class A_Ability
 	// choose which function based on touch of canvas or click on screen
 	// Setup ability with scriptable object, pass string to get ability class back from the scriptable object.
 	public abstract void Activate ();
-	public abstract void Use ();
-
-
-	protected void TurnOnRangeIndicator (){
-	}
+	public abstract void Use (Vector3 target);
 }
 

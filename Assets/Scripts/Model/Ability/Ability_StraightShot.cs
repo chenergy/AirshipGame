@@ -8,12 +8,12 @@ public class Ability_StraightShot : A_Ability
 
 	public override void Activate ()
 	{
-		throw new System.NotImplementedException ();
+		Debug.Log ("activated straightshot");
 	}
 
-	public override void Use ()
+	public override void Use (Vector3 target)
 	{
-		throw new System.NotImplementedException ();
+		Debug.Log ("used straightshot");
 	}
 }
 
