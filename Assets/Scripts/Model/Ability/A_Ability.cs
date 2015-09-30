@@ -13,6 +13,12 @@ public abstract class A_Ability
 		get { return this.cooldown; }
 	}
 
+	protected float maxRange;
+	public float MaxRange {
+		get { return this.maxRange; }
+	}
+
+
 	protected A_Ability (int manaCost, float cooldown){
 		this.manaCost = manaCost;
 		this.cooldown = cooldown;
@@ -25,5 +31,6 @@ public abstract class A_Ability
 	// Setup ability with scriptable object, pass string to get ability class back from the scriptable object.
 	public abstract void Activate ();
 	public abstract void Use (Vector3 target);
+	public abstract A_Ability Clone ();
 }
 

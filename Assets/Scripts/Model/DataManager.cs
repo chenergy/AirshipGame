@@ -10,13 +10,16 @@ public class DataManager
 	// Assigned properties for character display.
 	private SO_Characters characterProperties;
 
+	// Assigne properties for abilities.
+	private SO_Abilities abilityProperties;
+
 	// Dictionary for accessing associated ability functionality.
-	private Dictionary <GameEnum.AbilityName, A_Ability> abilitiesDict;
+	private Dictionary <GameEnum.AbilityName, A_Ability> abilitiesDict = new Dictionary<GameEnum.AbilityName, A_Ability> ();
 
 	// Loaded data object that is serialized and deserialized.
 	private DataObject dataObject = new DataObject ();
 
-	public DataManager (SO_Characters characterProperties){
+	public DataManager (SO_Characters characterProperties, SO_Abilities abilityProperties){
 		// Forces a different code path in the BinaryFormatter that doesn't rely on run-time code generation (which would break on iOS).
 		//http://answers.unity3d.com/questions/30930/why-did-my-binaryserialzer-stop-working.html
 		Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
@@ -28,10 +31,12 @@ public class DataManager
 
 		Debug.Log (Application.persistentDataPath);
 
+		// Set scriptable object properties.
 		this.characterProperties = characterProperties;
+		this.abilityProperties = abilityProperties;
 
 		this.abilitiesDict = new Dictionary<GameEnum.AbilityName, A_Ability> ();
-		this.abilitiesDict.Add (GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, new Ability_StraightShot (0, 1.0f));
+		this.abilitiesDict.Add (GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, new Ability_StraightShot (this.abilityProperties.straightShot.projectilePrefab));
 
 		// Deserialize data from binary.
 		this.Load ();
@@ -40,15 +45,18 @@ public class DataManager
 
 	public A_Ability GetAbility (GameEnum.AbilityName abilityName){
 		if (this.abilitiesDict.ContainsKey (abilityName))
-			return this.abilitiesDict [abilityName];
+			return this.abilitiesDict [abilityName].Clone ();
 		return null;
 	}
 
 
+	public void SetAbility (GameEnum.AbilityName abilityName, A_Ability ability){
+		this.abilitiesDict.Add (abilityName, ability);
+	}
+
+
 	// Get data saved in serialized object.
-	//public Sprite GetCharacterSpriteIcon (GameEnum.CharacterName charName){
 	public Sprite GetCharacterSpriteIcon (int charSlot){
-		//int charInt = (int)charName;
 		int charInt = this.dataObject.savedPartyMembers [charSlot];
 		if (charInt < this.characterProperties.characters.Length) {
 			return this.characterProperties.characters [charInt].icon;
@@ -56,10 +64,8 @@ public class DataManager
 		Debug.Log ("cannot find character icon");
 		return null;
 	}
-
-	//public string GetCharacterStringName (GameEnum.CharacterName charName){
+	
 	public string GetCharacterStringName (int charSlot){
-		//int charInt = (int)charName;
 		int charInt = this.dataObject.savedPartyMembers [charSlot];
 		if (charInt < this.characterProperties.characters.Length) {
 			return this.characterProperties.characters [charInt].name;
@@ -67,10 +73,8 @@ public class DataManager
 		Debug.Log ("cannot find character icon");
 		return "";
 	}
-
-	//public int GetCharacterBaseHp (GameEnum.CharacterName charName){
+	
 	public int GetCharacterBaseHp (int charSlot){
-		//int charInt = (int)charName;
 		int charInt = this.dataObject.savedPartyMembers [charSlot];
 		if (charInt < this.characterProperties.characters.Length) {
 			return this.characterProperties.characters [charInt].baseHp;
@@ -78,10 +82,8 @@ public class DataManager
 		Debug.Log ("cannot find character icon");
 		return 0;
 	}
-
-	//public int GetCharacterBaseMp (GameEnum.CharacterName charName){
+	
 	public int GetCharacterBaseMp (int charSlot){
-		//int charInt = (int)charName;
 		int charInt = this.dataObject.savedPartyMembers [charSlot];
 		if (charInt < this.characterProperties.characters.Length) {
 			return this.characterProperties.characters [charInt].baseMp;
@@ -89,16 +91,6 @@ public class DataManager
 		Debug.Log ("cannot find character icon");
 		return 0;
 	}
-
-
-	// Get data saved in binary.
-	/*public GameEnum.CharacterName GetSavedPartyCharacterName (int savedSlotNum){
-		int charNum = 0;
-		if (savedSlotNum < 4) {
-			charNum = this.dataObject.savedPartyMembers[savedSlotNum].charInt;
-		}
-		return (GameEnum.CharacterName) charNum;
-	}*/
 	
 	public int GetSavedPartyExp (int savedSlotNum){
 		if (savedSlotNum < 4) {

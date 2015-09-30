@@ -15,4 +15,16 @@ public class MakeScriptableObject : MonoBehaviour {
 		
 		Selection.activeObject = asset;
 	}
+
+	[MenuItem ("Assets/Create/AbilityScriptableObject")]
+	public static void CreateAbilities (){
+		SO_Abilities asset = ScriptableObject.CreateInstance <SO_Abilities> ();
+		
+		AssetDatabase.CreateAsset (asset, "Assets/Data/SO_Abilities.asset");
+		AssetDatabase.SaveAssets ();
+		
+		EditorUtility.FocusProjectWindow ();
+		
+		Selection.activeObject = asset;
+	}
 }

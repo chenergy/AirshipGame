@@ -3,7 +3,10 @@ using System.Collections;
 
 public class Ability_StraightShot : A_Ability
 {
-	public Ability_StraightShot (int manaCost, float cooldown) : base (manaCost, cooldown) {
+	private GameObject projectilePrefab;
+
+	public Ability_StraightShot (GameObject projectilePrefab) : base (0, 1.0f) {
+		this.projectilePrefab = projectilePrefab;
 	}
 
 	public override void Activate ()
@@ -13,7 +16,15 @@ public class Ability_StraightShot : A_Ability
 
 	public override void Use (Vector3 target)
 	{
+		Vector3 airshipPos = GameManager.instance.InGameController.airship.transform.position;
+		GameObject newProjectile = GameObject.Instantiate (this.projectilePrefab, airshipPos, Quaternion.identity) as GameObject;
+		newProjectile.GetComponent <Projectile> ().SetDirection ((target - airshipPos).normalized);
 		Debug.Log ("used straightshot");
+	}
+
+	public override A_Ability Clone ()
+	{
+		return new Ability_StraightShot (this.projectilePrefab);
 	}
 }
 

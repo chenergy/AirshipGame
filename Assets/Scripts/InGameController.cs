@@ -5,14 +5,18 @@ public class InGameController : MonoBehaviour
 {
 	public PartyMenuController pmc;
 	public Airship airship;
-	public A_SkillTip sphereSkillTip;
-	
+	public SkillTip_TargetAOE skillTipTargetAOE;
+	public SkillTip_Straight skillTipStraight;
+
 	private Character[] partyCharacters;
 	private int activatedCharNum = -1;
 
+	
 	// Use this for initialization
 	void Start ()
 	{
+		GameManager.instance.InGameController = this;
+
 		this.partyCharacters = new Character[4];
 
 		Character c0 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (0),
@@ -29,12 +33,14 @@ public class InGameController : MonoBehaviour
 		                              GameManager.instance.Data.GetCharacterBaseMp (1),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (1),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (1));
+
 		Character c2 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (2),
 		                              GameManager.instance.Data.GetCharacterStringName (2),
 		                              GameManager.instance.Data.GetCharacterBaseHp (2),
 		                              GameManager.instance.Data.GetCharacterBaseMp (2),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (2),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (2));
+
 		Character c3 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (3),
 		                              GameManager.instance.Data.GetCharacterStringName (3),
 		                              GameManager.instance.Data.GetCharacterBaseHp (3),
@@ -60,28 +66,25 @@ public class InGameController : MonoBehaviour
 	}*/
 
 	public void ActivateAbility (int charNum) {
-		//if (charNum < this.pmc.partyCharacters.Length) {
-
 		if (charNum < this.partyCharacters.Length) {
-			this.activatedCharNum = charNum;
-
 			if (this.partyCharacters[charNum].CanUseAbility()) {
-				this.sphereSkillTip.Enable (10.0f);
+				//this.skillTipTargetAOE.Enable (10.0f);
+				this.skillTipStraight.Enable (10.0f);
 				this.partyCharacters[charNum].ActivateAbility();
+				this.activatedCharNum = charNum;
 			}
-			//this.pmc.partyCharacters [charNum].ActivateAbility ();
 		}
 	}
 
 
 	public void UseAbility (Vector3 target) {
 		if ((this.activatedCharNum != -1) && (this.activatedCharNum < this.partyCharacters.Length)) {
-			//this.pmc.UseAbility (charNum);
 			if (this.partyCharacters[this.activatedCharNum].CanUseAbility()) {
+				//this.skillTipTargetAOE.Disable ();
+				this.skillTipStraight.Disable ();
 				this.partyCharacters[this.activatedCharNum].UseAbility (target);
+				this.activatedCharNum = -1;
 			}
-			//this.pmc.partyCharacters [charNum].UseAbility ();
-			this.activatedCharNum = -1;
 		}
 	}
 

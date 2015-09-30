@@ -7,7 +7,6 @@ public class InputHandler : MonoBehaviour
 	public InGameController ingamecontroller;
 
 	private int layerMask;
-	private int charNum = 0;
 
 
 	void Start (){
@@ -50,7 +49,6 @@ public class InputHandler : MonoBehaviour
 		Ray r = Camera.main.ScreenPointToRay (Input.mousePosition);
 		Debug.DrawLine (r.origin, r.origin + r.direction * 100);
 		if (Physics.Raycast (r, out hitInfo, 100.0f, layerMask)) {
-			//this.skillTipGobj.transform.position = hitInfo.point;
 			this.UseAbility (hitInfo.point);
 		}
 	}

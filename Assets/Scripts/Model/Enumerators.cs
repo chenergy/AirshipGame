@@ -16,7 +16,7 @@ namespace GameEnum
 	public enum SkillType {
 		NONE,
 		SKILL_STRAIGHT,
-		SKILL_SPHERE
+		SKILL_TARGETAOE
 	}
 }
 

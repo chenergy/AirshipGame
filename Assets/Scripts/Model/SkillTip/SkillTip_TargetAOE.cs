@@ -1,14 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class SkillTip_Sphere : A_SkillTip
+public class SkillTip_TargetAOE : A_SkillTip
 {
-	private int layerMask;
-
-	void Start (){
-		layerMask = LayerMask.GetMask (new string[] {"RaycastHitReceiver"});
-	}
-
 	public override void Enable (float range)
 	{
 		this.skillTipGobj.SetActive (true);
@@ -32,7 +26,6 @@ public class SkillTip_Sphere : A_SkillTip
 			Ray r = Camera.main.ScreenPointToRay (Input.mousePosition);
 			Debug.DrawLine (r.origin, r.origin + r.direction * 100);
 			if (Physics.Raycast (r, out hitInfo, 100.0f, layerMask)) {
-				//Debug.Log ("hit");
 				this.skillTipGobj.transform.position = hitInfo.point;
 			}
 #endif

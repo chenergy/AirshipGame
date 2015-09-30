@@ -2,13 +2,15 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
-	//public GameObject airshipPrefab;
 	public SO_Characters characterProperties;
+	public SO_Abilities abilityProperties;
 	
 	private DataManager data;
 	public DataManager Data {
 		get { return this.data; }
 	}
+
+	public InGameController InGameController { get; set; }
 
 	public static GameManager instance = null;
 
@@ -17,7 +19,7 @@ public class GameManager : MonoBehaviour {
 		if (instance != null) {
 			GameObject.Destroy (instance.gameObject);
 		} else {
-			this.data = new DataManager(this.characterProperties);
+			this.data = new DataManager (this.characterProperties, this.abilityProperties);
 
 			instance = this;
 		}
