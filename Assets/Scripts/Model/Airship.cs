@@ -6,10 +6,12 @@ public class Airship : MonoBehaviour
 	public float speed = 1.0f;
 	//public Rigidbody rigidbody;
 
+	private float baseSpeed = 1.0f;
+
 	// Use this for initialization
 	void Start ()
 	{
-	
+		this.baseSpeed = speed;
 	}
 	
 	// Update is called once per frame
@@ -30,8 +32,8 @@ public class Airship : MonoBehaviour
 		this.transform.Rotate (0, -degrees * 0.1f, 0);
 	}
 
-	public void UpdateSpeed (float newSpeed){
-		this.speed = newSpeed;
+	public void UpdateSpeed (float speedScale){
+		this.speed = speedScale * this.baseSpeed;
 	}
 }
 

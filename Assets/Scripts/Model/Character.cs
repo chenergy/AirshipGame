@@ -38,6 +38,7 @@ public class Character
 	private float curCooldown = 1.0f;
 	public float CurCooldown {
 		get { return this.curCooldown; }
+		//set { this.curCooldown = value; }
 	}
 
 	private float maxCooldown = 1.0f;
@@ -67,29 +68,63 @@ public class Character
 
 	public void ActivateAbility () {
 		if (this.ability != null) {
-			if (this.CanUseAbility()){
+			//if (this.CanUseAbility()){
 				this.ability.Activate ();
-			}
+			//}
 		}
 	}
 
 
 	public void UseAbility (Vector3 target){
 		if (this.ability != null) {
-			if (this.CanUseAbility()){
+			//if (this.CanUseAbility()){
 				this.curMp -= this.ability.ManaCost;
 				this.ability.Use (target);
-			}
+				this.curCooldown = 0.0f;
+				this.maxCooldown = this.ability.Cooldown;
+			//}
 		}
 	}
 
-
+	// Check multiple conditions to see if ability is allowed to be used.
 	public bool CanUseAbility (){
-		if ((this.curCooldown >= this.maxCooldown) && (this.curMp >= this.ability.ManaCost))
-			return true;
+		if (this.ability != null) {
+			if ((this.curCooldown >= this.maxCooldown) && (this.curMp >= this.ability.ManaCost))
+				return true;
+
+			if (this.curCooldown < this.maxCooldown)
+				GameManager.instance.InGameController.errorLog.LogErrorText ("Still on cooldown.");
+			
+			if (this.curMp < this.ability.ManaCost)
+				GameManager.instance.InGameController.errorLog.LogErrorText ("Not enough mana.");
+		}
+
 		return false;
 	}
 
+
+	public void RechargeHp (int hp){
+		this.curHp += hp;
+
+		if (this.curHp > this.maxHp)
+			this.curHp = this.maxHp;
+	}
+
+
+	public void RechargeMp (int mp) {
+		this.curMp += mp;
+
+		if (this.curMp > this.maxMp)
+			this.curMp = this.maxMp;
+	}
+
+
+	public void RechargeCooldown (float cooldown){
+		this.curCooldown += cooldown;
+
+		if (this.curCooldown > this.maxCooldown)
+			this.curCooldown = this.maxCooldown;
+	}
 
 	/*public int GetAbilityManaCost (){
 		if (this.ability != null)

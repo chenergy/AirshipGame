@@ -5,6 +5,7 @@ public class InGameController : MonoBehaviour
 {
 	public PartyMenuController pmc;
 	public Airship airship;
+	public ErrorLog errorLog;
 	public SkillTip_TargetAOE skillTipTargetAOE;
 	public SkillTip_Straight skillTipStraight;
 
@@ -65,12 +66,38 @@ public class InGameController : MonoBehaviour
 	
 	}*/
 
+	void OnApplicationPause (bool pauseStatus){
+		if (pauseStatus) {
+			for (int i = 0; i < this.partyCharacters.Length; i++) {
+				GameManager.instance.Data.SetSavedPartyCurHp (i, this.partyCharacters[i].CurHp);
+				GameManager.instance.Data.SetSavedPartyCurMp (i, this.partyCharacters[i].CurMp);
+			}
+
+			GameManager.instance.Data.Save ();
+		}
+	}
+
+	void OnApplicationQuit (){
+		for (int i = 0; i < this.partyCharacters.Length; i++) {
+			GameManager.instance.Data.SetSavedPartyCurHp (i, this.partyCharacters[i].CurHp);
+			GameManager.instance.Data.SetSavedPartyCurMp (i, this.partyCharacters[i].CurMp);
+		}
+
+		GameManager.instance.Data.Save ();
+	}
+
+
 	public void ActivateAbility (int charNum) {
 		if (charNum < this.partyCharacters.Length) {
 			if (this.partyCharacters[charNum].CanUseAbility()) {
+				// Stop showing the skilltip.
 				//this.skillTipTargetAOE.Enable (10.0f);
 				this.skillTipStraight.Enable (10.0f);
+
+				// Activate the character's ability to be used.
 				this.partyCharacters[charNum].ActivateAbility();
+
+				// Set the activated character number.
 				this.activatedCharNum = charNum;
 			}
 		}
@@ -80,9 +107,19 @@ public class InGameController : MonoBehaviour
 	public void UseAbility (Vector3 target) {
 		if ((this.activatedCharNum != -1) && (this.activatedCharNum < this.partyCharacters.Length)) {
 			if (this.partyCharacters[this.activatedCharNum].CanUseAbility()) {
+				// Stop showing the skilltip.
 				//this.skillTipTargetAOE.Disable ();
 				this.skillTipStraight.Disable ();
+
+				// Use the character's ability.
 				this.partyCharacters[this.activatedCharNum].UseAbility (target);
+
+				// Recharge the cooldown timer for target character.
+				//this.StartCoroutine ("StartCooldownTimer", this.activatedCharNum);
+				this.pmc.partyCharacters [this.activatedCharNum].RechargeCooldown ();
+				this.pmc.partyCharacters [this.activatedCharNum].RechargeMana ();
+
+				// Reset the activated character number.
 				this.activatedCharNum = -1;
 			}
 		}
@@ -96,6 +133,11 @@ public class InGameController : MonoBehaviour
 
 	public void UpdateAirshipSpeed (float newSpeed){
 		this.airship.UpdateSpeed (newSpeed);
+	}
+
+
+	public void DeleteSave (){
+		System.IO.File.Delete (Application.persistentDataPath + "/savedData.gd");
 	}
 }
 

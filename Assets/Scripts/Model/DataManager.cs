@@ -50,9 +50,9 @@ public class DataManager
 	}
 
 
-	public void SetAbility (GameEnum.AbilityName abilityName, A_Ability ability){
+	/*public void SetAbility (GameEnum.AbilityName abilityName, A_Ability ability){
 		this.abilitiesDict.Add (abilityName, ability);
-	}
+	}*/
 
 
 	// Get data saved in serialized object.
@@ -108,12 +108,26 @@ public class DataManager
 		return 0;
 	}
 
+	public void SetSavedPartyCurHp (int savedSlotNum, int hp){
+		if (savedSlotNum < 4) {
+			int charInt = this.dataObject.savedPartyMembers[savedSlotNum];
+			this.dataObject.savedCharacterData[charInt].curHp = hp;
+		}
+	}
+
 	public int GetSavedPartyCurMp (int savedSlotNum){
 		if (savedSlotNum < 4) {
 			int charInt = this.dataObject.savedPartyMembers[savedSlotNum];
 			return this.dataObject.savedCharacterData[charInt].curMp;
 		}
 		return 0;
+	}
+
+	public void SetSavedPartyCurMp (int savedSlotNum, int mp){
+		if (savedSlotNum < 4) {
+			int charInt = this.dataObject.savedPartyMembers[savedSlotNum];
+			this.dataObject.savedCharacterData[charInt].curMp = mp;
+		}
 	}
 
 	public void SetNewSavedPartyMember (int savedSlotNum, int charInt){

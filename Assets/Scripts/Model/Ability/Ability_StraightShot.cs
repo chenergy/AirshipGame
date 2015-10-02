@@ -5,7 +5,7 @@ public class Ability_StraightShot : A_Ability
 {
 	private GameObject projectilePrefab;
 
-	public Ability_StraightShot (GameObject projectilePrefab) : base (0, 1.0f) {
+	public Ability_StraightShot (GameObject projectilePrefab) : base (5, 1.0f) {
 		this.projectilePrefab = projectilePrefab;
 	}
 

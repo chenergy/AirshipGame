@@ -23,6 +23,7 @@ public abstract class A_Ability
 		this.manaCost = manaCost;
 		this.cooldown = cooldown;
 	}
+		
 
 	// Ability should be activated by party member touch.
 	// Ingamecontroller contains reference to the partymenucharacter.
