@@ -3,15 +3,14 @@ using System.Collections;
 
 public class Airship : MonoBehaviour
 {
-	public float speed = 1.0f;
-	//public Rigidbody rigidbody;
+	public float baseSpeed = 1.0f;
 
-	private float baseSpeed = 1.0f;
+	private float speed = 0.0f;
 
 	// Use this for initialization
 	void Start ()
 	{
-		this.baseSpeed = speed;
+		this.speed = baseSpeed;
 	}
 	
 	// Update is called once per frame
@@ -23,7 +22,7 @@ public class Airship : MonoBehaviour
 		this.transform.position += this.transform.forward * Time.deltaTime * this.speed;
 	}
 
-	void OnDrawGizmos (){
+	void OnDrawGizmosSelected (){
 		Gizmos.DrawLine (this.transform.position, this.transform.position + this.transform.forward * 10);
 	}
 
