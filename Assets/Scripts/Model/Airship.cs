@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Airship : MonoBehaviour
 {
+	public GameObject model;
 	public float baseSpeed = 1.0f;
 
 	private float speed = 0.0f;
@@ -20,6 +21,8 @@ public class Airship : MonoBehaviour
 		//this.rigidbody.AddForce (this.transform.forward * speed * Time.deltaTime);
 		//this.rigidbody.transform.forward = this.rigidbody.velocity;
 		this.transform.position += this.transform.forward * Time.deltaTime * this.speed;
+
+		//this.model.transform.localPosition = new Vector3 (0.0f, TrigLookup.Sin (Time.time * 2), 0.0f);
 	}
 
 	void OnDrawGizmosSelected (){
