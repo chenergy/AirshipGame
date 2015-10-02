@@ -5,16 +5,21 @@ using System.Collections;
 
 public class PartyMenuCharacter : MonoBehaviour
 {
-	public Image iconImage;
-	public Text nameText;
+	[System.Serializable]
+	public class DisplayType {
+		public Image iconImage;
+		public Text nameText;
 
-	public Image hpImage;
-	public Text hpText;
+		public Image hpImage;
+		public Text hpText;
 
-	public Image mpImage;
-	public Text mpText;
+		public Image mpImage;
+		public Text mpText;
 
-	public Image cdImage;
+		public Image cdImage;
+	}
+
+	public DisplayType[] displayTypes;
 
 	private Character character;
 
@@ -22,13 +27,16 @@ public class PartyMenuCharacter : MonoBehaviour
 	public void SetPartyCharacter (Character character){
 		this.character = character;
 
-		this.iconImage.sprite = character.Icon;
-		this.nameText.text = character.Name;
-		this.hpImage.fillAmount = 1.0f;
-		this.mpImage.fillAmount = 1.0f;
-		this.cdImage.fillAmount = 1.0f;
-		this.hpText.text = string.Format ("{0} / {1}", character.CurHp.ToString (), character.MaxHp.ToString ());
-		this.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
+		// Update the displays
+		foreach (DisplayType dt in this.displayTypes) {
+			dt.iconImage.sprite = character.Icon;
+			dt.nameText.text = character.Name;
+			dt.hpImage.fillAmount = 1.0f;
+			dt.mpImage.fillAmount = 1.0f;
+			dt.cdImage.fillAmount = 1.0f;
+			dt.hpText.text = string.Format ("{0} / {1}", character.CurHp.ToString (), character.MaxHp.ToString ());
+			dt.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
+		}
 
 		if (this.character.CurMp < this.character.MaxMp)
 			this.RechargeMana ();
@@ -54,8 +62,10 @@ public class PartyMenuCharacter : MonoBehaviour
 			yield return new WaitForEndOfFrame();
 
 			// Display updated mana amount.
-			this.mpImage.fillAmount = (1.0f * this.character.CurMp / this.character.MaxMp);
-			this.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
+			foreach (DisplayType dt in this.displayTypes) {
+				dt.mpImage.fillAmount = (1.0f * this.character.CurMp / this.character.MaxMp);
+				dt.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
+			}
 
 			if (tick > 1.0f) {
 				this.character.RechargeMp (1);
@@ -65,8 +75,10 @@ public class PartyMenuCharacter : MonoBehaviour
 			tick += Time.deltaTime;
 		}
 
-		this.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
-		this.mpImage.fillAmount = 1.0f;
+		foreach (DisplayType dt in this.displayTypes) {
+			dt.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
+			dt.mpImage.fillAmount = 1.0f;
+		}
 	}
 
 
@@ -75,13 +87,17 @@ public class PartyMenuCharacter : MonoBehaviour
 			yield return new WaitForEndOfFrame();
 
 			// Display updated cooldown amount.
-			this.cdImage.fillAmount = (1.0f * this.character.CurCooldown / this.character.MaxCooldown);
+			foreach (DisplayType dt in this.displayTypes) {
+				dt.cdImage.fillAmount = (1.0f * this.character.CurCooldown / this.character.MaxCooldown);
+			}
 
 			this.character.RechargeCooldown (Time.deltaTime);
 		}
+		foreach (DisplayType dt in this.displayTypes) {
+			dt.cdImage.fillAmount = 1.0f;
+		}
 
 		this.character.RechargeCooldown (Time.deltaTime);
-		this.cdImage.fillAmount = 1.0f;
 	}
 
 	// Recharge cooldown timer after using a skill.
