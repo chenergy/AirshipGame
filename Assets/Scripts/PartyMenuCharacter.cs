@@ -49,7 +49,12 @@ public class PartyMenuCharacter : MonoBehaviour
 			dt.nameText.text = character.Name;
 			dt.hpImage.fillAmount = 1.0f;
 			dt.mpImage.fillAmount = 1.0f;
-			dt.cdImage.fillAmount = 1.0f;
+
+			if (this.displayType == DisplayType.CIRCLE)
+				dt.cdImage.fillAmount = 0.0f;
+			else
+				dt.cdImage.fillAmount = 1.0f;
+
 			dt.hpText.text = string.Format ("{0} / {1}", character.CurHp.ToString (), character.MaxHp.ToString ());
 			dt.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
 		}
@@ -103,15 +108,21 @@ public class PartyMenuCharacter : MonoBehaviour
 			yield return new WaitForEndOfFrame();
 
 			// Display updated cooldown amount.
-			foreach (DisplayProperties dt in this.displayProperties) {
-				dt.cdImage.fillAmount = (1.0f * this.character.CurCooldown / this.character.MaxCooldown);
+			foreach (DisplayProperties dp in this.displayProperties) {
+				if (this.displayType == DisplayType.CIRCLE)
+					dp.cdImage.fillAmount = (1.0f - this.character.CurCooldown / this.character.MaxCooldown);
+				else
+					dp.cdImage.fillAmount = (1.0f * this.character.CurCooldown / this.character.MaxCooldown);
 			}
 
 			this.character.RechargeCooldown (Time.deltaTime);
 		}
 
 		foreach (DisplayProperties dt in this.displayProperties) {
-			dt.cdImage.fillAmount = 1.0f;
+			if (this.displayType == DisplayType.CIRCLE)
+				dt.cdImage.fillAmount = 0.0f;
+			else
+				dt.cdImage.fillAmount = 1.0f;
 		}
 
 		this.character.RechargeCooldown (Time.deltaTime);
