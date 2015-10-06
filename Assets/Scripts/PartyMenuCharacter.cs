@@ -6,7 +6,9 @@ using System.Collections;
 public class PartyMenuCharacter : MonoBehaviour
 {
 	[System.Serializable]
-	public class DisplayType {
+	public class DisplayProperties {
+		public GameObject parent;
+
 		public Image iconImage;
 		public Text nameText;
 
@@ -18,17 +20,31 @@ public class PartyMenuCharacter : MonoBehaviour
 
 		public Image cdImage;
 	}
-
-	public DisplayType[] displayTypes;
+	
+	public DisplayProperties[] displayProperties;
 
 	private Character character;
+	private DisplayType displayType;
 
+
+	public void SetDisplayType (DisplayType type){
+		this.displayType = type;
+		int num = (int)type;
+
+		// disable everything except for num
+		for (int i = 0; i < this.displayProperties.Length; i++) {
+			if (i == num)
+				this.displayProperties [i].parent.SetActive (true);
+			else 
+				this.displayProperties [i].parent.SetActive (false);
+		}
+	}
 
 	public void SetPartyCharacter (Character character){
 		this.character = character;
 
 		// Update the displays
-		foreach (DisplayType dt in this.displayTypes) {
+		foreach (DisplayProperties dt in this.displayProperties) {
 			dt.iconImage.sprite = character.Icon;
 			dt.nameText.text = character.Name;
 			dt.hpImage.fillAmount = 1.0f;
@@ -62,7 +78,7 @@ public class PartyMenuCharacter : MonoBehaviour
 			yield return new WaitForEndOfFrame();
 
 			// Display updated mana amount.
-			foreach (DisplayType dt in this.displayTypes) {
+			foreach (DisplayProperties dt in this.displayProperties) {
 				dt.mpImage.fillAmount = (1.0f * this.character.CurMp / this.character.MaxMp);
 				dt.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
 			}
@@ -75,7 +91,7 @@ public class PartyMenuCharacter : MonoBehaviour
 			tick += Time.deltaTime;
 		}
 
-		foreach (DisplayType dt in this.displayTypes) {
+		foreach (DisplayProperties dt in this.displayProperties) {
 			dt.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
 			dt.mpImage.fillAmount = 1.0f;
 		}
@@ -87,13 +103,14 @@ public class PartyMenuCharacter : MonoBehaviour
 			yield return new WaitForEndOfFrame();
 
 			// Display updated cooldown amount.
-			foreach (DisplayType dt in this.displayTypes) {
+			foreach (DisplayProperties dt in this.displayProperties) {
 				dt.cdImage.fillAmount = (1.0f * this.character.CurCooldown / this.character.MaxCooldown);
 			}
 
 			this.character.RechargeCooldown (Time.deltaTime);
 		}
-		foreach (DisplayType dt in this.displayTypes) {
+
+		foreach (DisplayProperties dt in this.displayProperties) {
 			dt.cdImage.fillAmount = 1.0f;
 		}
 

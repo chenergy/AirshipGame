@@ -3,8 +3,16 @@ using System.Collections;
 
 public class PartyMenuController : MonoBehaviour
 {
+	public DisplayType displayType;
 	public PartyMenuCharacter[] partyCharacters;
 
+
+
+	void Start (){
+		foreach (PartyMenuCharacter partyChar in this.partyCharacters) {
+			partyChar.SetDisplayType (this.displayType);
+		}
+	}
 
 	public void SetPartyCharacter (Character character, int partyIndex){
 		this.partyCharacters [partyIndex].SetPartyCharacter (character);

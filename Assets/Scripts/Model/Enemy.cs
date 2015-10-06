@@ -8,15 +8,18 @@ public class Enemy : MonoBehaviour
 	public GameObject model;
 	public float baseSpeed = 1.0f;
 	public int hp = 10;
+	public float agroRadius = 5.0f;
 	public Image hpImage;
 	
 	private float speed = 0.0f;
 	private int baseHp = 10;
 	private Collider baseCollider;
+	private Vector3 startPos;
 
 	// Use this for initialization
 	void Start ()
 	{
+		this.startPos = this.transform.position;
 		this.baseCollider = this.GetComponent <Collider> ();
 		this.speed = this.baseSpeed;
 		this.hp = this.baseHp;

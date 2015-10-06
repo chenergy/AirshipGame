@@ -5,6 +5,11 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
+[System.Serializable]
+public enum DisplayType {
+	BAR = 0, CIRCLE = 1
+};
+
 public class DataManager
 {
 	// Assigned properties for character display.
@@ -17,7 +22,7 @@ public class DataManager
 	private Dictionary <GameEnum.AbilityName, A_Ability> abilitiesDict = new Dictionary<GameEnum.AbilityName, A_Ability> ();
 
 	// Loaded data object that is serialized and deserialized.
-	private DataObject dataObject = new DataObject ();
+	private DataObject dataObject;
 
 	public DataManager (SO_Characters characterProperties, SO_Abilities abilityProperties){
 		// Forces a different code path in the BinaryFormatter that doesn't rely on run-time code generation (which would break on iOS).
@@ -29,7 +34,7 @@ public class DataManager
 		//System.IO.File.Delete("/private" + Application.persistentDataPath + "/savedData.gd");
 		#endif
 
-		Debug.Log (Application.persistentDataPath);
+		//Debug.Log (Application.persistentDataPath);
 
 		// Set scriptable object properties.
 		this.characterProperties = characterProperties;
@@ -37,6 +42,8 @@ public class DataManager
 
 		this.abilitiesDict = new Dictionary<GameEnum.AbilityName, A_Ability> ();
 		this.abilitiesDict.Add (GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, new Ability_StraightShot (this.abilityProperties.straightShot.projectilePrefab));
+
+		this.dataObject = new DataObject (this.characterProperties);
 
 		// Deserialize data from binary.
 		this.Load ();
@@ -146,7 +153,7 @@ public class DataManager
 		FileStream file = File.Create (Application.persistentDataPath + "/savedData.gd"); //you can call it anything you want
 		bf.Serialize(file, this.dataObject);
 		file.Close();
-		Debug.Log (Application.persistentDataPath);
+		Debug.Log ("Saved: " + Application.persistentDataPath);
 	}   
 	
 	
@@ -156,6 +163,7 @@ public class DataManager
 			FileStream file = File.Open (Application.persistentDataPath + "/savedData.gd", FileMode.Open);
 			this.dataObject = (DataObject)bf.Deserialize (file);	
 			file.Close ();
+			Debug.Log ("Loaded: " + Application.persistentDataPath);
 		} else {
 			this.Save ();
 			this.Load ();

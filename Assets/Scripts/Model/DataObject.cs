@@ -12,9 +12,9 @@ public class DataObject
 		public int curHp = 0;
 		public int curMp = 0;
 
-		public SavedCharacterData (int startHp, int startMp){
-			this.curHp = startHp;
-			this.curMp = startMp;
+		public SavedCharacterData (SO_Characters.CharacterProperties property){
+			this.curHp = property.baseHp;
+			this.curMp = property.baseMp;
 		}
 	}
 
@@ -23,17 +23,26 @@ public class DataObject
 	public SavedCharacterData[] savedCharacterData;
 
 
-	public DataObject (){
+	public DataObject (SO_Characters characterProperties){
+		this.dateLastSaved = DateTime.Now;
+
 		// Stored references to party members (in binary and serialized object data).
 		this.savedPartyMembers = new int[] {1, 2, 3, 4};
 
-		// 
+		/*
 		this.savedCharacterData = new SavedCharacterData[5];
-		this.savedCharacterData [0] = new SavedCharacterData (10, 10);
-		this.savedCharacterData [1] = new SavedCharacterData (10, 10);
-		this.savedCharacterData [2] = new SavedCharacterData (10, 10);
-		this.savedCharacterData [3] = new SavedCharacterData (10, 10);
-		this.savedCharacterData [4] = new SavedCharacterData (10, 10);
+		this.savedCharacterData [0] = new SavedCharacterData (GameManager.instance.characterProperties.characters[0]);
+		this.savedCharacterData [1] = new SavedCharacterData (GameManager.instance.characterProperties.characters[1]);
+		this.savedCharacterData [2] = new SavedCharacterData (GameManager.instance.characterProperties.characters[2]);
+		this.savedCharacterData [3] = new SavedCharacterData (GameManager.instance.characterProperties.characters[3]);
+		this.savedCharacterData [4] = new SavedCharacterData (GameManager.instance.characterProperties.characters[4]);
+		*/
+		// Save each character as new char in properties.
+		int numChars = characterProperties.characters.Length;
+		this.savedCharacterData = new SavedCharacterData[numChars];
+		for (int i = 0; i < numChars; i++) {
+			this.savedCharacterData [i] = new SavedCharacterData (characterProperties.characters[i]);
+		}
 	}
 
 	/*public int savedPartyMember0 = 0;
