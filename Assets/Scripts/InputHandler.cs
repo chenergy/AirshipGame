@@ -39,6 +39,16 @@ public class InputHandler : MonoBehaviour
 	}
 
 
+	public void StartRotateAirship (){
+		this.ingamecontroller.StartRotateAirship ();
+	}
+
+
+	public void EndRotateAirship (){
+		this.ingamecontroller.EndRotateAirship ();
+	}
+
+
 	public void UpdateAirshipSpeed (float newSpeed){
 		this.ingamecontroller.UpdateAirshipSpeed (newSpeed);
 	}
