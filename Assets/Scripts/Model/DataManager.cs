@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-[System.Serializable]
 public enum DisplayType {
 	BAR = 0, CIRCLE = 1
 };
