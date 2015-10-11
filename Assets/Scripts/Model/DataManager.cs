@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-public enum DisplayType {
-	BAR = 0, CIRCLE = 1
-};
 
 public class DataManager
 {

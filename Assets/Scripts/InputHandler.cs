@@ -34,8 +34,13 @@ public class InputHandler : MonoBehaviour
 	}
 
 
-	public void RotateAirship (float degrees){
-		this.ingamecontroller.RotateAirship (degrees);
+	public void SetRotationAirship (float degrees){
+		this.ingamecontroller.SetRotationAirship (degrees);
+	}
+
+
+	public void AddRotationAirship (float degrees){
+		this.ingamecontroller.AddRotationAirship (degrees);
 	}
 
 

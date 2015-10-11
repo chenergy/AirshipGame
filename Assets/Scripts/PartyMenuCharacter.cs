@@ -24,10 +24,10 @@ public class PartyMenuCharacter : MonoBehaviour
 	public DisplayProperties[] displayProperties;
 
 	private Character character;
-	private DisplayType displayType;
+	private GameEnum.DisplayType displayType;
 
 
-	public void SetDisplayType (DisplayType type){
+	public void SetDisplayType (GameEnum.DisplayType type){
 		this.displayType = type;
 		int num = (int)type;
 
@@ -50,7 +50,7 @@ public class PartyMenuCharacter : MonoBehaviour
 			dt.hpImage.fillAmount = 1.0f;
 			dt.mpImage.fillAmount = 1.0f;
 
-			if (this.displayType == DisplayType.CIRCLE)
+			if (this.displayType == GameEnum.DisplayType.CIRCLE)
 				dt.cdImage.fillAmount = 0.0f;
 			else
 				dt.cdImage.fillAmount = 1.0f;
@@ -109,7 +109,7 @@ public class PartyMenuCharacter : MonoBehaviour
 
 			// Display updated cooldown amount.
 			foreach (DisplayProperties dp in this.displayProperties) {
-				if (this.displayType == DisplayType.CIRCLE)
+				if (this.displayType == GameEnum.DisplayType.CIRCLE)
 					dp.cdImage.fillAmount = (1.0f - this.character.CurCooldown / this.character.MaxCooldown);
 				else
 					dp.cdImage.fillAmount = (1.0f * this.character.CurCooldown / this.character.MaxCooldown);
@@ -119,7 +119,7 @@ public class PartyMenuCharacter : MonoBehaviour
 		}
 
 		foreach (DisplayProperties dt in this.displayProperties) {
-			if (this.displayType == DisplayType.CIRCLE)
+			if (this.displayType == GameEnum.DisplayType.CIRCLE)
 				dt.cdImage.fillAmount = 0.0f;
 			else
 				dt.cdImage.fillAmount = 1.0f;

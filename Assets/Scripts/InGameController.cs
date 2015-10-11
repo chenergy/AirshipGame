@@ -126,8 +126,12 @@ public class InGameController : MonoBehaviour
 	}
 
 
-	public void RotateAirship (float degrees){
-		this.airship.SetRotate (degrees);
+	public void SetRotationAirship (float degrees){
+		this.airship.SetRotation (degrees);
+	}
+
+	public void AddRotationAirship (float degrees){
+		this.airship.AddRotation (degrees);
 	}
 
 

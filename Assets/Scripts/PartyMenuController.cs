@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PartyMenuController : MonoBehaviour
 {
-	public DisplayType displayType;
+	public GameEnum.DisplayType displayType;
 	public PartyMenuCharacter[] partyCharacters;
 
 

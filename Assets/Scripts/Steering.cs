@@ -6,6 +6,8 @@ using System.Collections;
 
 public class Steering : MonoBehaviour
 {
+	public GameEnum.SteeringType steeringMode;
+
 	public InputHandler input;
 	public RectTransform rectTransform;
 	//public Transform target;
@@ -29,6 +31,7 @@ public class Steering : MonoBehaviour
 	public void OnPointerDown (BaseEventData eventData){
 		PointerEventData ped = (PointerEventData)eventData;
 		this.lastLocation = ped.position;
+
 		StopCoroutine ("RotateToZero");
 
 		this.input.StartRotateAirship ();
@@ -41,7 +44,13 @@ public class Steering : MonoBehaviour
 		this.v2 = Vector3.zero;
 
 		//this.rectTransform.rotation = Quaternion.identity;
-		StartCoroutine ("RotateToZero");
+
+		// Follow realistic rotation mode.
+		if (this.steeringMode == GameEnum.SteeringType.REALISTIC) {
+			StartCoroutine ("RotateToZero");
+		} else if (this.steeringMode == GameEnum.SteeringType.UNREALISTIC) {
+			this.input.SetRotationAirship (0);
+		}
 
 		this.input.EndRotateAirship ();
 	}
@@ -58,22 +67,35 @@ public class Steering : MonoBehaviour
 		// Get angle between the vectors, direction based on turn direction.
 		float angleBetween = Vector3.Angle (v1, v2) * Mathf.Sign(Vector3.Cross (v1, v2).z);
 
-		// Add angle to start angle.
-		this.curAngle += angleBetween;
+		// Follow realistic rotation mode.
+		if (this.steeringMode == GameEnum.SteeringType.REALISTIC) {
+			// Add angle to start angle.
+			this.curAngle += angleBetween;
 
-		// Clamp angle between the min and max angles possible.
-		this.curAngle = Mathf.Clamp (this.curAngle, this.minMaxRotation.x, this.minMaxRotation.y);
+			// Clamp angle between the min and max angles possible.
+			this.curAngle = Mathf.Clamp (this.curAngle, this.minMaxRotation.x, this.minMaxRotation.y);
 
-		// Rotate this image.
-		//this.rectTransform.Rotate (0, 0, angleBetween);
-		this.rectTransform.rotation = Quaternion.Euler (0, 0, this.curAngle);
+			// Rotate this image.
+			//this.rectTransform.Rotate (0, 0, angleBetween);
+			this.rectTransform.rotation = Quaternion.Euler (0, 0, this.curAngle);
 
-		// Rotate the airship.
-		//this.input.RotateAirship (angleBetween);
-		this.input.RotateAirship (curAngle);
+			// Rotate the airship.
+			//this.input.RotateAirship (angleBetween);
+			this.input.SetRotationAirship (curAngle);
 
-		// Save this cur touch position as last.
-		this.lastLocation = ped.position;
+			// Save this cur touch position as last.
+			this.lastLocation = ped.position;
+		} else if (this.steeringMode == GameEnum.SteeringType.UNREALISTIC) {
+			this.rectTransform.Rotate (0, 0, angleBetween);
+
+			//this.input.AddRotationAirship (angleBetween);
+			this.input.AddRotationAirship (angleBetween);
+
+			// Save this cur touch position as last.
+			this.lastLocation = ped.position;
+
+			this.curAngle = 0.0f;
+		}
 	}
 
 
@@ -84,7 +106,7 @@ public class Steering : MonoBehaviour
 			//this.rectTransform.rotation = Quaternion.RotateTowards (this.rectTransform.rotation, Quaternion.identity, Time.deltaTime * 100);
 			this.rectTransform.rotation = Quaternion.Euler (0, 0, this.curAngle);
 
-			this.input.RotateAirship (this.curAngle);
+			this.input.SetRotationAirship (this.curAngle);
 
 			this.curAngle = Mathf.Lerp (this.curAngle, 0.0f, Time.deltaTime * 10);
 		}

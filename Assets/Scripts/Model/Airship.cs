@@ -5,12 +5,18 @@ public class Airship : MonoBehaviour
 {
 	public GameObject model;
 	public Heading heading;
-	public float baseSpeed = 1.0f;
+	public float baseMoveSpeed = 1.0f;
+	public float baseRotationSpeed = 1.0f;
 	//public float minRotate = -60.0f;
 	//public float maxRotate = 60.0f;
 
-	private float speed = 0.0f;
+	private float moveSpeed = 0.0f;
+	private float rotationSpeed = 0.0f;
 	private float curRotateRad = 0.0f;
+
+	//private float rotationBuffer = 0.0f;
+	//private GameEnum.SteeringType steeringType = GameEnum.SteeringType.REALISTIC;
+
 	private Vector3 curForward;
 	//private Vector3 targetForward;
 	//private Vector3 baseForward;
@@ -24,7 +30,8 @@ public class Airship : MonoBehaviour
 		this.rb = this.GetComponent <Rigidbody> ();
 		//this.curForward = this.targetForward = this.baseForward = this.transform.forward;
 		this.curForward = this.transform.forward;
-		this.speed = baseSpeed;
+		this.moveSpeed = this.baseMoveSpeed;
+		this.rotationSpeed = this.baseRotationSpeed;
 	}
 	
 	// Update is called once per frame
@@ -32,27 +39,31 @@ public class Airship : MonoBehaviour
 	{
 		//this.curForward = this.transform.forward;
 
-		this.transform.position += this.transform.forward * Time.deltaTime * this.speed;
+		// Movement translation.
+		this.transform.position += this.transform.forward * Time.deltaTime * this.moveSpeed;
+
 
 		//this.transform.position += this.curForward * Time.deltaTime * this.speed;
 		//this.rb.AddForce (this.curForward * Time.deltaTime * this.speed);
 		//Vector3.RotateTowards (this.curForward, this.targetForward, Time.deltaTime * 10, Time.deltaTime * 10);
 		//this.rb.AddTorque (0, -this.curRotateRad, 0);
-		this.transform.Rotate (0, -this.curRotateRad, 0);
+
+		// Movement rotation.
+		this.transform.Rotate (0, -this.curRotateRad * Time.deltaTime * this.rotationSpeed, 0);
 
 		// Local object rotations.
 		this.model.transform.localRotation = Quaternion.Euler (0, 0, this.curRotateRad * 10);
 		this.heading.transform.LookAt (this.transform.position + this.RotateVector (this.transform.forward * 10, this.curRotateRad));
 	}
 
+
 	void OnDrawGizmosSelected (){
 		//Gizmos.DrawLine (this.transform.position, this.transform.position + this.transform.forward * 10);
-		Gizmos.DrawLine (this.transform.position, this.transform.position + this.transform.forward * 10);
-		Gizmos.DrawLine (this.transform.position, this.transform.position + this.RotateVector (this.transform.forward * 10, this.curRotateRad));
+		//Gizmos.DrawLine (this.transform.position, this.transform.position + this.RotateVector (this.transform.forward * 10, this.curRotateRad));
 	}
 
 
-	public void SetRotate (float degrees){
+	public void SetRotation (float degrees){
 		//this.transform.Rotate (0, -degrees * 0.1f, 0);
 		//this.transform.Rotate (0, -degrees, 0);
 		//this.transform.rotation = Quaternion.Euler (0, -degrees * 0.5f, 0);
@@ -75,6 +86,10 @@ public class Airship : MonoBehaviour
 		//this.heading.TurnOn ();
 	}
 
+	public void AddRotation (float degrees){
+		this.curRotateRad += degrees * (Mathf.PI / 180.0f) * 0.5f;
+	}
+
 	public void StartRotate (){
 		this.heading.TurnOn ();
 	}
@@ -85,7 +100,7 @@ public class Airship : MonoBehaviour
 
 
 	public void UpdateSpeed (float speedScale){
-		this.speed = speedScale * this.baseSpeed;
+		this.moveSpeed = speedScale * this.baseMoveSpeed;
 	}
 
 
