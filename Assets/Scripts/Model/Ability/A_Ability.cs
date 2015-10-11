@@ -18,10 +18,17 @@ public abstract class A_Ability
 		get { return this.maxRange; }
 	}
 
+	protected GameEnum.SkillType skillType; 
+	public GameEnum.SkillType SkillType {
+		get { return this.skillType; }
+	}
 
-	protected A_Ability (int manaCost, float cooldown){
+
+	protected A_Ability (int manaCost, float cooldown, float maxRange, GameEnum.SkillType skillType){
 		this.manaCost = manaCost;
 		this.cooldown = cooldown;
+		this.maxRange = maxRange;
+		this.skillType = skillType;
 	}
 		
 

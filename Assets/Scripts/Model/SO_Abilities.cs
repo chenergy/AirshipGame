@@ -9,6 +9,13 @@ public class SO_Abilities : ScriptableObject
 		public GameObject projectilePrefab;
 	}
 
+	[System.Serializable]
+	public class TargetAOEProperties
+	{
+		public GameObject projectilePrefab;
+	}
+
 	public StraightShotProperties straightShot;
+	public TargetAOEProperties targetAOE;
 }
 

@@ -34,6 +34,7 @@ public class InGameController : MonoBehaviour
 		                              GameManager.instance.Data.GetCharacterBaseMp (1),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (1),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (1));
+		c1.SetAbility (GameManager.instance.Data.GetAbility (GameEnum.AbilityName.ABILITY_TARGETAOE));
 
 		Character c2 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (2),
 		                              GameManager.instance.Data.GetCharacterStringName (2),
@@ -89,10 +90,18 @@ public class InGameController : MonoBehaviour
 
 	public void ActivateAbility (int charNum) {
 		if (charNum < this.partyCharacters.Length) {
-			if (this.partyCharacters[charNum].CanUseAbility()) {
-				// Stop showing the skilltip.
-				//this.skillTipTargetAOE.Enable (10.0f);
-				this.skillTipStraight.Enable (10.0f);
+			Character c = this.partyCharacters [charNum];
+
+			if (c.CanUseAbility()) {
+				// Showing the skilltip.
+				if (c.GetAbilityType () == GameEnum.SkillType.SKILL_STRAIGHT) {
+					//this.skillTipTargetAOE.Enable (10.0f);
+					this.skillTipStraight.Enable (c.GetAbilityMaxRange ());
+					this.skillTipTargetAOE.Disable ();
+				} else if (c.GetAbilityType () == GameEnum.SkillType.SKILL_TARGETAOE) {
+					this.skillTipStraight.Disable ();
+					this.skillTipTargetAOE.Enable (c.GetAbilityMaxRange ());
+				}
 
 				// Activate the character's ability to be used.
 				this.partyCharacters[charNum].ActivateAbility();
@@ -108,7 +117,7 @@ public class InGameController : MonoBehaviour
 		if ((this.activatedCharNum != -1) && (this.activatedCharNum < this.partyCharacters.Length)) {
 			if (this.partyCharacters[this.activatedCharNum].CanUseAbility()) {
 				// Stop showing the skilltip.
-				//this.skillTipTargetAOE.Disable ();
+				this.skillTipTargetAOE.Disable ();
 				this.skillTipStraight.Disable ();
 
 				// Use the character's ability.

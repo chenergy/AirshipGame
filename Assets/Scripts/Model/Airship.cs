@@ -98,11 +98,9 @@ public class Airship : MonoBehaviour
 		this.heading.TurnOff ();
 	}
 
-
 	public void UpdateSpeed (float speedScale){
 		this.moveSpeed = speedScale * this.baseMoveSpeed;
 	}
-
 
 	private Vector3 RotateVector (Vector3 baseVector, float radians){
 		float x0 = baseVector.x;

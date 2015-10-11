@@ -126,6 +126,20 @@ public class Character
 			this.curCooldown = this.maxCooldown;
 	}
 
+	public GameEnum.SkillType GetAbilityType (){
+		if (this.ability != null)
+			return this.ability.SkillType;
+
+		return GameEnum.SkillType.NONE;
+	}
+
+	public float GetAbilityMaxRange (){
+		if (this.ability != null)
+			return this.ability.MaxRange;
+
+		return 0.0f;
+	}
+
 	/*public int GetAbilityManaCost (){
 		if (this.ability != null)
 			return this.ability.ManaCost;

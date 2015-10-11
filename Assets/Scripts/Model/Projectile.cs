@@ -5,13 +5,14 @@ public class Projectile : MonoBehaviour
 {
 	public float speed = 1.0f;
 	public int damage = 1;
+	public float lifetime = 3.0f;
 
 	private Vector3 direction;
 
 	// Use this for initialization
 	void Start ()
 	{
-	
+		GameObject.Destroy (this.gameObject, this.lifetime);
 	}
 	
 	// Update is called once per frame
