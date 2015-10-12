@@ -14,7 +14,7 @@ namespace GameEnum
 		ABILITY_TARGETAOE
 	};
 
-	public enum SkillType {
+	public enum SkillTipType {
 		NONE,
 		SKILL_STRAIGHT,
 		SKILL_TARGETAOE

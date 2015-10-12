@@ -5,13 +5,14 @@ public class Ability_TargetAOE : A_Ability
 {
 	private GameObject projectilePrefab;
 
-	public Ability_TargetAOE (GameObject projectilePrefab) : base (5, 2.0f, 5.0f, GameEnum.SkillType.SKILL_TARGETAOE) {
+	public Ability_TargetAOE (GameObject projectilePrefab) : base (5, 2.0f, 5.0f/*, GameEnum.SkillTipType.SKILL_TARGETAOE*/) {
 		this.projectilePrefab = projectilePrefab;
 	}
 
 	public override void Activate ()
 	{
-		Debug.Log ("activated targetAOE");
+        GameManager.instance.InGameController.EnableSkillTip(GameEnum.SkillTipType.SKILL_TARGETAOE, 5.0f);
+        Debug.Log ("activated targetAOE");
 	}
 
 	public override void Use (Vector3 target)

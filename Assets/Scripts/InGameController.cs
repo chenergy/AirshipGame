@@ -93,16 +93,6 @@ public class InGameController : MonoBehaviour
 			Character c = this.partyCharacters [charNum];
 
 			if (c.CanUseAbility()) {
-				// Showing the skilltip.
-				if (c.GetAbilityType () == GameEnum.SkillType.SKILL_STRAIGHT) {
-					//this.skillTipTargetAOE.Enable (10.0f);
-					this.skillTipStraight.Enable (c.GetAbilityMaxRange ());
-					this.skillTipTargetAOE.Disable ();
-				} else if (c.GetAbilityType () == GameEnum.SkillType.SKILL_TARGETAOE) {
-					this.skillTipStraight.Disable ();
-					this.skillTipTargetAOE.Enable (c.GetAbilityMaxRange ());
-				}
-
 				// Activate the character's ability to be used.
 				this.partyCharacters[charNum].ActivateAbility();
 
@@ -133,6 +123,23 @@ public class InGameController : MonoBehaviour
 			}
 		}
 	}
+
+
+    public void EnableSkillTip (GameEnum.SkillTipType skillTip, float range)
+    {
+        // Showing the skilltip.
+        if (skillTip == GameEnum.SkillTipType.SKILL_STRAIGHT)
+        {
+            //this.skillTipTargetAOE.Enable (10.0f);
+            this.skillTipStraight.Enable(range);
+            this.skillTipTargetAOE.Disable();
+        }
+        else if (skillTip == GameEnum.SkillTipType.SKILL_TARGETAOE)
+        {
+            this.skillTipStraight.Disable();
+            this.skillTipTargetAOE.Enable(range);
+        }
+    }
 
 
 	public void SetRotationAirship (float degrees){
