@@ -7,53 +7,57 @@ public class Airship : MonoBehaviour
 	public Heading heading;
 	public float baseMoveSpeed = 1.0f;
 	public float baseRotationSpeed = 1.0f;
-	//public float minRotate = -60.0f;
-	//public float maxRotate = 60.0f;
 
 	private float moveSpeed = 0.0f;
 	private float rotationSpeed = 0.0f;
 	private float curRotateRad = 0.0f;
 
-	//private float rotationBuffer = 0.0f;
-	//private GameEnum.SteeringType steeringType = GameEnum.SteeringType.REALISTIC;
+    private Vector3 headingDirection;
+	//private Vector3 curForward;
 
-	private Vector3 curForward;
-	//private Vector3 targetForward;
-	//private Vector3 baseForward;
-
-	private Rigidbody rb;
+	//private Rigidbody rb;
 
 
 	// Use this for initialization
 	void Start ()
 	{
-		this.rb = this.GetComponent <Rigidbody> ();
-		//this.curForward = this.targetForward = this.baseForward = this.transform.forward;
-		this.curForward = this.transform.forward;
+		//this.rb = this.GetComponent <Rigidbody> ();
+		//this.curForward = this.transform.forward;
 		this.moveSpeed = this.baseMoveSpeed;
 		this.rotationSpeed = this.baseRotationSpeed;
+        this.headingDirection = this.transform.forward;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		//this.curForward = this.transform.forward;
+        // Movement translation.
+        this.transform.position += this.transform.forward * Time.deltaTime * this.moveSpeed;
 
-		// Movement translation.
-		this.transform.position += this.transform.forward * Time.deltaTime * this.moveSpeed;
+        // Movement rotation.
+        //this.transform.Rotate (0, -this.curRotateRad * Time.deltaTime * this.rotationSpeed, 0);
+        float sqrMag = (this.transform.forward - this.headingDirection).sqrMagnitude;
 
+        if (sqrMag > 0.01f)
+        {
+            //this.transform.rotation = Quaternion.FromToRotation(this.transform.forward, this.headingDirection);
+            this.transform.forward = Vector3.Lerp(this.transform.forward, this.headingDirection, Time.deltaTime * this.rotationSpeed);
 
-		//this.transform.position += this.curForward * Time.deltaTime * this.speed;
-		//this.rb.AddForce (this.curForward * Time.deltaTime * this.speed);
-		//Vector3.RotateTowards (this.curForward, this.targetForward, Time.deltaTime * 10, Time.deltaTime * 10);
-		//this.rb.AddTorque (0, -this.curRotateRad, 0);
+            Vector3 cross = Vector3.Cross(this.transform.forward, this.headingDirection);
+            if (cross.y > 0)
+                this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, -sqrMag * 10), Time.deltaTime * 10);
+            else
+                this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, sqrMag * 10), Time.deltaTime * 10);
+        }
+        /*else
+        {
+            this.transform.forward = this.headingDirection;
+        }*/
 
-		// Movement rotation.
-		this.transform.Rotate (0, -this.curRotateRad * Time.deltaTime * this.rotationSpeed, 0);
-
-		// Local object rotations.
-		this.model.transform.localRotation = Quaternion.Euler (0, 0, this.curRotateRad * 10);
-		this.heading.transform.LookAt (this.transform.position + this.RotateVector (this.transform.forward * 10, this.curRotateRad));
+        // Local object rotations.
+        //this.model.transform.localRotation = Quaternion.Euler (0, 0, this.curRotateRad * 10);
+        //this.heading.transform.LookAt (this.transform.position + this.RotateVector (this.transform.forward * 10, this.curRotateRad));
+        this.heading.transform.LookAt(this.transform.position + this.headingDirection);
 	}
 
 
@@ -64,31 +68,18 @@ public class Airship : MonoBehaviour
 
 
 	public void SetRotation (float degrees){
-		//this.transform.Rotate (0, -degrees * 0.1f, 0);
-		//this.transform.Rotate (0, -degrees, 0);
-		//this.transform.rotation = Quaternion.Euler (0, -degrees * 0.5f, 0);
-
-		//this.curRotate = degrees;
-		//this.rb.AddTorque (0, this.curRotate, 0);
-
-		//this.curRotate = Mathf.Clamp (this.curRotate + degrees, this.minRotate, this.maxRotate);
 		this.curRotateRad = degrees * (Mathf.PI / 180.0f) * 0.5f;
-
-		/*float x0 = this.baseForward.x;
-		float z0 = this.baseForward.z;
-		float x1 = x0 * TrigLookup.Cos (this.curRotateRad) - z0 * TrigLookup.Sin (this.curRotateRad);
-		float z1 = x0 * TrigLookup.Sin (this.curRotateRad) + z0 * TrigLookup.Cos (this.curRotateRad);
-
-		this.targetForward = new Vector3 (x1, this.baseForward.y, z1);*/
-		//this.targetForward = this.RotateVector (this.baseForward, this.curRotateRad);
-
-		//this.rb.AddTorque (0, -this.curRotateRad, 0);
-		//this.heading.TurnOn ();
 	}
 
 	public void AddRotation (float degrees){
 		this.curRotateRad += degrees * (Mathf.PI / 180.0f) * 0.5f;
 	}
+
+    public void SetHeading (Vector3 direction)
+    {
+        this.headingDirection = this.RotateVector (direction, -Mathf.PI / 4);
+    }
+
 
 	public void StartRotate (){
 		this.heading.TurnOn ();

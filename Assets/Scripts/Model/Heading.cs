@@ -26,7 +26,7 @@ public class Heading : MonoBehaviour
 		float alpha = 1.0f;
 
 		while (timer < this.turnOffTime) {
-			Debug.Log (timer);
+			//Debug.Log (timer);
 			yield return new WaitForEndOfFrame ();
 			alpha = Mathf.Lerp (1.0f, 0.0f, timer / this.turnOffTime);
 			this.icon.color = new Color (this.icon.color.r, this.icon.color.g, this.icon.color.b, alpha);
