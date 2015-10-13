@@ -37,11 +37,12 @@ public class DataManager
 		this.abilityProperties = abilityProperties;
 
 		this.abilitiesDict = new Dictionary<GameEnum.AbilityName, A_Ability> ();
-		this.abilitiesDict.Add (GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, new Ability_StraightShot (this.abilityProperties.straightShot.projectilePrefab));
-		this.abilitiesDict.Add (GameEnum.AbilityName.ABILITY_TARGETAOE, new Ability_TargetAOE (this.abilityProperties.targetAOE.projectilePrefab));
+        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, new Ability_StraightShot(this.abilityProperties.straightShot.projectilePrefab));
+        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_TARGETAOE, new Ability_TargetAOE(this.abilityProperties.targetAOE.projectilePrefab));
         this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_AUTOBULLET, new Ability_AutoBullet(this.abilityProperties.autoBullet.projectilePrefab));
+        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_FRONTSWIPE, new Ability_FrontSwipe(this.abilityProperties.frontSwipe.swipePrefab));
 
-		this.dataObject = new DataObject (this.characterProperties);
+        this.dataObject = new DataObject (this.characterProperties);
 
 		// Deserialize data from binary.
 		this.Load ();

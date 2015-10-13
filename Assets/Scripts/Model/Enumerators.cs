@@ -12,7 +12,8 @@ namespace GameEnum
 		NONE,
 		ABILITY_STRAIGHTBULLET,
 		ABILITY_TARGETAOE,
-        ABILITY_AUTOBULLET
+        ABILITY_AUTOBULLET,
+        ABILITY_FRONTSWIPE
 	};
 
 	public enum SkillTipType {

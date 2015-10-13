@@ -50,8 +50,9 @@ public class InGameController : MonoBehaviour
 		                              GameManager.instance.Data.GetCharacterBaseMp (3),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (3),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (3));
+        c3.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_FRONTSWIPE));
 
-		pmc.SetPartyCharacter (c0, 0);
+        pmc.SetPartyCharacter (c0, 0);
 		pmc.SetPartyCharacter (c1, 1);
 		pmc.SetPartyCharacter (c2, 2);
 		pmc.SetPartyCharacter (c3, 3);
