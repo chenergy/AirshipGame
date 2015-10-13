@@ -11,7 +11,8 @@ namespace GameEnum
 	public enum AbilityName {
 		NONE,
 		ABILITY_STRAIGHTBULLET,
-		ABILITY_TARGETAOE
+		ABILITY_TARGETAOE,
+        ABILITY_AUTOBULLET
 	};
 
 	public enum SkillTipType {

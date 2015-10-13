@@ -39,6 +39,7 @@ public class DataManager
 		this.abilitiesDict = new Dictionary<GameEnum.AbilityName, A_Ability> ();
 		this.abilitiesDict.Add (GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, new Ability_StraightShot (this.abilityProperties.straightShot.projectilePrefab));
 		this.abilitiesDict.Add (GameEnum.AbilityName.ABILITY_TARGETAOE, new Ability_TargetAOE (this.abilityProperties.targetAOE.projectilePrefab));
+        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_AUTOBULLET, new Ability_AutoBullet(this.abilityProperties.autoBullet.projectilePrefab));
 
 		this.dataObject = new DataObject (this.characterProperties);
 

@@ -26,9 +26,9 @@ public class InGameController : MonoBehaviour
 		                              GameManager.instance.Data.GetCharacterBaseMp (0),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (0),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (0));
-		c0.SetAbility (GameManager.instance.Data.GetAbility (GameEnum.AbilityName.ABILITY_STRAIGHTBULLET));
+        c0.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_AUTOBULLET));
 
-		Character c1 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (1),
+        Character c1 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (1),
 		                              GameManager.instance.Data.GetCharacterStringName (1),
 		                              GameManager.instance.Data.GetCharacterBaseHp (1),
 		                              GameManager.instance.Data.GetCharacterBaseMp (1),
@@ -42,8 +42,9 @@ public class InGameController : MonoBehaviour
 		                              GameManager.instance.Data.GetCharacterBaseMp (2),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (2),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (2));
+        c2.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_STRAIGHTBULLET));
 
-		Character c3 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (3),
+        Character c3 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (3),
 		                              GameManager.instance.Data.GetCharacterStringName (3),
 		                              GameManager.instance.Data.GetCharacterBaseHp (3),
 		                              GameManager.instance.Data.GetCharacterBaseMp (3),
@@ -93,12 +94,12 @@ public class InGameController : MonoBehaviour
 			Character c = this.partyCharacters [charNum];
 
 			if (c.CanUseAbility()) {
-				// Activate the character's ability to be used.
-				this.partyCharacters[charNum].ActivateAbility();
-
 				// Set the activated character number.
 				this.activatedCharNum = charNum;
-			}
+
+                // Activate the character's ability to be used.
+                this.partyCharacters[charNum].ActivateAbility();
+            }
 		}
 	}
 
