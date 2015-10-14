@@ -8,7 +8,9 @@ public class Airship : MonoBehaviour
 	public float baseMoveSpeed = 1.0f;
 	public float baseRotationSpeed = 1.0f;
 
-	private float moveSpeed = 0.0f;
+	private float targetSpeed = 0.0f;
+	private float curSpeed = 0.0f;
+	private float acceleration = 1.0f;
 	private float rotationSpeed = 0.0f;
 	private float curRotateRad = 0.0f;
 
@@ -23,7 +25,7 @@ public class Airship : MonoBehaviour
 	{
 		//this.rb = this.GetComponent <Rigidbody> ();
 		//this.curForward = this.transform.forward;
-		this.moveSpeed = this.baseMoveSpeed;
+		//this.targetSpeed = this.baseMoveSpeed;
 		this.rotationSpeed = this.baseRotationSpeed;
         this.headingDirection = this.transform.forward;
 	}
@@ -31,8 +33,14 @@ public class Airship : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		// Interpolate towards target speed.
+		if (Mathf.Abs (this.targetSpeed - this.curSpeed) > 0.001f)
+			this.curSpeed = Mathf.Lerp (this.curSpeed, this.targetSpeed, Time.deltaTime * this.acceleration);
+		else
+			this.curSpeed = this.targetSpeed;
+
         // Movement translation.
-        this.transform.position += this.transform.forward * Time.deltaTime * this.moveSpeed;
+        this.transform.position += this.transform.forward * Time.deltaTime * this.curSpeed;
 
         // Movement rotation.
         //this.transform.Rotate (0, -this.curRotateRad * Time.deltaTime * this.rotationSpeed, 0);
@@ -90,7 +98,7 @@ public class Airship : MonoBehaviour
 	}
 
 	public void UpdateSpeed (float speedScale){
-		this.moveSpeed = speedScale * this.baseMoveSpeed;
+		this.targetSpeed = speedScale * this.baseMoveSpeed;
 	}
 
 	private Vector3 RotateVector (Vector3 baseVector, float radians){
@@ -100,6 +108,10 @@ public class Airship : MonoBehaviour
 		float z1 = x0 * TrigLookup.Sin (radians) + z0 * TrigLookup.Cos (radians);
 
 		return new Vector3 (x1, baseVector.y, z1);
+	}
+
+	public void SetTargetSpeed (float speed){
+		this.targetSpeed = speed;
 	}
 }
 

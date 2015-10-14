@@ -11,13 +11,13 @@ public class Heading : MonoBehaviour
 	}
 
 	public void TurnOn (){
-		Debug.Log ("turn on");
+		//Debug.Log ("turn on");
 		StopCoroutine ("TurnOffRoutine");
 		this.icon.color = new Color (this.icon.color.r, this.icon.color.g, this.icon.color.b, 1.0f);
 	}
 
 	public void TurnOff (){
-		Debug.Log ("turn off");
+		//Debug.Log ("turn off");
 		StartCoroutine ("TurnOffRoutine");
 	}
 

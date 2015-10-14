@@ -10,15 +10,15 @@ public class InGameController : MonoBehaviour
 	public SkillTip_TargetPointerAOE skillTipTargetAOE;
 	public SkillTip_TargetAirshipAOE skillTipAirshipAOE;
 
-
-
 	private Character[] partyCharacters;
 	private int activatedCharNum = -1;
-
+	private Bounds bounds;
 	
 	// Use this for initialization
 	void Start ()
 	{
+		this.bounds = new Bounds (Vector3.zero, new Vector3 (95f, 0, 95f));
+
 		GameManager.instance.InGameController = this;
 
 		this.partyCharacters = new Character[4];
@@ -67,10 +67,10 @@ public class InGameController : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	/*void Update ()
+	void Update ()
 	{
-	
-	}*/
+		this.KeepAirshipInBounds ();
+	}
 
 	void OnApplicationPause (bool pauseStatus){
 		if (pauseStatus) {
@@ -90,6 +90,20 @@ public class InGameController : MonoBehaviour
 		}
 
 		GameManager.instance.Data.Save ();
+	}
+
+
+	private void KeepAirshipInBounds (){
+		if (this.airship != null) {
+			if (this.airship.transform.position.x > this.bounds.max.x)
+				this.airship.transform.position = new Vector3 (this.bounds.max.x, this.airship.transform.position.y, this.airship.transform.position.z);
+			if (this.airship.transform.position.x < this.bounds.min.x)
+				this.airship.transform.position = new Vector3 (this.bounds.min.x, this.airship.transform.position.y, this.airship.transform.position.z);
+			if (this.airship.transform.position.z > this.bounds.max.z)
+				this.airship.transform.position = new Vector3 (this.airship.transform.position.x, this.airship.transform.position.y, this.bounds.max.z);
+			if (this.airship.transform.position.z < this.bounds.min.z)
+				this.airship.transform.position = new Vector3 (this.airship.transform.position.x, this.airship.transform.position.y, this.bounds.min.z);
+		}
 	}
 
 
@@ -178,6 +192,9 @@ public class InGameController : MonoBehaviour
 		this.airship.UpdateSpeed (newSpeed);
 	}
 
+	public void ReloadScene (){
+		Application.LoadLevel ("scene");
+	}
 
 	public void DeleteSave (){
 		System.IO.File.Delete (Application.persistentDataPath + "/savedData.gd");
