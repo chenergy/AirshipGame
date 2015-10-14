@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class SkillTip_TargetAOE : A_SkillTip
+public class SkillTip_TargetPointerAOE : A_SkillTip
 {
 	public override void Enable (float range)
 	{

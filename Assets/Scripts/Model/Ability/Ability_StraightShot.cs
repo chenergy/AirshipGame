@@ -5,13 +5,14 @@ public class Ability_StraightShot : A_Ability
 {
 	private GameObject projectilePrefab;
 
-	public Ability_StraightShot (GameObject projectilePrefab) : base (5, 1.0f, 10.0f/*, GameEnum.SkillTipType.SKILL_STRAIGHT*/) {
+	public Ability_StraightShot (GameObject projectilePrefab) : base (5, 1.0f, 10.0f) {
 		this.projectilePrefab = projectilePrefab;
 	}
 
 	public override void Activate ()
 	{
-        GameManager.instance.InGameController.EnableSkillTip(GameEnum.SkillTipType.SKILL_STRAIGHT, 10.0f);
+        //GameManager.instance.InGameController.EnableSkillTip(GameEnum.SkillTipType.SKILL_STRAIGHT, 10.0f);
+		GameManager.instance.InGameController.EnableSkillTip( GameEnum.SkillTipType.SKILL_TARGET_AIRSHIP_AOE, 10.0f);
 		Debug.Log ("activated straightshot");
 	}
 

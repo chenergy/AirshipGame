@@ -5,7 +5,7 @@ public class Ability_AutoBullet : A_Ability
 {
     private GameObject projectilePrefab;
 
-    public Ability_AutoBullet(GameObject projectilePrefab) : base (1, 0.1f, 10.0f/*, GameEnum.SkillTipType.SKILL_STRAIGHT*/) {
+    public Ability_AutoBullet(GameObject projectilePrefab) : base (1, 0.1f, 10.0f) {
         this.projectilePrefab = projectilePrefab;
     }
 

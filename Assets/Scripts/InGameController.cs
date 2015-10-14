@@ -6,8 +6,11 @@ public class InGameController : MonoBehaviour
 	public PartyMenuController pmc;
 	public Airship airship;
 	public ErrorLog errorLog;
-	public SkillTip_TargetAOE skillTipTargetAOE;
 	public SkillTip_Straight skillTipStraight;
+	public SkillTip_TargetPointerAOE skillTipTargetAOE;
+	public SkillTip_TargetAirshipAOE skillTipAirshipAOE;
+
+
 
 	private Character[] partyCharacters;
 	private int activatedCharNum = -1;
@@ -34,7 +37,7 @@ public class InGameController : MonoBehaviour
 		                              GameManager.instance.Data.GetCharacterBaseMp (1),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (1),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (1));
-		c1.SetAbility (GameManager.instance.Data.GetAbility (GameEnum.AbilityName.ABILITY_TARGETAOE));
+		c1.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_FRONTSWIPE));
 
 		Character c2 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (2),
 		                              GameManager.instance.Data.GetCharacterStringName (2),
@@ -50,7 +53,7 @@ public class InGameController : MonoBehaviour
 		                              GameManager.instance.Data.GetCharacterBaseMp (3),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (3),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (3));
-        c3.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_FRONTSWIPE));
+		c3.SetAbility (GameManager.instance.Data.GetAbility (GameEnum.AbilityName.ABILITY_TARGETAOE));
 
         pmc.SetPartyCharacter (c0, 0);
 		pmc.SetPartyCharacter (c1, 1);
@@ -111,6 +114,7 @@ public class InGameController : MonoBehaviour
 				// Stop showing the skilltip.
 				this.skillTipTargetAOE.Disable ();
 				this.skillTipStraight.Disable ();
+				this.skillTipAirshipAOE.Disable ();
 
 				// Use the character's ability.
 				this.partyCharacters[this.activatedCharNum].UseAbility (target);
@@ -130,17 +134,20 @@ public class InGameController : MonoBehaviour
     public void EnableSkillTip (GameEnum.SkillTipType skillTip, float range)
     {
         // Showing the skilltip.
-        if (skillTip == GameEnum.SkillTipType.SKILL_STRAIGHT)
-        {
-            //this.skillTipTargetAOE.Enable (10.0f);
-            this.skillTipStraight.Enable(range);
-            this.skillTipTargetAOE.Disable();
-        }
-        else if (skillTip == GameEnum.SkillTipType.SKILL_TARGETAOE)
-        {
-            this.skillTipStraight.Disable();
-            this.skillTipTargetAOE.Enable(range);
-        }
+		if (skillTip == GameEnum.SkillTipType.SKILL_STRAIGHT) {
+			//this.skillTipTargetAOE.Enable (10.0f);
+			this.skillTipStraight.Enable (range);
+			this.skillTipTargetAOE.Disable ();
+			this.skillTipAirshipAOE.Disable ();
+		} else if (skillTip == GameEnum.SkillTipType.SKILL_TARGET_POINTER_AOE) {
+			this.skillTipStraight.Disable ();
+			this.skillTipTargetAOE.Enable (range);
+			this.skillTipAirshipAOE.Disable ();
+		} else if (skillTip == GameEnum.SkillTipType.SKILL_TARGET_AIRSHIP_AOE) {
+			this.skillTipStraight.Disable ();
+			this.skillTipTargetAOE.Disable ();
+			this.skillTipAirshipAOE.Enable (range);
+		}
     }
 
 
