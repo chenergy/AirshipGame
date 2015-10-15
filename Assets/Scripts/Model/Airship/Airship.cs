@@ -5,6 +5,7 @@ public class Airship : MonoBehaviour
 {
 	public GameObject model;
 	public Heading heading;
+	public CharacterController cc;
 	public float baseMoveSpeed = 1.0f;
 	public float baseRotationSpeed = 1.0f;
 
@@ -40,7 +41,8 @@ public class Airship : MonoBehaviour
 			this.curSpeed = this.targetSpeed;
 
         // Movement translation.
-        this.transform.position += this.transform.forward * Time.deltaTime * this.curSpeed;
+        //this.transform.position += this.transform.forward * Time.deltaTime * this.curSpeed;
+		this.cc.Move (this.transform.forward * Time.deltaTime * this.curSpeed);
 
         // Movement rotation.
         //this.transform.Rotate (0, -this.curRotateRad * Time.deltaTime * this.rotationSpeed, 0);
