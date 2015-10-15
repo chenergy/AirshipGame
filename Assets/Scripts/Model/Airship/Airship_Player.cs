@@ -1,19 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class Airship_Player : MonoBehaviour
+public class Airship_Player : Airship
 {
 
-	// Use this for initialization
-	void Start ()
-	{
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	
-	}
 }
 
