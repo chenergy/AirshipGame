@@ -37,10 +37,10 @@ public class DataManager
 		this.abilityProperties = abilityProperties;
 
 		this.abilitiesDict = new Dictionary<GameEnum.AbilityName, A_Ability> ();
-        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, new Ability_StraightShot(this.abilityProperties.straightShot.projectilePrefab));
-        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_TARGETAOE, new Ability_TargetAOE(this.abilityProperties.targetAOE.projectilePrefab));
-        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_AUTOBULLET, new Ability_AutoBullet(this.abilityProperties.autoBullet.projectilePrefab));
-        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_FRONTSWIPE, new Ability_FrontSwipe(this.abilityProperties.frontSwipe.swipePrefab));
+        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, new Ability_StraightShot(this.abilityProperties.straightShot.projectilePrefab, null));
+        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_TARGETAOE, new Ability_TargetAOE(this.abilityProperties.targetAOE.projectilePrefab, null));
+        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_AUTOBULLET, new Ability_AutoBullet(this.abilityProperties.autoBullet.projectilePrefab, null));
+        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_FRONTSWIPE, new Ability_FrontSwipe(this.abilityProperties.frontSwipe.swipePrefab, null));
 
         this.dataObject = new DataObject (this.characterProperties);
 
@@ -49,9 +49,9 @@ public class DataManager
 	}
 
 
-	public A_Ability GetAbility (GameEnum.AbilityName abilityName){
+	public A_Ability GetAbility (GameEnum.AbilityName abilityName, A_Airship owner){
 		if (this.abilitiesDict.ContainsKey (abilityName))
-			return this.abilitiesDict [abilityName].Clone ();
+			return this.abilitiesDict [abilityName].Clone (owner);
 		return null;
 	}
 

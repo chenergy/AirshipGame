@@ -5,7 +5,7 @@ public class Ability_FrontSwipe : A_Ability
 {
     private GameObject swipePrefab;
 
-    public Ability_FrontSwipe(GameObject projectilePrefab) : base(5, 1.0f, 10.0f)
+	public Ability_FrontSwipe(GameObject projectilePrefab, A_Airship owner) : base(5, 1.0f, 10.0f, owner)
     {
         this.swipePrefab = projectilePrefab;
     }
@@ -18,20 +18,22 @@ public class Ability_FrontSwipe : A_Ability
 
     public override void Use(Vector3 target)
     {
-        Vector3 airshipPos = GameManager.instance.InGameController.airship.transform.position;
+        //Vector3 airshipPos = GameManager.instance.InGameController.airship.transform.position;
+		Vector3 airshipPos = this.owner.transform.position;
         //Vector3 airshipForward = GameManager.instance.InGameController.airship.transform.forward;
 
         GameObject newSwipe = GameObject.Instantiate(this.swipePrefab, airshipPos, Quaternion.identity) as GameObject;
         newSwipe.transform.parent = GameManager.instance.InGameController.airship.transform;
         newSwipe.transform.localRotation = Quaternion.identity;
         //newSwipe.transform.localPosition += new Vector3(0, 0, 0);
+		newSwipe.GetComponent<SwipeProjectile> ().SetOwner (this.owner);
         newSwipe.GetComponent<SwipeProjectile>().SetAngle(360.0f);
         //newSwipe.GetComponent<Projectile>().SetDirection(airshipForward);
         Debug.Log("used front swipe");
     }
 
-    public override A_Ability Clone()
+	public override A_Ability Clone(A_Airship owner)
     {
-        return new Ability_FrontSwipe(this.swipePrefab);
+        return new Ability_FrontSwipe(this.swipePrefab, owner);
     }
 }

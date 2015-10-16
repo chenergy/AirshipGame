@@ -29,7 +29,7 @@ public class InGameController : MonoBehaviour
 		                              GameManager.instance.Data.GetCharacterBaseMp (0),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (0),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (0));
-        c0.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_AUTOBULLET));
+		c0.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_AUTOBULLET, airship));
 
         Character c1 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (1),
 		                              GameManager.instance.Data.GetCharacterStringName (1),
@@ -37,7 +37,7 @@ public class InGameController : MonoBehaviour
 		                              GameManager.instance.Data.GetCharacterBaseMp (1),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (1),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (1));
-		c1.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_FRONTSWIPE));
+		c1.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_FRONTSWIPE, airship));
 
 		Character c2 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (2),
 		                              GameManager.instance.Data.GetCharacterStringName (2),
@@ -45,7 +45,7 @@ public class InGameController : MonoBehaviour
 		                              GameManager.instance.Data.GetCharacterBaseMp (2),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (2),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (2));
-        c2.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_STRAIGHTBULLET));
+		c2.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, airship));
 
         Character c3 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (3),
 		                              GameManager.instance.Data.GetCharacterStringName (3),
@@ -53,7 +53,7 @@ public class InGameController : MonoBehaviour
 		                              GameManager.instance.Data.GetCharacterBaseMp (3),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (3),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (3));
-		c3.SetAbility (GameManager.instance.Data.GetAbility (GameEnum.AbilityName.ABILITY_TARGETAOE));
+		c3.SetAbility (GameManager.instance.Data.GetAbility (GameEnum.AbilityName.ABILITY_TARGETAOE, airship));
 
         pmc.SetPartyCharacter (c0, 0);
 		pmc.SetPartyCharacter (c1, 1);

@@ -18,27 +18,26 @@ public abstract class A_Ability
 		get { return this.maxRange; }
 	}
 
-	/*protected GameEnum.SkillTipType skillType; 
-	public GameEnum.SkillTipType SkillType {
-		get { return this.skillType; }
-	}*/
+	protected A_Airship owner; 
+	public A_Airship SkillType {
+		get { return this.owner; }
+	}
 
 
-	protected A_Ability (int manaCost, float cooldown, float maxRange/*, GameEnum.SkillTipType skillType*/){
+	protected A_Ability (int manaCost, float cooldown, float maxRange, A_Airship owner){
 		this.manaCost = manaCost;
 		this.cooldown = cooldown;
 		this.maxRange = maxRange;
-		//this.skillType = skillType;
+		this.owner = owner;
 	}
 		
 
 	// Ability should be activated by party member touch.
 	// Ingamecontroller contains reference to the partymenucharacter.
-	// partymenucharacter contains character class, contains ability
 	// choose which function based on touch of canvas or click on screen
 	// Setup ability with scriptable object, pass string to get ability class back from the scriptable object.
 	public abstract void Activate ();
 	public abstract void Use (Vector3 target);
-	public abstract A_Ability Clone ();
+	public abstract A_Ability Clone (A_Airship owner);
 }
 

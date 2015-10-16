@@ -23,6 +23,9 @@ public class Airship_Enemy : A_Airship
 
 	private int curHp = 10;
 	//private float curSpeed = 0.0f;
+	private A_Ability ability;
+	private float targetCd;
+	private float curCd;
 
 	// Use this for initialization
 	protected override void Start ()
@@ -34,12 +37,25 @@ public class Airship_Enemy : A_Airship
 		this.curHp = this.baseHp;
 		this.hpImage.fillAmount = 1.0f;
 		this.UpdateSpeed (1.0f);
+
+		this.ability = GameManager.instance.Data.GetAbility (GameEnum.AbilityName.ABILITY_AUTOBULLET, this);
+		this.targetCd = this.ability.Cooldown;
 	}
 	
 	// Update is called once per frame
 	protected override void Update ()
 	{
 		base.Update ();
+
+		// Perform ability.
+		this.curCd += Time.deltaTime;
+
+		if (this.curCd > this.targetCd) {
+			this.curCd = 0;
+			this.ability.Use (Vector3.zero);
+		}
+
+
 		/*
 		if (GameManager.instance.InGameController.airship != null) {
 			Vector3 moveDir = GameManager.instance.InGameController.airship.transform.position - this.transform.position;

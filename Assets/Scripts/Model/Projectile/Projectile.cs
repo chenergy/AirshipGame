@@ -8,6 +8,7 @@ public class Projectile : MonoBehaviour
 	public float lifetime = 3.0f;
 
 	private Vector3 direction;
+	private A_Airship owner;
 
 	// Use this for initialization
 	void Start ()
@@ -26,11 +27,15 @@ public class Projectile : MonoBehaviour
 		this.direction = dir;
 	}
 
+	public void SetOwner (A_Airship owner){
+		this.owner = owner;
+	}
+
 
 	void OnTriggerEnter (Collider other){
-		Airship_Enemy e = other.GetComponent <Airship_Enemy> ();
-		if (e != null) {
-			e.TakeDamage (this.damage);
+		A_Airship a = other.GetComponent <A_Airship> ();
+		if (a != null && a != this.owner) {
+			//a.TakeDamage (this.damage);
 			GameObject.Destroy (this.gameObject);
 		}
 	}

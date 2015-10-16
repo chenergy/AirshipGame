@@ -14,8 +14,9 @@ public class SwipeProjectile : MonoBehaviour
     private float timer = 0.0f;
     private float curAngle = 0.0f;
     private float targetAngle = 0.0f;
+	private A_Airship owner;
 
-	private List<Airship_Enemy> hitColliders = new List<Airship_Enemy>();
+	private List<A_Airship> hitColliders = new List<A_Airship>();
 
     // Use this for initialization
     void Start()
@@ -52,16 +53,20 @@ public class SwipeProjectile : MonoBehaviour
         this.swipeCollider.transform.Rotate(0.0f, -degrees / 2, 0.0f);
     }
 
+	public void SetOwner (A_Airship owner){
+		this.owner = owner;
+	}
+
 
     void OnTriggerEnter(Collider other)
     {
-		Airship_Enemy e = other.GetComponent<Airship_Enemy>();
-        if (e != null)
+		A_Airship a = other.GetComponent<A_Airship>();
+        if (a != null)
         {
-            if (!this.hitColliders.Contains(e))
+            if (!this.hitColliders.Contains(a))
             {
-                this.hitColliders.Add(e);
-                e.TakeDamage(this.damage);
+                this.hitColliders.Add(a);
+                //e.TakeDamage(this.damage);
             }
         }
     }

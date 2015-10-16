@@ -9,11 +9,11 @@ public abstract class A_Airship : MonoBehaviour
 	public float baseMoveSpeed = 1.0f;
 	public float baseRotationSpeed = 1.0f;
 
-	protected float targetSpeed = 0.0f;
-	protected float curSpeed = 0.0f;
-	protected float acceleration = 1.0f;
-	protected float rotationSpeed = 0.0f;
-	protected float curRotateRad = 0.0f;
+	private float targetSpeed = 0.0f;
+	private float curSpeed = 0.0f;
+	private float acceleration = 1.0f;
+	private float rotationSpeed = 0.0f;
+	private float curRotateRad = 0.0f;
 	protected Vector3 headingDirection;
 
 	private float startY = 0.0f;
