@@ -15,7 +15,7 @@ public class SwipeProjectile : MonoBehaviour
     private float curAngle = 0.0f;
     private float targetAngle = 0.0f;
 
-    private List<Enemy> hitColliders = new List<Enemy>();
+	private List<Airship_Enemy> hitColliders = new List<Airship_Enemy>();
 
     // Use this for initialization
     void Start()
@@ -55,7 +55,7 @@ public class SwipeProjectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Enemy e = other.GetComponent<Enemy>();
+		Airship_Enemy e = other.GetComponent<Airship_Enemy>();
         if (e != null)
         {
             if (!this.hitColliders.Contains(e))

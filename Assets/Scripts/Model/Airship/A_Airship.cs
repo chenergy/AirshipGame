@@ -1,38 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Airship : MonoBehaviour
+public abstract class A_Airship : MonoBehaviour
 {
 	public GameObject model;
-	public Heading heading;
+
 	public CharacterController cc;
 	public float baseMoveSpeed = 1.0f;
 	public float baseRotationSpeed = 1.0f;
 
-	private float targetSpeed = 0.0f;
-	private float curSpeed = 0.0f;
-	private float acceleration = 1.0f;
-	private float rotationSpeed = 0.0f;
-	private float curRotateRad = 0.0f;
+	protected float targetSpeed = 0.0f;
+	protected float curSpeed = 0.0f;
+	protected float acceleration = 1.0f;
+	protected float rotationSpeed = 0.0f;
+	protected float curRotateRad = 0.0f;
+	protected Vector3 headingDirection;
 
-    private Vector3 headingDirection;
-	//private Vector3 curForward;
-
-	//private Rigidbody rb;
-
+	private float startY = 0.0f;
 
 	// Use this for initialization
-	void Start ()
+	protected virtual void Start ()
 	{
-		//this.rb = this.GetComponent <Rigidbody> ();
-		//this.curForward = this.transform.forward;
-		//this.targetSpeed = this.baseMoveSpeed;
 		this.rotationSpeed = this.baseRotationSpeed;
         this.headingDirection = this.transform.forward;
+		this.startY = this.transform.position.y;
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	protected virtual void Update ()
 	{
 		// Interpolate towards target speed.
 		if (Mathf.Abs (this.targetSpeed - this.curSpeed) > 0.001f)
@@ -41,11 +36,9 @@ public class Airship : MonoBehaviour
 			this.curSpeed = this.targetSpeed;
 
         // Movement translation.
-        //this.transform.position += this.transform.forward * Time.deltaTime * this.curSpeed;
 		this.cc.Move (this.transform.forward * Time.deltaTime * this.curSpeed);
 
         // Movement rotation.
-        //this.transform.Rotate (0, -this.curRotateRad * Time.deltaTime * this.rotationSpeed, 0);
         float sqrMag = (this.transform.forward - this.headingDirection).sqrMagnitude;
 
         if (sqrMag > 0.01f)
@@ -59,21 +52,11 @@ public class Airship : MonoBehaviour
             else
                 this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, sqrMag * 10), Time.deltaTime * 10);
         }
-        /*else
-        {
-            this.transform.forward = this.headingDirection;
-        }*/
+
+		this.transform.position = new Vector3 (this.transform.position.x, this.startY, this.transform.position.z);
 
         // Local object rotations.
-        //this.model.transform.localRotation = Quaternion.Euler (0, 0, this.curRotateRad * 10);
-        //this.heading.transform.LookAt (this.transform.position + this.RotateVector (this.transform.forward * 10, this.curRotateRad));
-        this.heading.transform.LookAt(this.transform.position + this.headingDirection);
-	}
-
-
-	void OnDrawGizmosSelected (){
-		//Gizmos.DrawLine (this.transform.position, this.transform.position + this.transform.forward * 10);
-		//Gizmos.DrawLine (this.transform.position, this.transform.position + this.RotateVector (this.transform.forward * 10, this.curRotateRad));
+        //this.heading.transform.LookAt(this.transform.position + this.headingDirection);
 	}
 
 
@@ -91,13 +74,13 @@ public class Airship : MonoBehaviour
     }
 
 
-	public void StartRotate (){
+	/*public void StartRotate (){
 		this.heading.TurnOn ();
 	}
 
 	public void EndRotate (){
 		this.heading.TurnOff ();
-	}
+	}*/
 
 	public void UpdateSpeed (float speedScale){
 		this.targetSpeed = speedScale * this.baseMoveSpeed;
@@ -112,8 +95,8 @@ public class Airship : MonoBehaviour
 		return new Vector3 (x1, baseVector.y, z1);
 	}
 
-	public void SetTargetSpeed (float speed){
+	/*public void SetTargetSpeed (float speed){
 		this.targetSpeed = speed;
-	}
+	}*/
 }
 

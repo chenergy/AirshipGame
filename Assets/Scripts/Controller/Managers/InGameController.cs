@@ -4,7 +4,7 @@ using System.Collections;
 public class InGameController : MonoBehaviour
 {
 	public PartyMenuController pmc;
-	public Airship airship;
+	public Airship_Player airship;
 	public ErrorLog errorLog;
 	public SkillTip_Straight skillTipStraight;
 	public SkillTip_TargetPointerAOE skillTipTargetAOE;

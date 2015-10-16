@@ -28,7 +28,7 @@ public class Projectile : MonoBehaviour
 
 
 	void OnTriggerEnter (Collider other){
-		Enemy e = other.GetComponent <Enemy> ();
+		Airship_Enemy e = other.GetComponent <Airship_Enemy> ();
 		if (e != null) {
 			e.TakeDamage (this.damage);
 			GameObject.Destroy (this.gameObject);
