@@ -18,7 +18,7 @@ public class Airship_Enemy : A_Airship
 
 	//public float baseSpeed = 1.0f;
 	public int baseHp = 10;
-	public float agroRadius = 5.0f;
+	public float agroDist = 5.0f;
 	public Image hpImage;
 
 	private int curHp = 10;
@@ -26,17 +26,18 @@ public class Airship_Enemy : A_Airship
 	private A_Ability ability;
 	private float targetCd;
 	private float curCd;
+	private Vector3 startPos;
 
 	// Use this for initialization
 	protected override void Start ()
 	{
 		base.Start ();
-		/*this.startPos = this.transform.position;
-		this.baseCollider = this.GetComponent <Collider> ();*/
+
+		this.startPos = this.transform.position;
+		//this.baseCollider = this.GetComponent <Collider> ();
 		//this.curSpeed = this.baseSpeed;
 		this.curHp = this.baseHp;
 		this.hpImage.fillAmount = 1.0f;
-		this.UpdateSpeed (1.0f);
 
 		this.ability = GameManager.instance.Data.GetAbility (GameEnum.AbilityName.ABILITY_AUTOBULLET, this);
 		this.targetCd = this.ability.Cooldown;
@@ -55,6 +56,7 @@ public class Airship_Enemy : A_Airship
 			this.ability.Use (Vector3.zero);
 		}
 
+		this.CheckAgro ();
 
 		/*
 		if (GameManager.instance.InGameController.airship != null) {
@@ -63,9 +65,20 @@ public class Airship_Enemy : A_Airship
 			this.model.transform.LookAt (GameManager.instance.InGameController.airship.transform.position);
 		}
 		*/
-		this.headingDirection = (GameManager.instance.InGameController.airship.transform.position - this.transform.position).normalized;
+		//this.headingDirection = (GameManager.instance.InGameController.airship.transform.position - this.transform.position).normalized;
 	}
-	
+
+
+	void OnCollisionEnter (Collision other){
+		//if (other.gameObject
+	}
+
+
+	void OnDrawGizmosSelected (){
+		Gizmos.DrawSphere (this.startPos, 1.0f);
+		Gizmos.DrawWireSphere (this.transform.position, this.agroDist);
+	}
+
 	
 	public void TakeDamage (int damage){
 		this.curHp -= damage;
@@ -73,6 +86,24 @@ public class Airship_Enemy : A_Airship
 		
 		if (this.curHp <= 0)
 			GameObject.Destroy (this.gameObject);
+	}
+
+
+	private void CheckAgro (){
+		float playerDist = (this.transform.position - GameManager.instance.InGameController.airship.transform.position).magnitude;
+
+		if (playerDist < this.agroDist) {
+			this.UpdateSpeed (1.0f);
+			this.headingDirection = (GameManager.instance.InGameController.airship.transform.position - this.transform.position).normalized;
+		} else {
+			if ((this.startPos - this.transform.position).magnitude > 1.0f) {
+				this.headingDirection = (this.startPos - this.transform.position).normalized;
+				this.UpdateSpeed (1.0f);
+			} else {
+				this.UpdateSpeed (0.0f);
+			}
+		}
+		//return (this.transform.position - GameManager.instance.InGameController.airship.transform.position
 	}
 }
 
