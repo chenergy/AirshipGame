@@ -7,6 +7,7 @@ public class InputHandler : MonoBehaviour
 	public InGameController ingamecontroller;
 
 	private int layerMask;
+	private bool isRightMouseDown = false;
 
 
 	void Start (){
@@ -33,11 +34,12 @@ public class InputHandler : MonoBehaviour
 			Ray r = Camera.main.ScreenPointToRay (Input.mousePosition);
 			Debug.DrawLine (r.origin, r.origin + r.direction * 100);
 			if (Physics.Raycast (r, out hitInfo, 100.0f, layerMask)) {
+				this.isRightMouseDown = true;
 				this.ingamecontroller.SetAirshipTarget (hitInfo.point);
 			}
-		} else {
-			this.ingamecontroller.StopAirshipMovingToTarget ();
-		}
+		}// else {
+			//this.ingamecontroller.StopAirshipMovingToTarget ();
+		//}
 #endif
 	}
 
@@ -87,14 +89,14 @@ public class InputHandler : MonoBehaviour
 		if (Physics.Raycast (r, out hitInfo, 100.0f, layerMask)) {
 			// Set the point to use an ability.
 			this.UseAbility (hitInfo.point);
-			/*
-#if UNITY_STANDALONE
-			// Right click on location.
-			if (Input.GetMouseButtonDown (1)) {
-				this.ingamecontroller.SetAirshipTarget (hitInfo.point);
-			}
-#endif
-*/
+		}
+	}
+
+
+	public void OnPointerUp (BaseEventData b){
+		if (this.isRightMouseDown) {
+			this.isRightMouseDown = false;
+			this.StopAirshipMovingToTarget();
 		}
 	}
 

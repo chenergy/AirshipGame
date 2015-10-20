@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SwipeProjectile : MonoBehaviour
+public class SwipeProjectile : A_Projectile
 {
     public Collider swipeCollider;
     public float speed = 1.0f;
@@ -14,9 +14,9 @@ public class SwipeProjectile : MonoBehaviour
     private float timer = 0.0f;
     private float curAngle = 0.0f;
     private float targetAngle = 0.0f;
-	private A_Airship owner;
+	//private A_Airship owner;
 
-	private List<A_Airship> hitColliders = new List<A_Airship>();
+	private List<Hitbox> hitColliders = new List<Hitbox>();
 
     // Use this for initialization
     void Start()
@@ -53,20 +53,20 @@ public class SwipeProjectile : MonoBehaviour
         this.swipeCollider.transform.Rotate(0.0f, -degrees / 2, 0.0f);
     }
 
-	public void SetOwner (A_Airship owner){
+	/*public void SetOwner (A_Airship owner){
 		this.owner = owner;
-	}
+	}*/
 
 
     void OnTriggerEnter(Collider other)
     {
-		A_Airship a = other.GetComponent<A_Airship>();
-        if (a != null)
+		Hitbox hb = other.GetComponent<Hitbox>();
+        if (hb != null)
         {
-            if (!this.hitColliders.Contains(a))
+            if ((hb.owner != this.owner) && (!this.hitColliders.Contains(hb)))
             {
-                this.hitColliders.Add(a);
-                //e.TakeDamage(this.damage);
+                this.hitColliders.Add(hb);
+                hb.TakeDamage(this.damage);
             }
         }
     }

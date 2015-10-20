@@ -51,7 +51,7 @@ public class Airship_Enemy : A_Airship
 		// Perform ability.
 		this.curCd += Time.deltaTime;
 
-		if (this.curCd > this.targetCd) {
+		if (this.curCd > this.targetCd * 10) {
 			this.curCd = 0;
 			this.ability.Use (Vector3.zero);
 		}
@@ -69,18 +69,13 @@ public class Airship_Enemy : A_Airship
 	}
 
 
-	void OnCollisionEnter (Collision other){
-		//if (other.gameObject
-	}
-
-
 	void OnDrawGizmosSelected (){
 		Gizmos.DrawSphere (this.startPos, 1.0f);
 		Gizmos.DrawWireSphere (this.transform.position, this.agroDist);
 	}
 
 	
-	public void TakeDamage (int damage){
+	public override void TakeDamage (int position, int damage){
 		this.curHp -= damage;
 		this.hpImage.fillAmount = (1.0f * this.curHp / this.baseHp);
 		

@@ -1,14 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
-public class Projectile : MonoBehaviour
+public class Projectile : A_Projectile
 {
 	public float speed = 1.0f;
 	public int damage = 1;
 	public float lifetime = 3.0f;
 
 	private Vector3 direction;
-	private A_Airship owner;
+	//private A_Airship owner;
 
 	// Use this for initialization
 	void Start ()
@@ -27,16 +27,18 @@ public class Projectile : MonoBehaviour
 		this.direction = dir;
 	}
 
-	public void SetOwner (A_Airship owner){
+	/*public void SetOwner (A_Airship owner){
 		this.owner = owner;
-	}
+	}*/
 
 
 	void OnTriggerEnter (Collider other){
-		A_Airship a = other.GetComponent <A_Airship> ();
-		if (a != null && a != this.owner) {
-			//a.TakeDamage (this.damage);
-			GameObject.Destroy (this.gameObject);
+		Hitbox hb = other.GetComponent <Hitbox> ();
+		if (hb != null){
+			if (hb.owner != this.owner) {
+				hb.TakeDamage (this.damage);
+				GameObject.Destroy (this.gameObject);
+			}
 		}
 	}
 }

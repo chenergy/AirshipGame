@@ -63,6 +63,8 @@ public abstract class A_Airship : MonoBehaviour
 		//this.heading.transform.LookAt(this.transform.position + this.headingDirection);
 	}
 
+	public abstract void TakeDamage (int position, int damage);
+
 
 	// Steering and rotation.
 	public void SetRotation (float degrees){
