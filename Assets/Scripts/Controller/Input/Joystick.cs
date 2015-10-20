@@ -38,7 +38,7 @@ public class Joystick : MonoBehaviour
         this.joystickTransform.position = this.startPosition;
 
 		if (this.changeSpeed)
-			this.input.UpdateAirshipSpeed (0.0f);
+			this.input.SetAirshipSpeed (0.0f);
 
         this.input.EndRotateAirship();
     }
@@ -53,7 +53,7 @@ public class Joystick : MonoBehaviour
         this.joystickTransform.position = this.startPosition + direction;
 
 		if (this.changeSpeed)
-			this.input.UpdateAirshipSpeed (direction.magnitude / 100);
+			this.input.SetAirshipSpeed (direction.magnitude / 100);
 
         direction = direction.normalized;
 
@@ -65,6 +65,6 @@ public class Joystick : MonoBehaviour
 
 		float speed = (this.changeSpeed) ? 0.0f : GameManager.instance.InGameController.airship.baseMoveSpeed;
 		//GameManager.instance.InGameController.airship.UpdateSpeed (speed);
-		this.input.UpdateAirshipSpeed (speed);
+		this.input.SetAirshipSpeed (speed);
 	}
 }

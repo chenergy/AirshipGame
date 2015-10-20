@@ -34,6 +34,7 @@ public class Steering : MonoBehaviour
 
 		StopCoroutine ("RotateToZero");
 
+		this.input.StopAirshipMovingToTarget ();
 		this.input.StartRotateAirship ();
 	}
 

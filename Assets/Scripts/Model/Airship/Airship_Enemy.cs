@@ -93,14 +93,14 @@ public class Airship_Enemy : A_Airship
 		float playerDist = (this.transform.position - GameManager.instance.InGameController.airship.transform.position).magnitude;
 
 		if (playerDist < this.agroDist) {
-			this.UpdateSpeed (1.0f);
+			this.SetSpeed (1.0f);
 			this.headingDirection = (GameManager.instance.InGameController.airship.transform.position - this.transform.position).normalized;
 		} else {
 			if ((this.startPos - this.transform.position).magnitude > 1.0f) {
 				this.headingDirection = (this.startPos - this.transform.position).normalized;
-				this.UpdateSpeed (1.0f);
+				this.SetSpeed (1.0f);
 			} else {
-				this.UpdateSpeed (0.0f);
+				this.SetSpeed (0.0f);
 			}
 		}
 		//return (this.transform.position - GameManager.instance.InGameController.airship.transform.position

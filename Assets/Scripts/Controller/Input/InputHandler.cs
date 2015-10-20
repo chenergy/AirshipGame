@@ -26,6 +26,18 @@ public class InputHandler : MonoBehaviour
 		} else if (Input.GetKeyDown (KeyCode.R)){
 			this.ingamecontroller.ActivateAbility (3);
 		}
+
+		// Right click on location.
+		if (Input.GetMouseButton (1)) {
+			RaycastHit hitInfo;
+			Ray r = Camera.main.ScreenPointToRay (Input.mousePosition);
+			Debug.DrawLine (r.origin, r.origin + r.direction * 100);
+			if (Physics.Raycast (r, out hitInfo, 100.0f, layerMask)) {
+				this.ingamecontroller.SetAirshipTarget (hitInfo.point);
+			}
+		} else {
+			this.ingamecontroller.StopAirshipMovingToTarget ();
+		}
 #endif
 	}
 
@@ -37,8 +49,7 @@ public class InputHandler : MonoBehaviour
 	public void SetRotationAirship (float degrees){
 		this.ingamecontroller.SetRotationAirship (degrees);
 	}
-
-
+	
 	public void AddRotationAirship (float degrees){
 		this.ingamecontroller.AddRotationAirship (degrees);
 	}
@@ -47,6 +58,10 @@ public class InputHandler : MonoBehaviour
     {
         this.ingamecontroller.SetHeadingAirship(direction);
     }
+
+	public void StopAirshipMovingToTarget (){
+		this.ingamecontroller.StopAirshipMovingToTarget ();
+	}
 
 
 
@@ -58,21 +73,50 @@ public class InputHandler : MonoBehaviour
 	public void EndRotateAirship (){
 		this.ingamecontroller.EndRotateAirship ();
 	}
+	
 
-
-	public void UpdateAirshipSpeed (float newSpeed){
-		this.ingamecontroller.UpdateAirshipSpeed (newSpeed);
+	public void SetAirshipSpeed (float newSpeed){
+		this.ingamecontroller.SetAirshipSpeed (newSpeed);
 	}
 
 
-	public void SetAbilityPoint (BaseEventData b){
+	public void OnPointerDown (BaseEventData b){
+		RaycastHit hitInfo;
+		Ray r = Camera.main.ScreenPointToRay (Input.mousePosition);
+		Debug.DrawLine (r.origin, r.origin + r.direction * 100);
+		if (Physics.Raycast (r, out hitInfo, 100.0f, layerMask)) {
+			// Set the point to use an ability.
+			this.UseAbility (hitInfo.point);
+			/*
+#if UNITY_STANDALONE
+			// Right click on location.
+			if (Input.GetMouseButtonDown (1)) {
+				this.ingamecontroller.SetAirshipTarget (hitInfo.point);
+			}
+#endif
+*/
+		}
+	}
+
+
+	/*private void MoveToScreenPoint (Vector3 mousePosition){
+		RaycastHit hitInfo;
+		Ray r = Camera.main.ScreenPointToRay (mousePosition);
+		Debug.DrawLine (r.origin, r.origin + r.direction * 100);
+		if (Physics.Raycast (r, out hitInfo, 100.0f, layerMask)) {
+			this.ingamecontroller.SetAirshipSpeed (1.0f);
+			this.ingamecontroller.SetHeadingAirship ((hitInfo.point - this.ingamecontroller.airship.transform.position).normalized);
+		}
+	}*/
+
+	/*private void SetAbilityPoint (BaseEventData b){
 		RaycastHit hitInfo;
 		Ray r = Camera.main.ScreenPointToRay (Input.mousePosition);
 		Debug.DrawLine (r.origin, r.origin + r.direction * 100);
 		if (Physics.Raycast (r, out hitInfo, 100.0f, layerMask)) {
 			this.UseAbility (hitInfo.point);
 		}
-	}
+	}*/
 
 
 	private void UseAbility (Vector3 target){

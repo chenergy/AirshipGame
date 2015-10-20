@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public abstract class A_Airship : MonoBehaviour
@@ -17,6 +17,8 @@ public abstract class A_Airship : MonoBehaviour
 	protected Vector3 headingDirection;
 
 	private float startY = 0.0f;
+	private bool isMovingToTarget = false;
+	private Vector3 moveTarget;
 
 	// Use this for initialization
 	protected virtual void Start ()
@@ -29,37 +31,40 @@ public abstract class A_Airship : MonoBehaviour
 	// Update is called once per frame
 	protected virtual void Update ()
 	{
+		if (this.isMovingToTarget) {
+			this.headingDirection = (this.moveTarget - this.transform.position).normalized;
+		}
+
 		// Interpolate towards target speed.
 		if (Mathf.Abs (this.targetSpeed - this.curSpeed) > 0.001f)
 			this.curSpeed = Mathf.Lerp (this.curSpeed, this.targetSpeed, Time.deltaTime * this.acceleration);
 		else
 			this.curSpeed = this.targetSpeed;
 
-        // Movement translation.
+		// Movement translation.
 		this.cc.Move (this.transform.forward * Time.deltaTime * this.curSpeed);
 
-        // Movement rotation.
-        float sqrMag = (this.transform.forward - this.headingDirection).sqrMagnitude;
+		// Movement rotation.
+		float sqrMag = (this.transform.forward - this.headingDirection).sqrMagnitude;
 
-        if (sqrMag > 0.01f)
-        {
-            //this.transform.rotation = Quaternion.FromToRotation(this.transform.forward, this.headingDirection);
-            this.transform.forward = Vector3.Lerp(this.transform.forward, this.headingDirection, Time.deltaTime * this.rotationSpeed);
+		if (sqrMag > 0.01f) {
+			this.transform.forward = Vector3.Lerp (this.transform.forward, this.headingDirection, Time.deltaTime * this.rotationSpeed);
 
-            Vector3 cross = Vector3.Cross(this.transform.forward, this.headingDirection);
-            if (cross.y > 0)
-                this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, -sqrMag * 10), Time.deltaTime * 10);
-            else
-                this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, sqrMag * 10), Time.deltaTime * 10);
-        }
+			Vector3 cross = Vector3.Cross (this.transform.forward, this.headingDirection);
+			if (cross.y > 0)
+				this.model.transform.localRotation = Quaternion.Lerp (this.model.transform.localRotation, Quaternion.Euler (0, 0, -sqrMag * 10), Time.deltaTime * 10);
+			else
+				this.model.transform.localRotation = Quaternion.Lerp (this.model.transform.localRotation, Quaternion.Euler (0, 0, sqrMag * 10), Time.deltaTime * 10);
+		}
 
 		this.transform.position = new Vector3 (this.transform.position.x, this.startY, this.transform.position.z);
 
-        // Local object rotations.
-        //this.heading.transform.LookAt(this.transform.position + this.headingDirection);
+		// Local object rotations.
+		//this.heading.transform.LookAt(this.transform.position + this.headingDirection);
 	}
 
 
+	// Steering and rotation.
 	public void SetRotation (float degrees){
 		this.curRotateRad = degrees * (Mathf.PI / 180.0f) * 0.5f;
 	}
@@ -73,6 +78,17 @@ public abstract class A_Airship : MonoBehaviour
         this.headingDirection = this.RotateVector (direction, -Mathf.PI / 4);
     }
 
+	public void SetMoveTarget (Vector3 moveTarget){
+		this.moveTarget = new Vector3 (moveTarget.x, this.transform.position.y, moveTarget.z);
+		this.SetSpeed (1.0f);
+		this.isMovingToTarget = true;
+	}
+
+	public void StopMovingToTarget (){
+		this.SetSpeed (0.0f);
+		this.isMovingToTarget = false;
+	}
+
 
 	/*public void StartRotate (){
 		this.heading.TurnOn ();
@@ -82,8 +98,9 @@ public abstract class A_Airship : MonoBehaviour
 		this.heading.TurnOff ();
 	}*/
 
-	public void UpdateSpeed (float speedScale){
-		this.targetSpeed = speedScale * this.baseMoveSpeed;
+
+	public void SetSpeed (float speedScale){
+		this.targetSpeed = Mathf.Clamp (speedScale, 0.0f, 1.0f) * this.baseMoveSpeed;
 	}
 
 	private Vector3 RotateVector (Vector3 baseVector, float radians){

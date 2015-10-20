@@ -6,6 +6,7 @@ public class InGameController : MonoBehaviour
 	public PartyMenuController pmc;
 	public Airship_Player airship;
 	public ErrorLog errorLog;
+	public GameObject moveTargetGobj;
 	public SkillTip_Straight skillTipStraight;
 	public SkillTip_TargetPointerAOE skillTipTargetAOE;
 	public SkillTip_TargetAirshipAOE skillTipAirshipAOE;
@@ -17,9 +18,10 @@ public class InGameController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		this.bounds = new Bounds (Vector3.zero, new Vector3 (95f, 0, 95f));
-
 		GameManager.instance.InGameController = this;
+
+		this.moveTargetGobj.SetActive (false);
+		this.bounds = new Bounds (Vector3.zero, new Vector3 (95f, 0, 95f));
 
 		this.partyCharacters = new Character[4];
 
@@ -164,7 +166,7 @@ public class InGameController : MonoBehaviour
 		}
     }
 
-
+	// Input for steering and rotation.
 	public void SetRotationAirship (float degrees){
 		this.airship.SetRotation (degrees);
 	}
@@ -178,7 +180,19 @@ public class InGameController : MonoBehaviour
         this.airship.SetHeading(direction);
     }
 
+	public void SetAirshipTarget (Vector3 target){
+		this.moveTargetGobj.SetActive (true);
+		this.moveTargetGobj.transform.position = target;
+		this.airship.SetMoveTarget (target);
+	}
 
+	public void StopAirshipMovingToTarget (){
+		this.moveTargetGobj.SetActive (false);
+		this.airship.StopMovingToTarget ();
+	}
+
+
+	// Start and End routines for airship rotation.
 	public void StartRotateAirship (){
 		this.airship.StartRotate ();
 	}
@@ -187,9 +201,9 @@ public class InGameController : MonoBehaviour
 		this.airship.EndRotate ();
 	}
 
-
-	public void UpdateAirshipSpeed (float newSpeed){
-		this.airship.UpdateSpeed (newSpeed);
+	// Temp on-screen buttons.
+	public void SetAirshipSpeed (float newSpeed){
+		this.airship.SetSpeed (newSpeed);
 	}
 
 	public void ReloadScene (){

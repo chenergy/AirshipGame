@@ -8,7 +8,7 @@ public class SpeedLever : MonoBehaviour
 	public Slider lever;
 
 	public void OnValueChange (){
-		this.input.UpdateAirshipSpeed (this.lever.value);
+		this.input.SetAirshipSpeed (this.lever.value);
 	}
 }
 
