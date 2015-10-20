@@ -8,7 +8,7 @@ public class PartyMenuController : MonoBehaviour
 
 
 
-	void Start (){
+	void Awake (){
 		foreach (PartyMenuCharacter partyChar in this.partyCharacters) {
 			partyChar.SetDisplayType (this.displayType);
 		}

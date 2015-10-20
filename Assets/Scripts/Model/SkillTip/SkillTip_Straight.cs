@@ -21,7 +21,7 @@ public class SkillTip_Straight : A_SkillTip
 	protected override IEnumerator FollowPointer (){
 		while (true) {
 			yield return new WaitForEndOfFrame ();
-			#if UNITY_STANDALONE
+			#if UNITY_STANDALONE || UNITY_WEBGL
 			RaycastHit hitInfo;
 			Ray r = Camera.main.ScreenPointToRay (Input.mousePosition);
 			Debug.DrawLine (r.origin, r.origin + r.direction * 100);

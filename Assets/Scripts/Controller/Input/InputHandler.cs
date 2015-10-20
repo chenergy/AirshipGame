@@ -17,7 +17,7 @@ public class InputHandler : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-#if UNITY_STANDALONE
+#if UNITY_STANDALONE || UNITY_WEBGL
 		if (Input.GetKeyDown (KeyCode.Q)){
 			this.ingamecontroller.ActivateAbility (0);
 		} else if (Input.GetKeyDown (KeyCode.W)){

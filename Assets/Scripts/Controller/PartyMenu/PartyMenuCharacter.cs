@@ -55,6 +55,8 @@ public class PartyMenuCharacter : MonoBehaviour
 			else
 				dt.cdImage.fillAmount = 1.0f;
 
+			Debug.Log (dt.cdImage.fillAmount);
+
 			dt.hpText.text = string.Format ("{0} / {1}", character.CurHp.ToString (), character.MaxHp.ToString ());
 			dt.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
 		}
