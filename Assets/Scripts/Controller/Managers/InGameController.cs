@@ -11,7 +11,7 @@ public class InGameController : MonoBehaviour
 	public SkillTip_TargetPointerAOE skillTipTargetAOE;
 	public SkillTip_TargetAirshipAOE skillTipAirshipAOE;
 
-	private Character[] partyCharacters;
+	private Character[] charactersInAirship;
 	private int activatedCharNum = -1;
 	private Bounds bounds;
 	
@@ -23,36 +23,55 @@ public class InGameController : MonoBehaviour
 		this.moveTargetGobj.SetActive (false);
 		this.bounds = new Bounds (Vector3.zero, new Vector3 (95f, 0, 95f));
 
-		this.partyCharacters = new Character[4];
+        //this.partyCharacters = new Character[4];
+        this.charactersInAirship = new Character[GameManager.instance.Data.GetCharactersInAirship().Length];
 
-		Character c0 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (0),
-		                              GameManager.instance.Data.GetCharacterStringName (0),
-		                              GameManager.instance.Data.GetCharacterBaseHp (0),
-		                              GameManager.instance.Data.GetCharacterBaseMp (0),
-		                              GameManager.instance.Data.GetSavedPartyCurHp (0),
-		                              GameManager.instance.Data.GetSavedPartyCurMp (0));
+        for (int i = 0; i < this.charactersInAirship.Length; i++)
+        {
+            int inventoryNum = GameManager.instance.Data.GetCharactersInAirship()[i];
+
+            Character c = new Character(GameManager.instance.Data.GetInventoryCharacterSpriteIcon(inventoryNum),
+            GameManager.instance.Data.GetInventoryCharacterStringName(inventoryNum),
+            GameManager.instance.Data.GetInventoryCharacterBaseHp(inventoryNum),
+            GameManager.instance.Data.GetInventoryCharacterBaseMp(inventoryNum),
+            GameManager.instance.Data.GetInventoryCharacterCurHp(inventoryNum),
+            GameManager.instance.Data.GetInventoryCharacterCurMp(inventoryNum));
+
+            GameEnum.AbilityName abilityName = GameManager.instance.Data.GetInventoryCharacterAbilityName(inventoryNum);
+            c.SetAbility(GameManager.instance.Data.CloneAbility(abilityName, airship));
+
+            this.pmc.SetPartyCharacter(c, i);
+            this.charactersInAirship[i] = c;
+        }
+        /*
+        Character c0 = new Character(GameManager.instance.Data.GetInventoryCharacterSpriteIcon(0),
+            GameManager.instance.Data.GetInventoryCharacterStringName(0),
+            GameManager.instance.Data.GetInventoryCharacterBaseHp(0),
+            GameManager.instance.Data.GetInventoryCharacterBaseMp(0),
+            GameManager.instance.Data.GetInventoryCharacterCurHp(0),
+            GameManager.instance.Data.GetInventoryCharacterCurMp(0));
 		c0.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_AUTOBULLET, airship));
 
-        Character c1 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (1),
-		                              GameManager.instance.Data.GetCharacterStringName (1),
-		                              GameManager.instance.Data.GetCharacterBaseHp (1),
-		                              GameManager.instance.Data.GetCharacterBaseMp (1),
+        Character c1 = new Character (GameManager.instance.Data.GetInventoryCharacterSpriteIcon (1),
+		                              GameManager.instance.Data.GetInventoryCharacterStringName (1),
+		                              GameManager.instance.Data.GetInventoryCharacterBaseHp (1),
+		                              GameManager.instance.Data.GetInventoryCharacterBaseMp (1),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (1),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (1));
 		c1.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_FRONTSWIPE, airship));
 
-		Character c2 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (2),
-		                              GameManager.instance.Data.GetCharacterStringName (2),
-		                              GameManager.instance.Data.GetCharacterBaseHp (2),
-		                              GameManager.instance.Data.GetCharacterBaseMp (2),
+		Character c2 = new Character (GameManager.instance.Data.GetInventoryCharacterSpriteIcon (2),
+		                              GameManager.instance.Data.GetInventoryCharacterStringName (2),
+		                              GameManager.instance.Data.GetInventoryCharacterBaseHp (2),
+		                              GameManager.instance.Data.GetInventoryCharacterBaseMp (2),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (2),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (2));
 		c2.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, airship));
 
-        Character c3 = new Character (GameManager.instance.Data.GetCharacterSpriteIcon (3),
-		                              GameManager.instance.Data.GetCharacterStringName (3),
-		                              GameManager.instance.Data.GetCharacterBaseHp (3),
-		                              GameManager.instance.Data.GetCharacterBaseMp (3),
+        Character c3 = new Character (GameManager.instance.Data.GetInventoryCharacterSpriteIcon (3),
+		                              GameManager.instance.Data.GetInventoryCharacterStringName (3),
+		                              GameManager.instance.Data.GetInventoryCharacterBaseHp (3),
+		                              GameManager.instance.Data.GetInventoryCharacterBaseMp (3),
 		                              GameManager.instance.Data.GetSavedPartyCurHp (3),
 		                              GameManager.instance.Data.GetSavedPartyCurMp (3));
 		c3.SetAbility (GameManager.instance.Data.GetAbility (GameEnum.AbilityName.ABILITY_TARGETAOE, airship));
@@ -66,6 +85,7 @@ public class InGameController : MonoBehaviour
 		this.partyCharacters [1] = c1;
 		this.partyCharacters [2] = c2;
 		this.partyCharacters [3] = c3;
+        */
 	}
 	
 	// Update is called once per frame
@@ -74,6 +94,7 @@ public class InGameController : MonoBehaviour
 		this.KeepAirshipInBounds ();
 	}
 
+    /*
 	void OnApplicationPause (bool pauseStatus){
 		if (pauseStatus) {
 			for (int i = 0; i < this.partyCharacters.Length; i++) {
@@ -84,15 +105,16 @@ public class InGameController : MonoBehaviour
 			GameManager.instance.Data.Save ();
 		}
 	}
+    */
 
-	void OnApplicationQuit (){
+	/*void OnApplicationQuit (){
 		for (int i = 0; i < this.partyCharacters.Length; i++) {
 			GameManager.instance.Data.SetSavedPartyCurHp (i, this.partyCharacters[i].CurHp);
 			GameManager.instance.Data.SetSavedPartyCurMp (i, this.partyCharacters[i].CurMp);
 		}
 
 		GameManager.instance.Data.Save ();
-	}
+	}*/
 
 
 	private void KeepAirshipInBounds (){
@@ -110,30 +132,30 @@ public class InGameController : MonoBehaviour
 
 
 	public void ActivateAbility (int charNum) {
-		if (charNum < this.partyCharacters.Length) {
-			Character c = this.partyCharacters [charNum];
+		if (charNum < this.charactersInAirship.Length) {
+			Character c = this.charactersInAirship [charNum];
 
 			if (c.CanUseAbility()) {
 				// Set the activated character number.
 				this.activatedCharNum = charNum;
 
                 // Activate the character's ability to be used.
-                this.partyCharacters[charNum].ActivateAbility();
+                this.charactersInAirship[charNum].ActivateAbility();
             }
 		}
 	}
 
 
 	public void UseAbility (Vector3 target) {
-		if ((this.activatedCharNum != -1) && (this.activatedCharNum < this.partyCharacters.Length)) {
-			if (this.partyCharacters[this.activatedCharNum].CanUseAbility()) {
+		if ((this.activatedCharNum != -1) && (this.activatedCharNum < this.charactersInAirship.Length)) {
+			if (this.charactersInAirship[this.activatedCharNum].CanUseAbility()) {
 				// Stop showing the skilltip.
 				this.skillTipTargetAOE.Disable ();
 				this.skillTipStraight.Disable ();
 				this.skillTipAirshipAOE.Disable ();
 
 				// Use the character's ability.
-				this.partyCharacters[this.activatedCharNum].UseAbility (target);
+				this.charactersInAirship[this.activatedCharNum].UseAbility (target);
 
 				// Recharge the cooldown timer for target character.
 				//this.StartCoroutine ("StartCooldownTimer", this.activatedCharNum);
@@ -209,6 +231,20 @@ public class InGameController : MonoBehaviour
 	public void ReloadScene (){
 		Application.LoadLevel ("scene");
 	}
+
+    public void Save()
+    {
+        for (int i = 0; i < this.charactersInAirship.Length; i++)
+        {
+            GameManager.instance.Data.SetAirshipCharacterCurHp(i, this.charactersInAirship[i].CurHp);
+            GameManager.instance.Data.SetAirshipCharacterCurMp(i, this.charactersInAirship[i].CurMp);
+        }
+        // Save current airship.
+        // Save current party members hp and mp.
+        // Save current party members exp.
+
+        GameManager.instance.Data.Save();
+    }
 
 	public void DeleteSave (){
 		System.IO.File.Delete (Application.persistentDataPath + "/savedData.gd");

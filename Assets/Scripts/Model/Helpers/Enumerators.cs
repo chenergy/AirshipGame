@@ -4,8 +4,21 @@ using System.Collections;
 namespace GameEnum
 {
 	public enum CharacterName {
-		EMPTY,
-		CHARACTER_TEST
+		EMPTY = 0,
+		MAIN_BOB,
+		MAIN_LILY,
+		MAIN_SAM,
+		MAIN_TIM,
+		CLASS_WARRIOR,
+		CLASS_GUNNER,
+		CLASS_MAGE,
+		CLASS_HEALER
+	};
+
+	public enum AirshipName {
+		KOALA = 0,
+		RACCOON,
+		PLATYPUS
 	};
 
 	public enum AbilityName {

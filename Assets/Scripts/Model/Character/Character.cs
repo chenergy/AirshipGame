@@ -49,8 +49,6 @@ public class Character
 	private A_Ability ability = null;
 
 
-
-
 	public Character (Sprite icon, string name, int maxHp, int maxMp, int curHp, int curMp) {
 		this.name = name;
 		this.icon = icon;
@@ -58,7 +56,7 @@ public class Character
 		this.maxMp = maxMp;
 		this.curHp = curHp;
 		this.curMp = curMp;
-	}
+    }
 
 
 	public void SetAbility (A_Ability ability){

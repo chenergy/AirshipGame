@@ -2,14 +2,18 @@
 using System.Collections;
 
 [System.Serializable]
-public class SO_Characters : ScriptableObject {
-	[System.Serializable]
-	public class CharacterProperties {
-		public Sprite icon;
-		public string name;
-		public int baseHp;
-		public int baseMp;
-	}
+public class SO_Characters : ScriptableObject
+{
+    [System.Serializable]
+    public class CharacterScriptable
+    {
+        // Non-serializable data.
+        //public GameEnum.CharacterName charName;
+        public Sprite icon;
 
-	public CharacterProperties[] characters;
+        // Serializable data.
+        public CharacterSerialized characterData;
+    }
+
+    public CharacterScriptable[] characters;
 }

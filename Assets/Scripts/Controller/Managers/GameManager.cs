@@ -4,6 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 	public SO_Characters characterProperties;
 	public SO_Abilities abilityProperties;
+    public SO_Airships airshipProperties;
 	
 	private DataManager data;
 	public DataManager Data {
@@ -19,7 +20,7 @@ public class GameManager : MonoBehaviour {
 		if (instance != null) {
 			GameObject.Destroy (instance.gameObject);
 		} else {
-			this.data = new DataManager (this.characterProperties, this.abilityProperties);
+			this.data = new DataManager (this.characterProperties, this.abilityProperties, this.airshipProperties);
 
 			instance = this;
 		}

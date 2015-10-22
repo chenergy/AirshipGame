@@ -27,4 +27,16 @@ public class MakeScriptableObject : MonoBehaviour {
 		
 		Selection.activeObject = asset;
 	}
+
+	[MenuItem ("Assets/Create/AirshipScriptableObject")]
+	public static void CreateAirships (){
+		SO_Airships asset = ScriptableObject.CreateInstance <SO_Airships> ();
+
+		AssetDatabase.CreateAsset (asset, "Assets/Data/SO_Airships.asset");
+		AssetDatabase.SaveAssets ();
+
+		EditorUtility.FocusProjectWindow ();
+
+		Selection.activeObject = asset;
+	}
 }

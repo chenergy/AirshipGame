@@ -39,7 +39,7 @@ public class Airship_Enemy : A_Airship
 		this.curHp = this.baseHp;
 		this.hpImage.fillAmount = 1.0f;
 
-		this.ability = GameManager.instance.Data.GetAbility (GameEnum.AbilityName.ABILITY_AUTOBULLET, this);
+		this.ability = GameManager.instance.Data.CloneAbility (GameEnum.AbilityName.ABILITY_AUTOBULLET, this);
 		this.targetCd = this.ability.Cooldown;
 	}
 	
