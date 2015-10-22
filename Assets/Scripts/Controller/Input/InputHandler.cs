@@ -36,8 +36,14 @@ public class InputHandler : MonoBehaviour
 			if (Physics.Raycast (r, out hitInfo, 100.0f, layerMask)) {
 				this.isRightMouseDown = true;
 				this.ingamecontroller.SetAirshipTarget (hitInfo.point);
+				this.StartRotateAirship ();
 			}
-		}// else {
+		}
+		if (Input.GetMouseButtonUp (1)){
+			this.EndRotateAirship ();
+		}
+
+		// else {
 			//this.ingamecontroller.StopAirshipMovingToTarget ();
 		//}
 #endif

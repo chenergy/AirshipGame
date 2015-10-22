@@ -48,7 +48,9 @@ public abstract class A_Airship : MonoBehaviour
 		float sqrMag = (this.transform.forward - this.headingDirection).sqrMagnitude;
 
 		if (sqrMag > 0.01f) {
-			this.transform.forward = Vector3.Lerp (this.transform.forward, this.headingDirection, Time.deltaTime * this.rotationSpeed);
+			//this.transform.forward = Vector3.Lerp (this.transform.forward, this.headingDirection, Time.deltaTime * this.rotationSpeed);
+			//this.transform.forward = Vector3.RotateTowards (this.transform.forward, this.headingDirection, Time.deltaTime * this.rotationSpeed, 0.0f);
+			this.transform.forward = Vector3.Slerp (this.transform.forward, this.headingDirection, Time.deltaTime * this.rotationSpeed);
 
 			Vector3 cross = Vector3.Cross (this.transform.forward, this.headingDirection);
 			if (cross.y > 0)
@@ -58,9 +60,6 @@ public abstract class A_Airship : MonoBehaviour
 		}
 
 		this.transform.position = new Vector3 (this.transform.position.x, this.startY, this.transform.position.z);
-
-		// Local object rotations.
-		//this.heading.transform.LookAt(this.transform.position + this.headingDirection);
 	}
 
 	public abstract void TakeDamage (int position, int damage);
