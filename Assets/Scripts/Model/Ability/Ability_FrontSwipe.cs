@@ -23,7 +23,7 @@ public class Ability_FrontSwipe : A_Ability
         //Vector3 airshipForward = GameManager.instance.InGameController.airship.transform.forward;
 
         GameObject newSwipe = GameObject.Instantiate(this.swipePrefab, airshipPos, Quaternion.identity) as GameObject;
-        newSwipe.transform.parent = GameManager.instance.InGameController.airship.transform;
+        newSwipe.transform.parent = GameManager.instance.InGameController.Airship.transform;
         newSwipe.transform.localRotation = Quaternion.identity;
         //newSwipe.transform.localPosition += new Vector3(0, 0, 0);
 		newSwipe.GetComponent<SwipeProjectile> ().SetOwner (this.owner);

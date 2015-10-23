@@ -10,6 +10,7 @@ public class CharacterSerialized {
 	public int baseMp;
     public GameEnum.AbilityName ability;
 
+    // Do not set.
     public int exp;
 	public int curHp;
     public int curMp;

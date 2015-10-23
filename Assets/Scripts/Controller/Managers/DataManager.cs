@@ -27,16 +27,16 @@ public class DataManager
 		// Forces a different code path in the BinaryFormatter that doesn't rely on run-time code generation (which would break on iOS).
 		//http://answers.unity3d.com/questions/30930/why-did-my-binaryserialzer-stop-working.html
 		Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
-		
-		#if UNITY_IOS
-		// Temp wipe data.
-		//System.IO.File.Delete("/private" + Application.persistentDataPath + "/savedData.gd");
-		#endif
 
-		//Debug.Log (Application.persistentDataPath);
+        // Temp wipe data for iOS.
+        //System.IO.File.Delete("/private" + Application.persistentDataPath + "/savedData.gd");
+        // Temp wipe data for standalone.
+        //System.IO.File.Delete(Application.persistentDataPath + "/savedData.gd");
 
-		// Set scriptable object properties.
-		this.characterScriptables = characterScriptables;
+        //Debug.Log (Application.persistentDataPath);
+
+        // Set scriptable object properties.
+        this.characterScriptables = characterScriptables;
 		this.abilityScriptables = abilityScriptables;
         this.airshipScriptables = airshipScriptables;
 
@@ -178,6 +178,13 @@ public class DataManager
         return this.dataObject.charactersInAirship;
     }
 
+
+
+
+    public GameObject GetCurrentAirshipPrefab()
+    {
+        return this.airshipScriptables.airships[(int)this.dataObject.currentAirship].prefab;
+    }
 
     public void SetAirshipCharacterCurHp(int airshipSlotNum, int hp)
     {

@@ -4,7 +4,8 @@ using System.Collections;
 public class InGameController : MonoBehaviour
 {
 	public PartyMenuController pmc;
-	public Airship_Player airship;
+    public StartMenuController smc;
+    public CameraMovement cm;
 	public ErrorLog errorLog;
 	public GameObject moveTargetGobj;
 	public SkillTip_Straight skillTipStraight;
@@ -14,18 +15,38 @@ public class InGameController : MonoBehaviour
 	private Character[] charactersInAirship;
 	private int activatedCharNum = -1;
 	private Bounds bounds;
-	
-	// Use this for initialization
-	void Start ()
+
+    private Airship_Player airship;
+    public Airship_Player Airship
+    {
+        get { return this.airship; }
+    }
+
+
+    // Use this for initialization
+    void Start ()
 	{
 		GameManager.instance.InGameController = this;
 
-		this.moveTargetGobj.SetActive (false);
+        // Get the airship prefab from scriptable.
+        GameObject gobj = GameManager.instance.Data.GetCurrentAirshipPrefab();
+        if (gobj != null)
+            this.airship = (GameObject.Instantiate (gobj, new Vector3 (0, 10, 0), Quaternion.identity) as GameObject).GetComponent<Airship_Player>();
+
+        if (this.airship == null)
+            Debug.Log("airship not found");
+        else
+            this.cm.SetTarget(this.airship.transform);
+
+        // Disable move target gobj.
+        this.moveTargetGobj.SetActive (false);
+
+        // Initialize boundaries.
 		this.bounds = new Bounds (Vector3.zero, new Vector3 (95f, 0, 95f));
 
+        // Get characters that are currently in airship.
         //this.partyCharacters = new Character[4];
         this.charactersInAirship = new Character[GameManager.instance.Data.GetCharactersInAirship().Length];
-
         for (int i = 0; i < this.charactersInAirship.Length; i++)
         {
             int inventoryNum = GameManager.instance.Data.GetCharactersInAirship()[i];
@@ -43,78 +64,17 @@ public class InGameController : MonoBehaviour
             this.pmc.SetPartyCharacter(c, i);
             this.charactersInAirship[i] = c;
         }
-        /*
-        Character c0 = new Character(GameManager.instance.Data.GetInventoryCharacterSpriteIcon(0),
-            GameManager.instance.Data.GetInventoryCharacterStringName(0),
-            GameManager.instance.Data.GetInventoryCharacterBaseHp(0),
-            GameManager.instance.Data.GetInventoryCharacterBaseMp(0),
-            GameManager.instance.Data.GetInventoryCharacterCurHp(0),
-            GameManager.instance.Data.GetInventoryCharacterCurMp(0));
-		c0.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_AUTOBULLET, airship));
 
-        Character c1 = new Character (GameManager.instance.Data.GetInventoryCharacterSpriteIcon (1),
-		                              GameManager.instance.Data.GetInventoryCharacterStringName (1),
-		                              GameManager.instance.Data.GetInventoryCharacterBaseHp (1),
-		                              GameManager.instance.Data.GetInventoryCharacterBaseMp (1),
-		                              GameManager.instance.Data.GetSavedPartyCurHp (1),
-		                              GameManager.instance.Data.GetSavedPartyCurMp (1));
-		c1.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_FRONTSWIPE, airship));
-
-		Character c2 = new Character (GameManager.instance.Data.GetInventoryCharacterSpriteIcon (2),
-		                              GameManager.instance.Data.GetInventoryCharacterStringName (2),
-		                              GameManager.instance.Data.GetInventoryCharacterBaseHp (2),
-		                              GameManager.instance.Data.GetInventoryCharacterBaseMp (2),
-		                              GameManager.instance.Data.GetSavedPartyCurHp (2),
-		                              GameManager.instance.Data.GetSavedPartyCurMp (2));
-		c2.SetAbility(GameManager.instance.Data.GetAbility(GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, airship));
-
-        Character c3 = new Character (GameManager.instance.Data.GetInventoryCharacterSpriteIcon (3),
-		                              GameManager.instance.Data.GetInventoryCharacterStringName (3),
-		                              GameManager.instance.Data.GetInventoryCharacterBaseHp (3),
-		                              GameManager.instance.Data.GetInventoryCharacterBaseMp (3),
-		                              GameManager.instance.Data.GetSavedPartyCurHp (3),
-		                              GameManager.instance.Data.GetSavedPartyCurMp (3));
-		c3.SetAbility (GameManager.instance.Data.GetAbility (GameEnum.AbilityName.ABILITY_TARGETAOE, airship));
-
-        pmc.SetPartyCharacter (c0, 0);
-		pmc.SetPartyCharacter (c1, 1);
-		pmc.SetPartyCharacter (c2, 2);
-		pmc.SetPartyCharacter (c3, 3);
-
-		this.partyCharacters [0] = c0;
-		this.partyCharacters [1] = c1;
-		this.partyCharacters [2] = c2;
-		this.partyCharacters [3] = c3;
-        */
+        // Disable start menu controller.
+        this.smc.gameObject.SetActive(false);
 	}
 	
+
 	// Update is called once per frame
 	void Update ()
 	{
 		this.KeepAirshipInBounds ();
 	}
-
-    /*
-	void OnApplicationPause (bool pauseStatus){
-		if (pauseStatus) {
-			for (int i = 0; i < this.partyCharacters.Length; i++) {
-				GameManager.instance.Data.SetSavedPartyCurHp (i, this.partyCharacters[i].CurHp);
-				GameManager.instance.Data.SetSavedPartyCurMp (i, this.partyCharacters[i].CurMp);
-			}
-
-			GameManager.instance.Data.Save ();
-		}
-	}
-    */
-
-	/*void OnApplicationQuit (){
-		for (int i = 0; i < this.partyCharacters.Length; i++) {
-			GameManager.instance.Data.SetSavedPartyCurHp (i, this.partyCharacters[i].CurHp);
-			GameManager.instance.Data.SetSavedPartyCurMp (i, this.partyCharacters[i].CurMp);
-		}
-
-		GameManager.instance.Data.Save ();
-	}*/
 
 
 	private void KeepAirshipInBounds (){
@@ -249,5 +209,15 @@ public class InGameController : MonoBehaviour
 	public void DeleteSave (){
 		System.IO.File.Delete (Application.persistentDataPath + "/savedData.gd");
 	}
+
+    public void OpenMenu()
+    {
+        this.smc.gameObject.SetActive(true);
+    }
+
+    public void CloseMenu()
+    {
+        this.smc.gameObject.SetActive(false);
+    }
 }
 

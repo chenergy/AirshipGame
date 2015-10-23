@@ -63,7 +63,7 @@ public class Joystick : MonoBehaviour
 	public void ToggleChangeSpeed (){
 		this.changeSpeed = !this.changeSpeed;
 
-		float speed = (this.changeSpeed) ? 0.0f : GameManager.instance.InGameController.airship.baseMoveSpeed;
+		float speed = (this.changeSpeed) ? 0.0f : GameManager.instance.InGameController.Airship.baseMoveSpeed;
 		//GameManager.instance.InGameController.airship.UpdateSpeed (speed);
 		this.input.SetAirshipSpeed (speed);
 	}

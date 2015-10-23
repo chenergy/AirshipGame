@@ -21,7 +21,7 @@ public class SkillTip_TargetAirshipAOE : A_SkillTip
 	protected override IEnumerator FollowPointer(){
 		while (true) {
 			yield return new WaitForEndOfFrame ();
-			this.skillTipGobj.transform.position = GameManager.instance.InGameController.airship.transform.position;
+			this.skillTipGobj.transform.position = GameManager.instance.InGameController.Airship.transform.position;
 			/*#if UNITY_STANDALONE
 			RaycastHit hitInfo;
 			Ray r = Camera.main.ScreenPointToRay (Input.mousePosition);

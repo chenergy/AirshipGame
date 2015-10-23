@@ -73,7 +73,7 @@ public class DataObject
         this.airships [(int)GameEnum.AirshipName.KOALA].isLocked = false;
 
         // Save characters from 0 and 1 (mapped to the # in characterScriptables) into characterInventory.
-		int airshipSlots = this.airships [(int)this.currentAirship].slots;
+		int airshipSlots = this.airships [(int)this.currentAirship].slots.Length;
 		this.charactersInAirship = new int[airshipSlots];
 		this.charactersInAirship [0] = 0;
 		this.charactersInAirship [1] = 1;

@@ -51,10 +51,7 @@ public class Airship_Enemy : A_Airship
 		// Perform ability.
 		this.curCd += Time.deltaTime;
 
-		if (this.curCd > this.targetCd * 10) {
-			this.curCd = 0;
-			this.ability.Use (Vector3.zero);
-		}
+		
 
 		this.CheckAgro ();
 
@@ -85,11 +82,18 @@ public class Airship_Enemy : A_Airship
 
 
 	private void CheckAgro (){
-		float playerDist = (this.transform.position - GameManager.instance.InGameController.airship.transform.position).magnitude;
+		float playerDist = (this.transform.position - GameManager.instance.InGameController.Airship.transform.position).magnitude;
 
 		if (playerDist < this.agroDist) {
 			this.SetSpeed (1.0f);
-			this.headingDirection = (GameManager.instance.InGameController.airship.transform.position - this.transform.position).normalized;
+
+            if (this.curCd > this.targetCd * 10)
+            {
+                this.curCd = 0;
+                this.ability.Use(Vector3.zero);
+            }
+				
+            this.headingDirection = (GameManager.instance.InGameController.Airship.transform.position - this.transform.position).normalized;
 		} else {
 			if ((this.startPos - this.transform.position).magnitude > 1.0f) {
 				this.headingDirection = (this.startPos - this.transform.position).normalized;

@@ -28,7 +28,7 @@ public class SkillTip_Straight : A_SkillTip
 			if (Physics.Raycast (r, out hitInfo, 100.0f, layerMask)) {
 				this.skillTipGobj.transform.LookAt (hitInfo.point);
 				this.skillTipGobj.transform.rotation = Quaternion.Euler (0, this.skillTipGobj.transform.eulerAngles.y, 0);
-				this.skillTipGobj.transform.position = GameManager.instance.InGameController.airship.transform.position;
+				this.skillTipGobj.transform.position = GameManager.instance.InGameController.Airship.transform.position;
 			}
 			#endif
 		}

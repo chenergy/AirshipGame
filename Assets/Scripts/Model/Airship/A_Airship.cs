@@ -62,11 +62,11 @@ public abstract class A_Airship : MonoBehaviour
 		this.transform.position = new Vector3 (this.transform.position.x, this.startY, this.transform.position.z);
 	}
 
-	public abstract void TakeDamage (int position, int damage);
 
+    public abstract void TakeDamage(int position, int damage);
 
-	// Steering and rotation.
-	public void SetRotation (float degrees){
+    // Steering and rotation.
+    public void SetRotation (float degrees){
 		this.curRotateRad = degrees * (Mathf.PI / 180.0f) * 0.5f;
 	}
 
