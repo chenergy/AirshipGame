@@ -172,43 +172,115 @@ public class DataManager
         return GameEnum.AbilityName.NONE;
     }
 
+    public GameEnum.CharacterName GetInventoryCharacterName (int inventoryNum)
+    {
+        if (inventoryNum < this.dataObject.characterInventory.Count)
+        {
+            CharacterSerialized cp = this.dataObject.characterInventory[inventoryNum];
+            return cp.charName;
+        }
+
+        Debug.Log("cannot find character name");
+        return GameEnum.CharacterName.EMPTY;
+    }
+
+    public int GetInventoryCharacterCount()
+    {
+        return this.dataObject.characterInventory.Count;
+    }
+
+
+
 
     public int[] GetCharactersInAirship()
     {
-        return this.dataObject.charactersInAirship;
+        return this.dataObject.charInAirshipSlotToInventory;
     }
 
-
-
-
-    public GameObject GetCurrentAirshipPrefab()
+    public void SetCharacterInAirship(int inventoryNum, int slotNum)
     {
-        return this.airshipScriptables.airships[(int)this.dataObject.currentAirship].prefab;
+        this.dataObject.charInAirshipSlotToInventory[slotNum] = inventoryNum;
     }
+
+    /*public AirshipSerialized[] GetAirshipData()
+    {
+        return this.dataObject.airships;
+    }*/
+    public int GetAirshipsTotalNum()
+    {
+        return this.dataObject.airships.Length;
+    }
+
+    public bool IsAirshipLocked (GameEnum.AirshipName name)
+    {
+        return this.dataObject.airships[(int)name].isLocked;
+    }
+
+    public AirshipCharacterSlot GetAirshipSlotInfo (GameEnum.AirshipName name, int slotNum)
+    {
+        return this.airshipScriptables.airships[(int)name].slots[slotNum];
+    }
+
+
+
+
+    public GameEnum.AirshipName GetCurrentAirshipName()
+    {
+        return this.dataObject.currentAirship;
+    }
+
+    public int GetAirshipSlotsNum (GameEnum.AirshipName name)
+    {
+        return this.airshipScriptables.airships[(int)name].slots.Length;
+    }
+
+    public GameObject GetCurrentAirshipPrefab(GameEnum.AirshipName name)
+    {
+        return this.airshipScriptables.airships[(int)name].prefab;
+    }
+
+    public Sprite GetAirshipIcon (GameEnum.AirshipName name)
+    {
+        return this.airshipScriptables.airships[(int)name].icon;
+    }
+
+    public Sprite GetAirshipLayout(GameEnum.AirshipName name)
+    {
+        return this.airshipScriptables.airships[(int)name].layout;
+    }
+
+    public void SetCurrentAirship (GameEnum.AirshipName airshipName)
+    {
+        this.dataObject.currentAirship = airshipName;
+    }
+
+    
+
+
 
     public void SetAirshipCharacterCurHp(int airshipSlotNum, int hp)
     {
-        if (airshipSlotNum < this.dataObject.charactersInAirship.Length)
+        if (airshipSlotNum < this.dataObject.charInAirshipSlotToInventory.Length)
         {
-            CharacterSerialized cp = this.dataObject.characterInventory[this.dataObject.charactersInAirship[airshipSlotNum]];
+            CharacterSerialized cp = this.dataObject.characterInventory[this.dataObject.charInAirshipSlotToInventory[airshipSlotNum]];
             cp.curHp = hp;
         }
     }
 
     public void SetAirshipCharacterCurMp(int airshipSlotNum, int mp)
     {
-        if (airshipSlotNum < this.dataObject.charactersInAirship.Length)
+        if (airshipSlotNum < this.dataObject.charInAirshipSlotToInventory.Length)
         {
-            CharacterSerialized cp = this.dataObject.characterInventory[this.dataObject.charactersInAirship[airshipSlotNum]];
+            CharacterSerialized cp = this.dataObject.characterInventory[this.dataObject.charInAirshipSlotToInventory[airshipSlotNum]];
             cp.curMp = mp;
         }
     }
 
     public void SetAirshipCharacterExp (int airshipSlotNum, int exp)
     {
-        if (airshipSlotNum < this.dataObject.charactersInAirship.Length)
+        if (airshipSlotNum < this.dataObject.charInAirshipSlotToInventory.Length)
         {
-            CharacterSerialized cp = this.dataObject.characterInventory[this.dataObject.charactersInAirship[airshipSlotNum]];
+            CharacterSerialized cp = this.dataObject.characterInventory[this.dataObject.charInAirshipSlotToInventory[airshipSlotNum]];
             cp.exp = exp;
         }
     }

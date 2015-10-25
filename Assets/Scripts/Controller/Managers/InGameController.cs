@@ -4,7 +4,7 @@ using System.Collections;
 public class InGameController : MonoBehaviour
 {
 	public PartyMenuController pmc;
-    public StartMenuController smc;
+    //public LoadoutMenuController smc;
     public CameraMovement cm;
 	public ErrorLog errorLog;
 	public GameObject moveTargetGobj;
@@ -29,7 +29,7 @@ public class InGameController : MonoBehaviour
 		GameManager.instance.InGameController = this;
 
         // Get the airship prefab from scriptable.
-        GameObject gobj = GameManager.instance.Data.GetCurrentAirshipPrefab();
+        GameObject gobj = GameManager.instance.Data.GetCurrentAirshipPrefab(GameManager.instance.Data.GetCurrentAirshipName());
         if (gobj != null)
             this.airship = (GameObject.Instantiate (gobj, new Vector3 (0, 10, 0), Quaternion.identity) as GameObject).GetComponent<Airship_Player>();
 
@@ -66,7 +66,7 @@ public class InGameController : MonoBehaviour
         }
 
         // Disable start menu controller.
-        this.smc.gameObject.SetActive(false);
+        //this.smc.gameObject.SetActive(false);
 	}
 	
 
@@ -210,7 +210,7 @@ public class InGameController : MonoBehaviour
 		System.IO.File.Delete (Application.persistentDataPath + "/savedData.gd");
 	}
 
-    public void OpenMenu()
+    /*public void OpenMenu()
     {
         this.smc.gameObject.SetActive(true);
     }
@@ -218,6 +218,6 @@ public class InGameController : MonoBehaviour
     public void CloseMenu()
     {
         this.smc.gameObject.SetActive(false);
-    }
+    }*/
 }
 

@@ -48,7 +48,7 @@ public class DataObject
 	public AirshipSerialized[] airships;
 	public GameEnum.AirshipName currentAirship;
 	public List<CharacterSerialized> characterInventory;
-	public int[] charactersInAirship;
+	public int[] charInAirshipSlotToInventory;
 
 
 	public DataObject (SO_Characters.CharacterScriptable[] characterScriptables, SO_Airships.AirshipScriptable[] airshipScriptables){
@@ -72,11 +72,11 @@ public class DataObject
         // Unlock the first airship.
         this.airships [(int)GameEnum.AirshipName.KOALA].isLocked = false;
 
-        // Save characters from 0 and 1 (mapped to the # in characterScriptables) into characterInventory.
-		int airshipSlots = this.airships [(int)this.currentAirship].slots.Length;
-		this.charactersInAirship = new int[airshipSlots];
-		this.charactersInAirship [0] = 0;
-		this.charactersInAirship [1] = 1;
+        // Save characters from 0 and 1 (inventory index) into characterInventory.
+        int airshipSlots = airshipScriptables[(int)this.currentAirship].slots.Length;
+		this.charInAirshipSlotToInventory = new int[airshipSlots];
+		this.charInAirshipSlotToInventory [0] = 0;
+		this.charInAirshipSlotToInventory [1] = 1;
 
 
 		/*
