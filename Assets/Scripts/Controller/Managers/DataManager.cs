@@ -31,7 +31,7 @@ public class DataManager
         // Temp wipe data for iOS.
         //System.IO.File.Delete("/private" + Application.persistentDataPath + "/savedData.gd");
         // Temp wipe data for standalone.
-        //System.IO.File.Delete(Application.persistentDataPath + "/savedData.gd");
+        System.IO.File.Delete(Application.persistentDataPath + "/savedData.gd");
 
         //Debug.Log (Application.persistentDataPath);
 
