@@ -44,13 +44,13 @@ public class LoadoutCharacters : MonoBehaviour
             LoadoutCharacterButton lcb = gobj.GetComponent<LoadoutCharacterButton>();
             lcb.image.sprite = GameManager.instance.Data.GetInventoryCharacterSpriteIcon(i);
             lcb.selectButton.onClick.AddListener(delegate {
+                this.charButtons.Clear();
+                controller.SelectCharacterInventoryIndex(j);
+
                 foreach (LoadoutCharacterButton b in this.charButtons)
                 {
                     GameObject.Destroy(b.gameObject);
                 }
-                
-                this.charButtons.Clear();
-                controller.SelectCharacterInventoryIndex(j);
             });
             this.charButtons.Add(lcb);
         }

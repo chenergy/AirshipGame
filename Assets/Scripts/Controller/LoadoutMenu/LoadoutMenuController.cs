@@ -62,4 +62,9 @@ public class LoadoutMenuController : MonoBehaviour
         GameManager.instance.Data.Save();
         this.OpenAirshipLayoutForNum(this.selectedAirshipNum);
     }
+
+    public void ButtonBeginMission()
+    {
+        Application.LoadLevel("LevelPrototype");
+    }
 }
