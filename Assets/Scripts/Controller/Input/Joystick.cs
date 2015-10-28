@@ -57,7 +57,7 @@ public class Joystick : MonoBehaviour
 
         direction = direction.normalized;
 
-        this.input.SetHeadingAirship(new Vector3(direction.x, 0.0f, direction.y));
+        this.input.SetHeadingAirshipAdjusted(new Vector3(direction.x, 0.0f, direction.y));
     }
 
 	public void ToggleChangeSpeed (){

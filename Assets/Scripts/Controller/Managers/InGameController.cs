@@ -157,9 +157,9 @@ public class InGameController : MonoBehaviour
 		this.airship.AddRotation (degrees);
 	}
 
-    public void SetHeadingAirship(Vector3 direction)
+    public void SetHeadingAirshipAdjusted(Vector3 direction)
     {
-        this.airship.SetHeading(direction);
+        this.airship.SetHeadingAdjusted(direction);
     }
 
 	public void SetAirshipTarget (Vector3 target){

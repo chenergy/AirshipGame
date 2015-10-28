@@ -11,8 +11,26 @@ public class AirshipBehaviour_Patrol : A_AirshipBehaviour
 		FSMAction idleExit = new FSMAction_IdleExit ();
 		FSMState idle = new FSMState ("idle", idleEnter, idleUpdate, idleExit);
 
-		this.fsm = FSM.FSM.createFSMInstance (idle, noAction);
+        FSMAction moveToPlayerEnter = new FSMAction_MoveToPlayerEnter(this.airship);
+        FSMAction moveToPlayerUpdate = new FSMAction_MoveToPlayerEnter(this.airship);
+        FSMAction moveToPlayerExit = new FSMAction_MoveToPlayerEnter(this.airship);
+        FSMState moveToPlayer = new FSMState("moveToPlayer", moveToPlayerEnter, moveToPlayerUpdate, moveToPlayerExit);
+
+        FSMAction moveToOriginEnter = new FSMAction_MoveToPositionEnter(this.airship);
+        FSMAction moveToOriginUpdate = new FSMAction_MoveToPositionUpdate(this.airship, this.airship.StartPosition);
+        FSMAction moveToOriginExit = new FSMAction_MoveToPositionExit(this.airship);
+        FSMState moveToOrigin = new FSMState("moveToOrigin", moveToOriginEnter, moveToOriginUpdate, moveToOriginExit);
+
+
+
+        this.fsm = FSM.FSM.createFSMInstance (idle, noAction);
 	}
+
+
+    void Update()
+    {
+
+    }
 
 
 	protected override bool CheckAgro (){

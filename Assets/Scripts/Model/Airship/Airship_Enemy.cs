@@ -7,24 +7,28 @@ public class Airship_Enemy : A_Airship
 	public int baseHp = 10;
 	public float agroDist = 5.0f;
 	public Image hpImage;
+    public A_AirshipBehaviour behaviour;
 
 	private int curHp = 10;
 	private A_Ability ability;
-	private float targetCd;
-	private float curCd;
-	private Vector3 startPos;
+    public A_Ability Ability
+    {
+        get { return this.ability; }
+    }
+	//private float targetCd;
+	//private float curCd;
+	
 
 	// Use this for initialization
 	protected override void Start ()
 	{
 		base.Start ();
 
-		this.startPos = this.transform.position;
 		this.curHp = this.baseHp;
 		this.hpImage.fillAmount = 1.0f;
 
 		this.ability = GameManager.instance.Data.CloneAbility (GameEnum.AbilityName.ABILITY_AUTOBULLET, this);
-		this.targetCd = this.ability.Cooldown;
+		//this.targetCd = this.ability.Cooldown;
 	}
 	
 	// Update is called once per frame
@@ -33,14 +37,14 @@ public class Airship_Enemy : A_Airship
 		base.Update ();
 
 		// Perform ability.
-		this.curCd += Time.deltaTime;
+		//this.curCd += Time.deltaTime;
 
 		//this.CheckAgro ();
 	}
 
 
 	void OnDrawGizmosSelected (){
-		Gizmos.DrawSphere (this.startPos, 1.0f);
+		//Gizmos.DrawSphere (this.startPos, 1.0f);
 		Gizmos.DrawWireSphere (this.transform.position, this.agroDist);
 	}
 

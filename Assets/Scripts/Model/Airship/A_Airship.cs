@@ -16,8 +16,13 @@ public abstract class A_Airship : MonoBehaviour
 	private float curRotateRad = 0.0f;
 	protected Vector3 headingDirection;
 
-	private float startY = 0.0f;
-	private bool isMovingToTarget = false;
+    private Vector3 startPos;
+    public Vector3 StartPosition
+    {
+        get { return this.startPos; }
+    }
+
+    private bool isMovingToTarget = false;
 	private Vector3 moveTarget;
 
 	// Use this for initialization
@@ -25,7 +30,7 @@ public abstract class A_Airship : MonoBehaviour
 	{
 		this.rotationSpeed = this.baseRotationSpeed;
         this.headingDirection = this.transform.forward;
-		this.startY = this.transform.position.y;
+		this.startPos = this.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -59,7 +64,7 @@ public abstract class A_Airship : MonoBehaviour
 				this.model.transform.localRotation = Quaternion.Lerp (this.model.transform.localRotation, Quaternion.Euler (0, 0, sqrMag * 10), Time.deltaTime * 10);
 		}
 
-		this.transform.position = new Vector3 (this.transform.position.x, this.startY, this.transform.position.z);
+		this.transform.position = new Vector3 (this.transform.position.x, this.startPos.y, this.transform.position.z);
 	}
 
 
@@ -74,9 +79,14 @@ public abstract class A_Airship : MonoBehaviour
 		this.curRotateRad += degrees * (Mathf.PI / 180.0f) * 0.5f;
 	}
 
-    public void SetHeading (Vector3 direction)
+    public void SetHeadingAdjusted (Vector3 direction)
     {
         this.headingDirection = this.RotateVector (direction, -Mathf.PI / 4);
+    }
+
+    public void SetHeading (Vector3 direction)
+    {
+        this.headingDirection = direction;
     }
 
 	public void SetMoveTarget (Vector3 moveTarget){

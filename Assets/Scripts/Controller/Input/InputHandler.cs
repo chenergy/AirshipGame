@@ -62,9 +62,9 @@ public class InputHandler : MonoBehaviour
 		this.ingamecontroller.AddRotationAirship (degrees);
 	}
 
-    public void SetHeadingAirship(Vector3 direction)
+    public void SetHeadingAirshipAdjusted(Vector3 direction)
     {
-        this.ingamecontroller.SetHeadingAirship(direction);
+        this.ingamecontroller.SetHeadingAirshipAdjusted(direction);
     }
 
 	public void StopAirshipMovingToTarget (){
