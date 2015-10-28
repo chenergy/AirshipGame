@@ -7,6 +7,6 @@ namespace FSM
 {
     public abstract class FSMAction
     {
-        public abstract void execute(FSMContext c, Object o);
+        public abstract void execute(FSMContext c);
     }
 }

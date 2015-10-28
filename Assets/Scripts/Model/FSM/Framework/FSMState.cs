@@ -37,18 +37,18 @@ namespace FSM
                 transitionList.Remove(eventName);
         }
 		
-		public void update(FSMContext fsmc, object o){
-			updateAction.execute(fsmc, o);
+		public void update(FSMContext fsmc){
+			updateAction.execute(fsmc);
 		}
 		
         //dispatch - triggers a state transition
-        public void dispatch(FSMContext fsmc, string eventName, object o)
+        public void dispatch(FSMContext fsmc, string eventName)
         {
             if (transitionList.ContainsKey(eventName))
             {
-				fsmc.CurrentState.exitAction.execute(fsmc, o);
-                transitionList[eventName].execute(fsmc, o);
-				fsmc.CurrentState.entryAction.execute(fsmc, o);
+				fsmc.CurrentState.exitAction.execute(fsmc);
+                transitionList[eventName].execute(fsmc);
+				fsmc.CurrentState.entryAction.execute(fsmc);
             }
         }
 

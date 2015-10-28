@@ -12,7 +12,7 @@ namespace FSM
         {
             this.currentState = startState;
             this.initAction = initAction;
-			this.initAction.execute(this, null);
+			this.initAction.execute(this);
         }
 		
 		public FSMState CurrentState
@@ -21,9 +21,13 @@ namespace FSM
             set { currentState = value; }
         }
 		
-        public void dispatch(string eventName, object o)
+        public void dispatch(string eventName)
         {
-            currentState.dispatch(this, eventName, o);
+            currentState.dispatch(this, eventName);
         }
+
+		public void Update (){
+			currentState.update (this);
+		}
     }
 }

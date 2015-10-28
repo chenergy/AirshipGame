@@ -189,7 +189,7 @@ public class InGameController : MonoBehaviour
 	}
 
 	public void ReloadScene (){
-		Application.LoadLevel ("scene");
+		Application.LoadLevel ("LoadoutMenu");
 	}
 
     public void Save()

@@ -4,7 +4,7 @@ using FSM;
 
 public class FSMAction_IdleEnter : FSMAction
 {
-	public override void execute (FSMContext c, object o)
+	public override void execute (FSMContext c)
 	{
 		
 	}
@@ -13,7 +13,7 @@ public class FSMAction_IdleEnter : FSMAction
 
 public class FSMAction_IdleUpdate : FSMAction
 {
-	public override void execute (FSMContext c, object o)
+	public override void execute (FSMContext c)
 	{
 
 	}
@@ -22,7 +22,7 @@ public class FSMAction_IdleUpdate : FSMAction
 
 public class FSMAction_IdleExit : FSMAction
 {
-	public override void execute (FSMContext c, object o)
+	public override void execute (FSMContext c)
 	{
 
 	}

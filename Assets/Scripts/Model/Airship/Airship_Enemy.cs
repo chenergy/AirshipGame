@@ -5,9 +5,9 @@ using System.Collections;
 public class Airship_Enemy : A_Airship
 {
 	public int baseHp = 10;
-	public float agroDist = 5.0f;
+	//public float agroDist = 5.0f;
 	public Image hpImage;
-    public A_AirshipBehaviour behaviour;
+    public A_EnemyBehaviour behaviour;
 
 	private int curHp = 10;
 	private A_Ability ability;
@@ -43,10 +43,10 @@ public class Airship_Enemy : A_Airship
 	}
 
 
-	void OnDrawGizmosSelected (){
+	//void OnDrawGizmosSelected (){
 		//Gizmos.DrawSphere (this.startPos, 1.0f);
-		Gizmos.DrawWireSphere (this.transform.position, this.agroDist);
-	}
+		//Gizmos.DrawWireSphere (this.transform.position, this.agroDist);
+	//}
 
 	
 	public override void TakeDamage (int position, int damage){

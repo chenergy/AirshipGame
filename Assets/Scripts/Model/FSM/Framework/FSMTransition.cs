@@ -12,9 +12,9 @@ namespace FSM
             this.target = targetState;
             this.action = action;
         }
-        public void execute(FSMContext c, object o)
+        public void execute(FSMContext c)
         {
-            action.execute(c,o);
+            action.execute(c);
             c.CurrentState = target;
         }
 

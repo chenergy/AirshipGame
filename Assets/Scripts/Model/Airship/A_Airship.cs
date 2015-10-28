@@ -68,8 +68,6 @@ public abstract class A_Airship : MonoBehaviour
 	}
 
 
-    public abstract void TakeDamage(int position, int damage);
-
     // Steering and rotation.
     public void SetRotation (float degrees){
 		this.curRotateRad = degrees * (Mathf.PI / 180.0f) * 0.5f;
@@ -126,5 +124,7 @@ public abstract class A_Airship : MonoBehaviour
 	/*public void SetTargetSpeed (float speed){
 		this.targetSpeed = speed;
 	}*/
+
+	public abstract void TakeDamage(int position, int damage);
 }
 
