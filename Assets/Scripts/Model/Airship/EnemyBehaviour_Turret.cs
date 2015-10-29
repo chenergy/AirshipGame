@@ -5,6 +5,7 @@ using FSM;
 public class EnemyBehaviour_Turret : A_EnemyBehaviour
 {
 	public Transform[] directions;
+    public float turnDuration = 3.0f;
 	public float trackDist = 10.0f;
 
 	void Start (){
@@ -19,7 +20,7 @@ public class EnemyBehaviour_Turret : A_EnemyBehaviour
 
 		// Setup actions.
 		FSMAction rotateEnter = new FSMAction_RotateHeadingEnter ();
-		FSMAction rotateUpdate = new FSMAction_RotateHeadingUpdate (this.owner, this.directions);
+		FSMAction rotateUpdate = new FSMAction_RotateHeadingUpdate (this.owner, this.directions, this.turnDuration);
 		FSMAction rotateExit = new FSMAction_RotateHeadingExit ();
 		FSMState rotate = new FSMState ("rotate", rotateEnter, rotateUpdate, rotateExit);
 

@@ -52,8 +52,6 @@ public class EnemyBehaviour_Patrol : A_EnemyBehaviour
     void Update()
     {
 		if (this.fsm != null) {
-			
-
 			if (this.isPlayerDetected) {
 				float playerDist = (this.transform.position - GameManager.instance.InGameController.Airship.transform.position).magnitude;
 

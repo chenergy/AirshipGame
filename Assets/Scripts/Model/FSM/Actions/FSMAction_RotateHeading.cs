@@ -19,13 +19,14 @@ public class FSMAction_RotateHeadingUpdate : FSMAction
 	private A_Airship owner;
 	private Transform[] directions;
 	private int curHeading = 0;
-	private float staticDuration = 3.0f;
+	private float turnDuration = 3.0f;
 	private float timer = 0.0f;
 
-	public FSMAction_RotateHeadingUpdate(A_Airship owner, Transform[] directions)
+	public FSMAction_RotateHeadingUpdate(A_Airship owner, Transform[] directions, float duration)
 	{
 		this.owner = owner;
 		this.directions = directions;
+        this.turnDuration = duration;
 	}
 
 	public override void execute(FSMContext c)
@@ -35,7 +36,7 @@ public class FSMAction_RotateHeadingUpdate : FSMAction
 
 		Transform targetHeading = this.directions [this.curHeading];
 
-		if (this.timer < this.staticDuration) {
+		if (this.timer < this.turnDuration) {
 			this.owner.SetHeading((targetHeading.position - this.owner.transform.position).normalized);
 			this.timer += Time.deltaTime;
 		} else {
