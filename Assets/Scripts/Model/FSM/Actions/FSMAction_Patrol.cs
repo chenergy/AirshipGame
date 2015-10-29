@@ -32,7 +32,6 @@ public class FSMAction_PatrolUpdate : FSMAction
 
 	public override void execute(FSMContext c)
 	{
-		//this.self.SetHeading((target - this.self.transform.position).normalized);
 		if (this.curPatrolPoint >= this.patrolPoints.Length)
 			this.curPatrolPoint = 0;
 
@@ -40,12 +39,8 @@ public class FSMAction_PatrolUpdate : FSMAction
 
 		if ((targetPatrolPoint.position - this.owner.transform.position).magnitude > 1.0f) {
 			this.owner.SetHeading((targetPatrolPoint.position - this.owner.transform.position).normalized);
-			//if (fsm.CurrentState != "moveTo
-			/*this.headingDirection = (this.startPos - this.transform.position).normalized;
-				this.SetSpeed (1.0f);*/
 		} else {
 			this.curPatrolPoint++;
-			//this.SetSpeed (0.0f);
 		}
 	}
 }

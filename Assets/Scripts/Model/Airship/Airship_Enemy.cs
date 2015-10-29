@@ -52,6 +52,7 @@ public class Airship_Enemy : A_Airship
 	public override void TakeDamage (int position, int damage){
 		this.curHp -= damage;
 		this.hpImage.fillAmount = (1.0f * this.curHp / this.baseHp);
+		this.behaviour.SetPlayerDetected (true);
 		
 		if (this.curHp <= 0)
 			GameObject.Destroy (this.gameObject);
