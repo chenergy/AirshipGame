@@ -27,9 +27,16 @@ public class SO_Abilities : ScriptableObject
         public GameObject swipePrefab;
     }
 
+	[System.Serializable]
+	public class HomingMissileProperties
+	{
+		public GameObject projectilePrefab;
+	}
+
     public StraightShotProperties straightShot;
 	public TargetAOEProperties targetAOE;
     public AutoBulletProperties autoBullet;
     public FrontSwipeProperties frontSwipe;
+	public HomingMissileProperties homingMissile;
 }
 
