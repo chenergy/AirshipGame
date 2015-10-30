@@ -8,6 +8,7 @@ public abstract class A_Airship : MonoBehaviour
 	public CharacterController cc;
 	public float baseMoveSpeed = 1.0f;
 	public float baseRotationSpeed = 1.0f;
+    public bool tiltWhileRotating = true;
 
 	private float targetSpeed = 0.0f;
 	private float curSpeed = 0.0f;
@@ -57,11 +58,16 @@ public abstract class A_Airship : MonoBehaviour
 			//this.transform.forward = Vector3.RotateTowards (this.transform.forward, this.headingDirection, Time.deltaTime * this.rotationSpeed, 0.0f);
 			this.transform.forward = Vector3.Slerp (this.transform.forward, this.headingDirection, Time.deltaTime * this.rotationSpeed);
 
-			Vector3 cross = Vector3.Cross (this.transform.forward, this.headingDirection);
-			if (cross.y > 0)
-				this.model.transform.localRotation = Quaternion.Lerp (this.model.transform.localRotation, Quaternion.Euler (0, 0, -sqrMag * 10), Time.deltaTime * 10);
-			else
-				this.model.transform.localRotation = Quaternion.Lerp (this.model.transform.localRotation, Quaternion.Euler (0, 0, sqrMag * 10), Time.deltaTime * 10);
+            // Tilt the local model in the direction of the rotation.
+            if (this.tiltWhileRotating)
+            {
+                Vector3 cross = Vector3.Cross(this.transform.forward, this.headingDirection);
+
+                if (cross.y > 0)
+                    this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, -sqrMag * 10), Time.deltaTime * 10);
+                else
+                    this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, sqrMag * 10), Time.deltaTime * 10);
+            }
 		}
 
 		this.transform.position = new Vector3 (this.transform.position.x, this.startPos.y, this.transform.position.z);
