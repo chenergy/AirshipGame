@@ -46,6 +46,7 @@ public class DataManager
         this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_AUTOBULLET, new Ability_AutoBullet(this.abilityScriptables.autoBullet.projectilePrefab, null));
         this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_FRONTSWIPE, new Ability_FrontSwipe(this.abilityScriptables.frontSwipe.swipePrefab, null));
 		this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_HOMINGMISSILE, new Ability_HomingMissile(this.abilityScriptables.homingMissile.projectilePrefab, null));
+		this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_BLINKFORWARD, new Ability_BlinkForward(null));
 
         this.dataObject = new DataObject (this.characterScriptables.characters, this.airshipScriptables.airships);
 

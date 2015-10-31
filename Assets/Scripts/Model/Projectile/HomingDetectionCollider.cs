@@ -15,10 +15,12 @@ public class HomingDetectionCollider : MonoBehaviour
 			float minDist = 1000000.0f;
 
 			foreach (Hitbox hb in this.hitboxes) {
-				float sqDist = (hb.transform.position - this.transform.position).sqrMagnitude;
-				if (sqDist < minDist) {
-					minDist = sqDist;
-					this.targetHitbox = hb;
+				if (hb != null) {
+					float sqDist = (hb.transform.position - this.transform.position).sqrMagnitude;
+					if (sqDist < minDist) {
+						minDist = sqDist;
+						this.targetHitbox = hb;
+					}
 				}
 			}
 

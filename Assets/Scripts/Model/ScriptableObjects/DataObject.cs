@@ -49,6 +49,8 @@ public class DataObject
 		this.charInAirshipSlotToInventory = new int[airshipSlots];
 		this.charInAirshipSlotToInventory [0] = 0;
 		this.charInAirshipSlotToInventory [1] = 1;
+		this.charInAirshipSlotToInventory [2] = 2;
+		this.charInAirshipSlotToInventory [3] = 3;
 	}
 }
 

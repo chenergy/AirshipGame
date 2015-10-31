@@ -8,6 +8,7 @@ public class Airship_Enemy : A_Airship
 	//public float agroDist = 5.0f;
 	public Image hpImage;
     public A_EnemyBehaviour behaviour;
+	public GameEnum.AbilityName abilityName;
 
 	private int curHp = 10;
 	private A_Ability ability;
@@ -27,7 +28,7 @@ public class Airship_Enemy : A_Airship
 		this.curHp = this.baseHp;
 		this.hpImage.fillAmount = 1.0f;
 
-		this.ability = GameManager.instance.Data.CloneAbility (GameEnum.AbilityName.ABILITY_AUTOBULLET, this);
+		this.ability = GameManager.instance.Data.CloneAbility (this.abilityName, this);
 		//this.targetCd = this.ability.Cooldown;
 	}
 	
