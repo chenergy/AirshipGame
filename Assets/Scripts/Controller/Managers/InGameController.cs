@@ -7,6 +7,8 @@ public class InGameController : MonoBehaviour
     //public LoadoutMenuController smc;
     public CameraMovement cm;
 	public ErrorLog errorLog;
+    public Transform playerStartPoint;
+
 	public GameObject moveTargetGobj;
 	public SkillTip_Straight skillTipStraight;
 	public SkillTip_TargetPointerAOE skillTipTargetAOE;
@@ -31,7 +33,7 @@ public class InGameController : MonoBehaviour
         // Get the airship prefab from scriptable.
         GameObject gobj = GameManager.instance.Data.GetCurrentAirshipPrefab(GameManager.instance.Data.GetCurrentAirshipName());
         if (gobj != null)
-            this.airship = (GameObject.Instantiate (gobj, new Vector3 (0, 10, 0), Quaternion.identity) as GameObject).GetComponent<Airship_Player>();
+            this.airship = (GameObject.Instantiate (gobj, this.playerStartPoint.position, Quaternion.identity) as GameObject).GetComponent<Airship_Player>();
 
         if (this.airship == null)
             Debug.Log("airship not found");
@@ -73,7 +75,7 @@ public class InGameController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		this.KeepAirshipInBounds ();
+		//this.KeepAirshipInBounds ();
 	}
 
 

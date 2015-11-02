@@ -64,9 +64,9 @@ public abstract class A_Airship : MonoBehaviour
                 Vector3 cross = Vector3.Cross(this.transform.forward, this.headingDirection);
 
                 if (cross.y > 0)
-                    this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, -sqrMag * 10), Time.deltaTime * 10);
+                    this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, -sqrMag * 20), Time.deltaTime);
                 else
-                    this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, sqrMag * 10), Time.deltaTime * 10);
+                    this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, sqrMag * 20), Time.deltaTime);
             }
 		}
 
