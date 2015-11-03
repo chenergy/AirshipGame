@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SwipeProjectile : A_Projectile
+public class Projectile_Swipe : A_Projectile
 {
     public Collider swipeCollider;
     public float speed = 1.0f;
@@ -14,7 +14,6 @@ public class SwipeProjectile : A_Projectile
     private float timer = 0.0f;
     private float curAngle = 0.0f;
     private float targetAngle = 0.0f;
-	//private A_Airship owner;
 
 	private List<Hitbox> hitColliders = new List<Hitbox>();
 
@@ -41,21 +40,11 @@ public class SwipeProjectile : A_Projectile
         this.timer += Time.deltaTime;
     }
 
-
-    /*public void SetDirection(Vector3 dir)
-    {
-        this.direction = dir;
-    }*/
-
     public void SetAngle(float degrees)
     {
         this.targetAngle = degrees;
         this.swipeCollider.transform.Rotate(0.0f, -degrees / 2, 0.0f);
     }
-
-	/*public void SetOwner (A_Airship owner){
-		this.owner = owner;
-	}*/
 
 
     void OnTriggerEnter(Collider other)
@@ -70,5 +59,11 @@ public class SwipeProjectile : A_Projectile
             }
         }
     }
+
+
+	public override void DestroyProjectile ()
+	{
+		
+	}
 }
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Projectile : A_Projectile
+public class Projectile_Basic : A_Projectile
 {
 	public float speed = 1.0f;
 	public int damage = 1;
@@ -27,10 +27,6 @@ public class Projectile : A_Projectile
 		this.direction = dir;
 	}
 
-	/*public void SetOwner (A_Airship owner){
-		this.owner = owner;
-	}*/
-
 
 	void OnTriggerEnter (Collider other){
 		Hitbox hb = other.GetComponent <Hitbox> ();
@@ -40,6 +36,12 @@ public class Projectile : A_Projectile
 				GameObject.Destroy (this.gameObject);
 			}
 		}
+	}
+
+
+	public override void DestroyProjectile ()
+	{
+		GameObject.Destroy (this.gameObject);
 	}
 }
 

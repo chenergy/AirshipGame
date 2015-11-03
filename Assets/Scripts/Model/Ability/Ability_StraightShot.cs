@@ -22,8 +22,8 @@ public class Ability_StraightShot : A_Ability
 		Vector3 airshipPos = this.owner.transform.position;
 
 		GameObject newProjectile = GameObject.Instantiate (this.projectilePrefab, airshipPos, Quaternion.identity) as GameObject;
-		newProjectile.GetComponent<Projectile> ().SetOwner (this.owner);
-		newProjectile.GetComponent <Projectile> ().SetDirection ((target - airshipPos).normalized);
+		newProjectile.GetComponent<Projectile_Basic> ().SetOwner (this.owner);
+		newProjectile.GetComponent <Projectile_Basic> ().SetDirection ((target - airshipPos).normalized);
 		Debug.Log ("used straightshot");
 	}
 

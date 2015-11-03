@@ -22,7 +22,7 @@ public class Ability_TargetAOE : A_Ability
 		Vector3 airshipPos = this.owner.transform.position;
 
 		GameObject newProjectile = GameObject.Instantiate (this.projectilePrefab, target, Quaternion.identity) as GameObject;
-		newProjectile.GetComponent<Projectile> ().SetOwner (this.owner);
+		newProjectile.GetComponent<Projectile_Basic> ().SetOwner (this.owner);
 		//newProjectile.GetComponent <Projectile> ().SetDirection (Vector3.zero);
 		Debug.Log ("used targetAOE");
 	}

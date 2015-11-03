@@ -23,8 +23,8 @@ public class Ability_AutoBullet : A_Ability
 		Vector3 airshipForward = this.owner.transform.forward;
 
         GameObject newProjectile = GameObject.Instantiate(this.projectilePrefab, airshipPos, Quaternion.identity) as GameObject;
-		newProjectile.GetComponent<Projectile> ().SetOwner (this.owner);
-        newProjectile.GetComponent<Projectile>().SetDirection(airshipForward);
+		newProjectile.GetComponent<Projectile_Basic> ().SetOwner (this.owner);
+        newProjectile.GetComponent<Projectile_Basic>().SetDirection(airshipForward);
         Debug.Log("used AUTO_BULLET");
     }
 

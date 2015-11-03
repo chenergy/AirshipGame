@@ -18,4 +18,10 @@ public class Projectile_Kamikaze : A_Projectile
             }
         }
     }
+
+
+	public override void DestroyProjectile ()
+	{
+		GameObject.Destroy (this.gameObject);
+	}
 }

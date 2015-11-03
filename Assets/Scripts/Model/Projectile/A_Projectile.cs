@@ -11,5 +11,7 @@ public abstract class A_Projectile : MonoBehaviour
 	public void SetOwner (A_Airship owner){
 		this.owner = owner;
 	}
+
+	public abstract void DestroyProjectile ();
 }
 
