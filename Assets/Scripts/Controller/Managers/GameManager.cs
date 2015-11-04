@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
 		} else {
 			this.data = new DataManager (this.characterProperties, this.abilityProperties, this.airshipProperties);
 
+			DontDestroyOnLoad (this.gameObject);
 			instance = this;
 		}
 	}

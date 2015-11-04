@@ -23,7 +23,7 @@ public class CameraRaycast : MonoBehaviour
 			// Get all hit colliders.
 			Ray r = Camera.main.ScreenPointToRay (new Vector3(Screen.width/2.0f, Screen.height/2.0f, 0.0f));
 			RaycastHit[] hits;
-			hits = Physics.RaycastAll(r, 100.0F, this.layerMask);
+			hits = Physics.RaycastAll(GameManager.instance.InGameController.Airship.transform.position, -r.direction, 100.0F, this.layerMask);
 
 			for (int i = 0; i < hits.Length; i++) {
 				RaycastHit hit = hits[i];

@@ -31,7 +31,7 @@ public class DataManager
         // Temp wipe data for iOS.
         //System.IO.File.Delete("/private" + Application.persistentDataPath + "/savedData.gd");
         // Temp wipe data for standalone.
-        //System.IO.File.Delete(Application.persistentDataPath + "/savedData.gd");
+        System.IO.File.Delete(Application.persistentDataPath + "/savedData.gd");
 
         //Debug.Log (Application.persistentDataPath);
 
@@ -97,6 +97,19 @@ public class DataManager
         }
 
         Debug.Log ("cannot find character string name");
+		return "";
+	}
+
+	// Get string name of character from binary.
+	public string GetInventoryCharacterDescription (int inventoryNum)
+	{
+		if (inventoryNum < this.dataObject.characterInventory.Count)
+		{
+			CharacterSerialized cp = this.dataObject.characterInventory[inventoryNum];
+			return cp.desc;
+		}
+
+		Debug.Log ("cannot find character description");
 		return "";
 	}
 	
@@ -212,6 +225,14 @@ public class DataManager
     {
         return this.dataObject.airships.Length;
     }
+
+	public bool IsInventoryCharacterInAirship (int inventoryNum){
+		foreach (int character in this.dataObject.charInAirshipSlotToInventory) {
+			if (character == inventoryNum)
+				return true;
+		}
+		return false;
+	}
 
     public bool IsAirshipLocked (GameEnum.AirshipName name)
     {

@@ -63,6 +63,12 @@ public class LoadoutMenuController : MonoBehaviour
         this.OpenAirshipLayoutForNum(this.selectedAirshipNum);
     }
 
+
+	public void ButtonCloseCharacterInventory (){
+		this.OpenAirshipLayoutForNum (this.selectedAirshipNum);
+	}
+
+
     public void ButtonBeginMission()
     {
         Application.LoadLevel("LevelPrototype");

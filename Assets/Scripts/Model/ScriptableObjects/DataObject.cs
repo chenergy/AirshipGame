@@ -27,6 +27,7 @@ public class DataObject
 
         // Populate character inventory with 4 characters.
 		this.characterInventory = new List<CharacterSerialized> ();
+		this.characterInventory.Add (characterScriptables [(int)GameEnum.CharacterName.EMPTY].characterData.Clone ());
         this.characterInventory.Add (characterScriptables [(int)GameEnum.CharacterName.MAIN_BOB].characterData.Clone ());
 		this.characterInventory.Add (characterScriptables [(int)GameEnum.CharacterName.MAIN_LILY].characterData.Clone ());
 		this.characterInventory.Add (characterScriptables [(int)GameEnum.CharacterName.MAIN_SAM].characterData.Clone ());
@@ -47,10 +48,10 @@ public class DataObject
         // Save characters from 0 and 1 (inventory index) into characterInventory.
         int airshipSlots = airshipScriptables[(int)this.currentAirship].slots.Length;
 		this.charInAirshipSlotToInventory = new int[airshipSlots];
-		this.charInAirshipSlotToInventory [0] = 0;
-		this.charInAirshipSlotToInventory [1] = 1;
-		this.charInAirshipSlotToInventory [2] = 2;
-		this.charInAirshipSlotToInventory [3] = 3;
+		this.charInAirshipSlotToInventory [0] = 1;
+		this.charInAirshipSlotToInventory [1] = 2;
+		this.charInAirshipSlotToInventory [2] = 3;
+		this.charInAirshipSlotToInventory [3] = 4;
 	}
 }
 
