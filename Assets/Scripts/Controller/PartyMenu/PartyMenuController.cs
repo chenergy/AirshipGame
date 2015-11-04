@@ -14,8 +14,8 @@ public class PartyMenuController : MonoBehaviour
 		}
 	}
 
-	public void SetPartyCharacter (Character character, int partyIndex){
-		this.partyCharacters [partyIndex].SetPartyCharacter (character);
+	public void SetPartyCharacter (Character character, GameEnum.AbilityName abilityName, int partyIndex){
+		this.partyCharacters [partyIndex].SetPartyCharacter (character, abilityName);
 	}
 	/*
 	public void ActivateAbility (int charNum){

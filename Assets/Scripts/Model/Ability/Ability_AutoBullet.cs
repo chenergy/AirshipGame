@@ -5,7 +5,7 @@ public class Ability_AutoBullet : A_Ability
 {
     private GameObject projectilePrefab;
 
-    public Ability_AutoBullet(GameObject projectilePrefab, A_Airship owner) : base (1, 0.1f, 10.0f, owner) {
+	public Ability_AutoBullet(int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (manaCost, cooldown, maxRange, owner) {
         this.projectilePrefab = projectilePrefab;
     }
 
@@ -28,8 +28,8 @@ public class Ability_AutoBullet : A_Ability
         Debug.Log("used AUTO_BULLET");
     }
 
-	public override A_Ability Clone(A_Airship owner)
+	/*public override A_Ability Clone(A_Airship owner)
 	{
         return new Ability_AutoBullet(this.projectilePrefab, owner);
-    }
+    }*/
 }

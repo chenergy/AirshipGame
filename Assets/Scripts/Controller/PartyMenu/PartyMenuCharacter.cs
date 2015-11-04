@@ -7,21 +7,30 @@ public class PartyMenuCharacter : MonoBehaviour
 {
 	[System.Serializable]
 	public class DisplayProperties {
+		// Main Display.
 		public GameObject parent;
-
 		public Image iconImage;
 		public Text nameText;
-
 		public Image hpImage;
 		public Text hpText;
-
 		public Image mpImage;
 		public Text mpText;
-
 		public Image cdImage;
+	}
+
+	[System.Serializable]
+	public class TooltipProperties
+	{
+		// Show ability tooltip.
+		public GameObject tooltipParent;
+		public Text tooltipAbilityName;
+		public Text tooltipAbilityDesc;
+		public Text tooltipAbilityMana;
+		public Text tooltipAbilityCooldown;
 	}
 	
 	public DisplayProperties[] displayProperties;
+	public TooltipProperties tooltipProperties;
 
 	private Character character;
 	private GameEnum.DisplayType displayType;
@@ -40,24 +49,31 @@ public class PartyMenuCharacter : MonoBehaviour
 		}
 	}
 
-	public void SetPartyCharacter (Character character){
+	public void SetPartyCharacter (Character character, GameEnum.AbilityName abilityName){
 		this.character = character;
 
 		// Update the displays
-		foreach (DisplayProperties dt in this.displayProperties) {
-			dt.iconImage.sprite = character.Icon;
-			dt.nameText.text = character.Name;
-			dt.hpImage.fillAmount = 1.0f;
-			dt.mpImage.fillAmount = 1.0f;
+		foreach (DisplayProperties dp in this.displayProperties) {
+			dp.iconImage.sprite = character.Icon;
+			dp.nameText.text = character.Name;
+			dp.hpImage.fillAmount = 1.0f;
+			dp.mpImage.fillAmount = 1.0f;
 
 			if (this.displayType == GameEnum.DisplayType.CIRCLE)
-				dt.cdImage.fillAmount = 0.0f;
+				dp.cdImage.fillAmount = 0.0f;
 			else
-				dt.cdImage.fillAmount = 1.0f;
+				dp.cdImage.fillAmount = 1.0f;
 
-			dt.hpText.text = string.Format ("{0} / {1}", character.CurHp.ToString (), character.MaxHp.ToString ());
-			dt.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
+			dp.hpText.text = string.Format ("{0} / {1}", character.CurHp.ToString (), character.MaxHp.ToString ());
+			dp.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
 		}
+			
+		// Set tooltip info.
+		this.tooltipProperties.tooltipAbilityName.text = GameManager.instance.Data.GetAbilityStringName (abilityName);
+		this.tooltipProperties.tooltipAbilityDesc.text = GameManager.instance.Data.GetAbilityDesc (abilityName);
+		this.tooltipProperties.tooltipAbilityMana.text = GameManager.instance.Data.GetAbilityStringManaCost (abilityName).ToString ();
+		this.tooltipProperties.tooltipAbilityCooldown.text = GameManager.instance.Data.GetAbilityStringCooldown (abilityName).ToString ();
+		this.tooltipProperties.tooltipParent.SetActive (false);
 
 		if (this.character.CurMp < this.character.MaxMp)
 			this.RechargeMana ();
@@ -126,6 +142,16 @@ public class PartyMenuCharacter : MonoBehaviour
 		}
 
 		this.character.RechargeCooldown (Time.deltaTime);
+	}
+
+
+	public void OnPointerEnter (BaseEventData b){
+		this.tooltipProperties.tooltipParent.SetActive (true);
+	}
+
+
+	public void OnPointerExit (BaseEventData b){
+		this.tooltipProperties.tooltipParent.SetActive (false);
 	}
 
 	// Recharge cooldown timer after using a skill.

@@ -5,7 +5,7 @@ public class Ability_BlinkForward : A_Ability
 {
 	private GameObject projectilePrefab;
 
-	public Ability_BlinkForward(A_Airship owner) : base (1, 3.0f, 10.0f, owner) {
+	public Ability_BlinkForward (int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (manaCost, cooldown, maxRange, owner) {
 		this.projectilePrefab = projectilePrefab;
 	}
 
@@ -32,8 +32,8 @@ public class Ability_BlinkForward : A_Ability
 		Debug.Log("used HOMING_MISSILE");*/
 	}
 
-	public override A_Ability Clone(A_Airship owner)
+	/*public override A_Ability Clone(A_Airship owner)
 	{
 		return new Ability_BlinkForward(owner);
-	}
+	}*/
 }

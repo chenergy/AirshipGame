@@ -38,6 +38,6 @@ public abstract class A_Ability
 	// Setup ability with scriptable object, pass string to get ability class back from the scriptable object.
 	public abstract void Activate ();
 	public abstract void Use (Vector3 target);
-	public abstract A_Ability Clone (A_Airship owner);
+	//public abstract A_Ability Clone (A_Airship owner);
 }
 

@@ -5,7 +5,7 @@ public class Ability_StraightShot : A_Ability
 {
 	private GameObject projectilePrefab;
 
-	public Ability_StraightShot (GameObject projectilePrefab, A_Airship owner) : base (5, 1.0f, 10.0f, owner) {
+	public Ability_StraightShot (int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (manaCost, cooldown, maxRange, owner) {
 		this.projectilePrefab = projectilePrefab;
 	}
 
@@ -27,9 +27,9 @@ public class Ability_StraightShot : A_Ability
 		Debug.Log ("used straightshot");
 	}
 
-	public override A_Ability Clone (A_Airship owner)
+	/*public override A_Ability Clone (A_Airship owner)
 	{
-		return new Ability_StraightShot (this.projectilePrefab, owner);
-	}
+		new Ability_StraightShot (this.manaCost, this.cooldown, this.maxRange, this.projectilePrefab, owner);
+	}*/
 }
 

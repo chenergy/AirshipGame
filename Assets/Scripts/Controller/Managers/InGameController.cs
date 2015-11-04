@@ -63,7 +63,7 @@ public class InGameController : MonoBehaviour
             GameEnum.AbilityName abilityName = GameManager.instance.Data.GetInventoryCharacterAbilityName(inventoryNum);
             c.SetAbility(GameManager.instance.Data.CloneAbility(abilityName, airship));
 
-            this.pmc.SetPartyCharacter(c, i);
+			this.pmc.SetPartyCharacter(c, abilityName, i);
             this.charactersInAirship[i] = c;
         }
 

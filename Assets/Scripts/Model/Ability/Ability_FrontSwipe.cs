@@ -5,8 +5,7 @@ public class Ability_FrontSwipe : A_Ability
 {
     private GameObject swipePrefab;
 
-	public Ability_FrontSwipe(GameObject projectilePrefab, A_Airship owner) : base(5, 1.0f, 10.0f, owner)
-    {
+	public Ability_FrontSwipe(int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (manaCost, cooldown, maxRange, owner) {
         this.swipePrefab = projectilePrefab;
     }
 
@@ -32,8 +31,8 @@ public class Ability_FrontSwipe : A_Ability
         Debug.Log("used front swipe");
     }
 
-	public override A_Ability Clone(A_Airship owner)
+	/*public override A_Ability Clone(A_Airship owner)
     {
         return new Ability_FrontSwipe(this.swipePrefab, owner);
-    }
+    }*/
 }

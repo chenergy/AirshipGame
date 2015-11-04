@@ -5,6 +5,17 @@ using System.Collections;
 public class SO_Abilities : ScriptableObject
 {
 	[System.Serializable]
+	public class AbilityProperties {
+		public GameEnum.AbilityName abilityName;
+		public GameObject projectilePrefab;
+		public string name;
+		public string desc;
+		public int manaCost;
+		public float cooldown;
+		public float maxRange;
+	}
+
+	[System.Serializable]
 	public class StraightShotProperties {
 		public GameObject projectilePrefab;
 	}
@@ -32,6 +43,8 @@ public class SO_Abilities : ScriptableObject
 	{
 		public GameObject projectilePrefab;
 	}
+
+	public AbilityProperties[] abilities;
 
     public StraightShotProperties straightShot;
 	public TargetAOEProperties targetAOE;

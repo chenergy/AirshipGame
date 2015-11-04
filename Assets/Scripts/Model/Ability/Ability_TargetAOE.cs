@@ -5,7 +5,7 @@ public class Ability_TargetAOE : A_Ability
 {
 	private GameObject projectilePrefab;
 
-	public Ability_TargetAOE (GameObject projectilePrefab, A_Airship owner) : base (5, 2.0f, 5.0f, owner) {
+	public Ability_TargetAOE (int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (manaCost, cooldown, maxRange, owner) {
 		this.projectilePrefab = projectilePrefab;
 	}
 
@@ -27,9 +27,9 @@ public class Ability_TargetAOE : A_Ability
 		Debug.Log ("used targetAOE");
 	}
 
-	public override A_Ability Clone (A_Airship owner)
+	/*public override A_Ability Clone (A_Airship owner)
 	{
 		return new Ability_TargetAOE (this.projectilePrefab, owner);
-	}
+	}*/
 }
 
