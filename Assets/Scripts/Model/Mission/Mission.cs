@@ -18,15 +18,19 @@ public class Mission
 	}
 
 
-	public void TriggerMissionObjective (){
+	public void TriggerObjectiveCondition (GameEnum.ObjectiveCondition condition, params string[] parameters)
+    {
 		if (this.curObjective < this.objectives.Length) {
-			this.objectives [this.curObjective].TriggerObjective ();
+			this.objectives [this.curObjective].TriggerCondition (condition, parameters);
 
 			if (this.objectives [this.curObjective].isComplete) {
 				this.curObjective++;
 
-				if (this.curObjective >= this.objectives.Length)
-					this.isComplete = true;
+                if (this.curObjective >= this.objectives.Length)
+                {
+                    this.isComplete = true;
+                    GameManager.instance.Data.Save();
+                }
 			}
 		}
 	}

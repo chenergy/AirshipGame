@@ -57,9 +57,13 @@ public class DataObject
 		this.charInAirshipSlotToInventory [2] = 3;
 		this.charInAirshipSlotToInventory [3] = 4;
 
-		// Setup missions.
-
-		//Mission m0 = new Mission("Mission 0", "This is the tutorial mission.", 
+        // Setup missions and objectives.
+        A_Objective[] objectives = new A_Objective[1];
+        Objective_KillEnemy kill_kamikaze = new Objective_KillEnemy("Kill the Kamikaze enemy.", "Kill the Kamikaze enemy.", GameEnum.EnemyName.ENEMY_KAMIKAZE);
+        objectives[0] = kill_kamikaze;
+        Mission m0 = new Mission("Tutorial", "This is the tutorial mission.", objectives);
+        this.missions = new Mission[1];
+        this.missions[0] = m0;
 	}
 }
 

@@ -21,6 +21,13 @@ namespace GameEnum
 		PLATYPUS
 	};
 
+    public enum EnemyName
+    {
+        ENEMY_PATROL,
+        ENEMY_KAMIKAZE,
+        ENEMY_TURRET
+    };
+
 	public enum AbilityName {
 		NONE,
 		ABILITY_STRAIGHTBULLET,
@@ -47,7 +54,7 @@ namespace GameEnum
 		UNREALISTIC
 	};
 
-	public enum ObjectiveEventType {
+	public enum ObjectiveCondition {
 		KILL_ENEMY
 	};
 }

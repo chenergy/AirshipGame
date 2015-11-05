@@ -14,7 +14,8 @@ public class Projectile_Kamikaze : A_Projectile
             if (hb.owner != this.parent)
             {
                 hb.TakeDamage(this.damage);
-                GameObject.Destroy(this.parent.gameObject);
+                parent.TakeDamage(0, 1000000);
+                //GameObject.Destroy(this.parent.gameObject);
             }
         }
     }

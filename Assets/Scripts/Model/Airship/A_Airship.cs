@@ -127,9 +127,10 @@ public abstract class A_Airship : MonoBehaviour
 		return new Vector3 (x1, baseVector.y, z1);
 	}
 
-	/*public void SetTargetSpeed (float speed){
+    /*public void SetTargetSpeed (float speed){
 		this.targetSpeed = speed;
 	}*/
+
 
 	public abstract void TakeDamage(int position, int damage);
 }

@@ -14,6 +14,6 @@ public abstract class A_Objective
 		this.desc = desc;
 	}
 
-	public abstract void TriggerObjective ();
+	public abstract void TriggerCondition (GameEnum.ObjectiveCondition condition, params string[] parameters);
 }
 

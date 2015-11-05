@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class Airship_Enemy : A_Airship
 {
+    public GameEnum.EnemyName enemyName;
 	public int baseHp = 10;
 	//public float agroDist = 5.0f;
 	public Image hpImage;
@@ -44,19 +46,22 @@ public class Airship_Enemy : A_Airship
 	}
 
 
-	//void OnDrawGizmosSelected (){
-		//Gizmos.DrawSphere (this.startPos, 1.0f);
-		//Gizmos.DrawWireSphere (this.transform.position, this.agroDist);
-	//}
+    //void OnDrawGizmosSelected (){
+    //Gizmos.DrawSphere (this.startPos, 1.0f);
+    //Gizmos.DrawWireSphere (this.transform.position, this.agroDist);
+    //}
 
-	
-	public override void TakeDamage (int position, int damage){
+
+    public override void TakeDamage (int position, int damage){
 		this.curHp -= damage;
 		this.hpImage.fillAmount = (1.0f * this.curHp / this.baseHp);
 		this.behaviour.SetPlayerDetected (true);
-		
-		if (this.curHp <= 0)
-			GameObject.Destroy (this.gameObject);
+
+        if (this.curHp <= 0)
+        {
+            GameManager.instance.InGameController.mc.TriggerObjectiveCondition(GameEnum.ObjectiveCondition.KILL_ENEMY, this.enemyName.ToString());
+            GameObject.Destroy(this.gameObject);
+        }
 	}
 }
 
