@@ -43,53 +43,6 @@ public class DataManager
         this.airshipScriptables = airshipScriptables;
 
 		this.abilityFactory = new Factory_Ability (abilityScriptables);
-		/*this.abilityClones = new A_Ability[this.abilityScriptables.abilities.Length];
-
-		this.abilityClones [0] = null;
-		this.abilityClones [1] = new Ability_StraightShot (this.abilityScriptables.abilities [1].manaCost, 
-			this.abilityScriptables.abilities [1].cooldown, 
-			this.abilityScriptables.abilities [1].maxRange,
-			this.abilityScriptables.abilities [1].projectilePrefab, 
-			null);
-		this.abilityClones [2] = new Ability_TargetAOE (this.abilityScriptables.abilities [2].manaCost, 
-			this.abilityScriptables.abilities [2].cooldown, 
-			this.abilityScriptables.abilities [2].maxRange,
-			this.abilityScriptables.abilities [2].projectilePrefab, 
-			null);
-		this.abilityClones [3] = new Ability_AutoBullet (this.abilityScriptables.abilities [3].manaCost, 
-			this.abilityScriptables.abilities [3].cooldown, 
-			this.abilityScriptables.abilities [3].maxRange,
-			this.abilityScriptables.abilities [3].projectilePrefab, 
-			null);
-		this.abilityClones [1] = new Ability_FrontSwipe (this.abilityScriptables.abilities [1].manaCost, 
-			this.abilityScriptables.abilities [1].cooldown, 
-			this.abilityScriptables.abilities [1].maxRange,
-			this.abilityScriptables.abilities [1].projectilePrefab, 
-			null);
-		this.abilityClones [1] = new Ability_HomingMissile (this.abilityScriptables.abilities [1].manaCost, 
-			this.abilityScriptables.abilities [1].cooldown, 
-			this.abilityScriptables.abilities [1].maxRange,
-			this.abilityScriptables.abilities [1].projectilePrefab, 
-			null);
-		this.abilityClones [1] = new Ability_BlinkForward (this.abilityScriptables.abilities [1].manaCost, 
-			this.abilityScriptables.abilities [1].cooldown, 
-			this.abilityScriptables.abilities [1].maxRange,
-			this.abilityScriptables.abilities [1].projectilePrefab, 
-			null);
-		this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_TARGETAOE, new Ability_TargetAOE(this.abilityScriptables.targetAOE.projectilePrefab, null));
-		this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_AUTOBULLET, new Ability_AutoBullet(this.abilityScriptables.autoBullet.projectilePrefab, null));
-		this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_FRONTSWIPE, new Ability_FrontSwipe(this.abilityScriptables.frontSwipe.swipePrefab, null));
-		this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_HOMINGMISSILE, new Ability_HomingMissile(this.abilityScriptables.homingMissile.projectilePrefab, null));
-		this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_BLINKFORWARD, new Ability_BlinkForward(null));
-
-
-		this.abilitiesDict = new Dictionary<GameEnum.AbilityName, A_Ability> ();
-        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_STRAIGHTBULLET, new Ability_StraightShot(this.abilityScriptables.straightShot.projectilePrefab, null));
-        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_TARGETAOE, new Ability_TargetAOE(this.abilityScriptables.targetAOE.projectilePrefab, null));
-        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_AUTOBULLET, new Ability_AutoBullet(this.abilityScriptables.autoBullet.projectilePrefab, null));
-        this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_FRONTSWIPE, new Ability_FrontSwipe(this.abilityScriptables.frontSwipe.swipePrefab, null));
-		this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_HOMINGMISSILE, new Ability_HomingMissile(this.abilityScriptables.homingMissile.projectilePrefab, null));
-		this.abilitiesDict.Add(GameEnum.AbilityName.ABILITY_BLINKFORWARD, new Ability_BlinkForward(null));*/
 
         this.dataObject = new DataObject (this.characterScriptables.characters, this.airshipScriptables.airships);
 
@@ -381,6 +334,26 @@ public class DataManager
 			this.dataObject.charactersInAirship[savedSlotNum] = charInt;
 		}
 	}*/
+
+
+
+
+	public Mission[] GetMissions (){
+		return this.dataObject.missions;
+	}
+
+
+	public Mission GetCurrentMission (){
+		return this.dataObject.missions [this.dataObject.curMission];
+	}
+
+
+	public void SetCurrentMission (int missionInt){
+		if (missionInt < this.dataObject.missions.Length) {
+			this.dataObject.curMission = missionInt;
+		}
+	}
+
 
 
 

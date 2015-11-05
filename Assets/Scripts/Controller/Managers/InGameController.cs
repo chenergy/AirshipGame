@@ -4,8 +4,9 @@ using System.Collections;
 public class InGameController : MonoBehaviour
 {
 	public PartyMenuController pmc;
-    //public LoadoutMenuController smc;
     public CameraMovement cm;
+	public MissionController mc;
+
 	public ErrorLog errorLog;
     public Transform playerStartPoint;
 
@@ -67,6 +68,7 @@ public class InGameController : MonoBehaviour
             this.charactersInAirship[i] = c;
         }
 
+		this.mc.SetMission (GameManager.instance.Data.GetCurrentMission ());
         // Disable start menu controller.
         //this.smc.gameObject.SetActive(false);
 	}

@@ -153,17 +153,5 @@ public class PartyMenuCharacter : MonoBehaviour
 	public void OnPointerExit (BaseEventData b){
 		this.tooltipProperties.tooltipParent.SetActive (false);
 	}
-
-	// Recharge cooldown timer after using a skill.
-	/*IEnumerator StartCooldownTimer (int charNum){
-		this.partyCharacters[charNum].CurCooldown = 0.0f;
-		
-		while (this.partyCharacters[charNum].CurCooldown < this.partyCharacters[charNum].MaxCooldown) {
-			this.partyCharacters[charNum].CurCooldown += Time.deltaTime;
-			yield return new WaitForEndOfFrame ();
-		}
-		
-		this.partyCharacters[charNum].CurCooldown = this.partyCharacters[charNum].MaxCooldown;
-	}*/
 }
 

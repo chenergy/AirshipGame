@@ -7,33 +7,15 @@ public class PartyMenuController : MonoBehaviour
 	public PartyMenuCharacter[] partyCharacters;
 
 
-
 	void Awake (){
 		foreach (PartyMenuCharacter partyChar in this.partyCharacters) {
 			partyChar.SetDisplayType (this.displayType);
 		}
 	}
 
+
 	public void SetPartyCharacter (Character character, GameEnum.AbilityName abilityName, int partyIndex){
 		this.partyCharacters [partyIndex].SetPartyCharacter (character, abilityName);
 	}
-	/*
-	public void ActivateAbility (int charNum){
-		if (charNum < this.partyCharacters.Length) {
-			this.partyCharacters[charNum].ActivateAbility ();
-		}
-	}
-
-	public void UseAbility (int charNum){
-		if (charNum < this.partyCharacters.Length) {
-			this.partyCharacters[charNum].UseAbility ();
-		}
-	}
-
-	public bool CanUseAbility (int charNum){
-		if (charNum < this.partyCharacters.Length) {
-			return this.partyCharacters [charNum].
-		}
-	}*/
 }
 

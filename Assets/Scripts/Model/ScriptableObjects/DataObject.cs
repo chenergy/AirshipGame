@@ -21,6 +21,10 @@ public class DataObject
 	// Current crew on airships, positions on airship
 	public int[] charInAirshipSlotToInventory;
 
+	// List of missions.
+	public Mission[] missions;
+	public int curMission = 0;
+
 
 	public DataObject (SO_Characters.CharacterScriptable[] characterScriptables, SO_Airships.AirshipScriptable[] airshipScriptables){
 		this.dateLastSaved = DateTime.Now;
@@ -52,6 +56,10 @@ public class DataObject
 		this.charInAirshipSlotToInventory [1] = 2;
 		this.charInAirshipSlotToInventory [2] = 3;
 		this.charInAirshipSlotToInventory [3] = 4;
+
+		// Setup missions.
+
+		//Mission m0 = new Mission("Mission 0", "This is the tutorial mission.", 
 	}
 }
 

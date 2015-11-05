@@ -46,5 +46,9 @@ namespace GameEnum
 		REALISTIC,
 		UNREALISTIC
 	};
+
+	public enum ObjectiveEventType {
+		KILL_ENEMY
+	};
 }
 
