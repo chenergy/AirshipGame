@@ -53,7 +53,7 @@ public abstract class A_Airship : MonoBehaviour
 		// Movement rotation.
 		float sqrMag = (this.transform.forward - this.headingDirection).sqrMagnitude;
 
-		if (sqrMag > 0.01f) {
+		if (sqrMag > 0.001f) {
 			//this.transform.forward = Vector3.Lerp (this.transform.forward, this.headingDirection, Time.deltaTime * this.rotationSpeed);
 			//this.transform.forward = Vector3.RotateTowards (this.transform.forward, this.headingDirection, Time.deltaTime * this.rotationSpeed, 0.0f);
 			this.transform.forward = Vector3.Slerp (this.transform.forward, this.headingDirection, Time.deltaTime * this.rotationSpeed);
