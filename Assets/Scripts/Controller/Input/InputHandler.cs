@@ -34,18 +34,13 @@ public class InputHandler : MonoBehaviour
 			Ray r = Camera.main.ScreenPointToRay (Input.mousePosition);
 			Debug.DrawLine (r.origin, r.origin + r.direction * 100);
 			if (Physics.Raycast (r, out hitInfo, 100.0f, layerMask)) {
-				this.isRightMouseDown = true;
-				this.ingamecontroller.SetAirshipTarget (hitInfo.point);
-				this.StartRotateAirship ();
+                this.ingamecontroller.SetAirshipTarget(hitInfo.point);
+                this.StartRotateAirship ();
 			}
 		}
 		if (Input.GetMouseButtonUp (1)){
 			this.EndRotateAirship ();
 		}
-
-		// else {
-			//this.ingamecontroller.StopAirshipMovingToTarget ();
-		//}
 #endif
 	}
 
@@ -74,12 +69,14 @@ public class InputHandler : MonoBehaviour
 
 
 	public void StartRotateAirship (){
-		this.ingamecontroller.StartRotateAirship ();
+        this.isRightMouseDown = true;
+        this.ingamecontroller.StartRotateAirship ();
 	}
 
 
 	public void EndRotateAirship (){
-		this.ingamecontroller.EndRotateAirship ();
+        this.isRightMouseDown = false;
+        this.ingamecontroller.EndRotateAirship ();
 	}
 	
 
