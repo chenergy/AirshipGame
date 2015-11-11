@@ -9,14 +9,21 @@ public abstract class A_Airship : MonoBehaviour
 	public float baseMoveSpeed = 1.0f;
 	public float baseRotationSpeed = 1.0f;
     public bool tiltWhileRotating = true;
+	public bool isGrounded = false;
 
 	private float targetSpeed = 0.0f;
 	private float curSpeed = 0.0f;
 	private float acceleration = 1.0f;
 	private float rotationSpeed = 0.0f;
 	private float curRotateRad = 0.0f;
-	private GameEnum.HeightLevel heightLevel = GameEnum.HeightLevel.LOWER;
+	private bool isMovingHeight = false;
+
 	protected Vector3 headingDirection;
+
+	private GameEnum.HeightLevel heightLevel = GameEnum.HeightLevel.LOWER;
+	public GameEnum.HeightLevel HeightLevel {
+		get { return this.heightLevel; }
+	}
 
     private Vector3 startPos;
     public Vector3 StartPosition
@@ -64,17 +71,23 @@ public abstract class A_Airship : MonoBehaviour
             {
                 Vector3 cross = Vector3.Cross(this.transform.forward, this.headingDirection);
 
-                if (cross.y > 0)
-                    this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, -sqrMag * 20), Time.deltaTime);
-                else
-                    this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, Quaternion.Euler(0, 0, sqrMag * 20), Time.deltaTime);
+				if (cross.y > 0) {
+					this.model.transform.localRotation = Quaternion.Lerp (this.model.transform.localRotation, 
+						Quaternion.Euler (this.model.transform.localRotation.x, this.model.transform.localRotation.y, -sqrMag * 20), 
+						Time.deltaTime);
+				} else {
+					this.model.transform.localRotation = Quaternion.Lerp (this.model.transform.localRotation, 
+						Quaternion.Euler (this.model.transform.localRotation.x, this.model.transform.localRotation.y, sqrMag * 20), 
+						Time.deltaTime);
+				}
             }
 		}
 
-		if (this.heightLevel == GameEnum.HeightLevel.LOWER)
+		/*if (this.heightLevel == GameEnum.HeightLevel.LOWER)
 			this.transform.position = new Vector3 (this.transform.position.x, Mathf.Lerp (this.transform.position.y, this.startPos.y, Time.deltaTime * 5), this.transform.position.z);
 		else if (this.heightLevel == GameEnum.HeightLevel.UPPER)
-			this.transform.position = new Vector3 (this.transform.position.x, Mathf.Lerp (this.transform.position.y, this.startPos.y + 10, Time.deltaTime * 5), this.transform.position.z);
+			this.transform.position = new Vector3 (this.transform.position.x, Mathf.Lerp (this.transform.position.y, this.startPos.y + 10, Time.deltaTime * 5), this.transform.position.z);*/
+		//this.transform.position = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z);
 	}
 
 
@@ -123,15 +136,47 @@ public abstract class A_Airship : MonoBehaviour
 	}
 
 
-	public void MoveToHeightLevel (GameEnum.HeightLevel heightLevel){
-		if (this.heightLevel != heightLevel) {
-			/*if (heightLevel == GameEnum.HeightLevel.LOWER) {
-				
-			} else if (heightLevel == GameEnum.HeightLevel.UPPER) {
-				
-			}*/
-			this.heightLevel = heightLevel;
+	public void SetHeightLevel (GameEnum.HeightLevel heightLevel){
+		if (this.heightLevel != heightLevel && !this.isMovingHeight) {
+			this.isMovingHeight = true;
+			StartCoroutine ("MoveToHeightLevelRoutine", heightLevel);
 		}
+	}
+
+
+	IEnumerator MoveToHeightLevelRoutine (GameEnum.HeightLevel heightLevel){
+		float startHeight = this.transform.position.y;
+		float targetHeight = (heightLevel == GameEnum.HeightLevel.LOWER) ? DataManager.HEIGHT_LEVEL_LOWER : DataManager.HEIGHT_LEVEL_UPPER;
+		float timer = 0.0f;
+		float duration = 2.0f;
+		float parametric = 0.0f;
+		float rotationX = 0.0f;
+		float maxRotationX = (heightLevel == GameEnum.HeightLevel.LOWER) ? 20f : -20f;
+
+		while (timer < duration) {
+			yield return new WaitForEndOfFrame ();
+
+			parametric = (TrigLookup.Sin (((timer / duration) * Mathf.PI) - Mathf.PI / 2.0f) * 0.5f) + 0.5f;
+			rotationX = TrigLookup.Sin ((timer / duration) * Mathf.PI);
+			//Debug.Log (parametric);
+
+			this.transform.position = new Vector3 (this.transform.position.x, Mathf.Lerp (startHeight, targetHeight, parametric), this.transform.position.z);
+			this.model.transform.localRotation = Quaternion.Lerp(this.model.transform.localRotation, 
+				Quaternion.Euler(rotationX * maxRotationX, this.model.transform.localRotation.y, this.model.transform.localRotation.z), 
+				parametric);
+
+			timer += Time.deltaTime;
+		}
+
+		this.transform.position = new Vector3 (this.transform.position.x, targetHeight, this.transform.position.z);
+		this.model.transform.localRotation = Quaternion.Euler (0, this.model.transform.localRotation.y, this.model.transform.localRotation.z);
+		this.heightLevel = heightLevel;
+		this.isMovingHeight = false;
+
+		/*if (this.heightLevel == GameEnum.HeightLevel.LOWER) 
+			this.transform.position = new Vector3 (this.transform.position.x, Mathf.Lerp (this.transform.position.y, this.startPos.y, Time.deltaTime * 5), this.transform.position.z);
+		else if (this.heightLevel == GameEnum.HeightLevel.UPPER)
+			this.transform.position = new Vector3 (this.transform.position.x, Mathf.Lerp (this.transform.position.y, this.startPos.y + 10, Time.deltaTime * 5), this.transform.position.z);*/
 	}
 
 

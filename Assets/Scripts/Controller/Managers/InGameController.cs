@@ -216,12 +216,12 @@ public class InGameController : MonoBehaviour
 
 
 	public void GoToUpperLevel(){
-		this.airship.MoveToHeightLevel (GameEnum.HeightLevel.UPPER);
+		this.airship.SetHeightLevel (GameEnum.HeightLevel.UPPER);
 	}
 
 
 	public void GoToLowerLevel (){
-		this.airship.MoveToHeightLevel (GameEnum.HeightLevel.LOWER);
+		this.airship.SetHeightLevel (GameEnum.HeightLevel.LOWER);
 	}
 
     /*public void OpenMenu()

@@ -8,12 +8,8 @@ public class EnemyBehaviour_Turret : A_EnemyBehaviour
     public float turnDuration = 3.0f;
 	public float trackDist = 10.0f;
 
-	void Start (){
-		StartCoroutine ("LateStart");
-	}
 
-
-	IEnumerator LateStart (){
+	protected override IEnumerator LateStart (){
 		yield return new WaitForEndOfFrame ();
 
 		FSMAction noAction = new FSMAction_None ();
@@ -38,7 +34,7 @@ public class EnemyBehaviour_Turret : A_EnemyBehaviour
 	}
 
 
-	void Update()
+	protected override void UpdateBehaviour()
 	{
 		if (this.fsm != null) {
 			if (this.isPlayerDetected) {

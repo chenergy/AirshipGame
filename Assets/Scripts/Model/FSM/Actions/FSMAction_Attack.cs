@@ -33,6 +33,9 @@ public class FSMAction_AttackUpdate : FSMAction
 
         this.curCd += Time.deltaTime;
 
+		if (!this.owner.isGrounded)
+			this.owner.SetHeightLevel (GameManager.instance.InGameController.Airship.HeightLevel);
+		
 		this.owner.SetHeading ((GameManager.instance.InGameController.Airship.transform.position - this.owner.transform.position).normalized);
     }
 }

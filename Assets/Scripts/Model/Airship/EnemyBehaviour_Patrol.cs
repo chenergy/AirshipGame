@@ -9,12 +9,7 @@ public class EnemyBehaviour_Patrol : A_EnemyBehaviour
 	public float attackDist = 5.0f;
 
 
-	void Start (){
-		StartCoroutine ("LateStart");
-	}
-
-
-	IEnumerator LateStart (){
+	protected override IEnumerator LateStart (){
 		yield return new WaitForEndOfFrame ();
 
 		FSMAction noAction = new FSMAction_None ();
@@ -49,7 +44,7 @@ public class EnemyBehaviour_Patrol : A_EnemyBehaviour
 	}
 
 
-    void Update()
+	protected override void UpdateBehaviour()
     {
 		if (this.fsm != null) {
 			if (this.isPlayerDetected) {

@@ -31,6 +31,9 @@ public class FSMAction_MoveToPlayerUpdate : FSMAction
 
     public override void execute(FSMContext c)
     {
+		if (!this.owner.isGrounded)
+			this.owner.SetHeightLevel (player.HeightLevel);
+		
         this.owner.SetHeading ((player.transform.position - this.owner.transform.position).normalized);
     }
 }

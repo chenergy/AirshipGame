@@ -25,6 +25,11 @@ public class DataManager
 	// Loaded data object that is serialized and deserialized.
 	private DataObject dataObject;
 
+	// Constants.
+	public const float HEIGHT_LEVEL_LOWER = 10.0f;
+	public const float HEIGHT_LEVEL_UPPER = 20.0f;
+
+
 	public DataManager (SO_Characters characterScriptables, SO_Abilities abilityScriptables, SO_Airships airshipScriptables){
 		// Forces a different code path in the BinaryFormatter that doesn't rely on run-time code generation (which would break on iOS).
 		//http://answers.unity3d.com/questions/30930/why-did-my-binaryserialzer-stop-working.html

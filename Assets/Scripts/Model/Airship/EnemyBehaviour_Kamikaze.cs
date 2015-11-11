@@ -8,13 +8,7 @@ public class EnemyBehaviour_Kamikaze : A_EnemyBehaviour
     public float chaseDist = 10.0f;
 
 
-    void Start()
-    {
-        StartCoroutine("LateStart");
-    }
-
-
-    IEnumerator LateStart()
+    protected override IEnumerator LateStart ()
     {
         yield return new WaitForEndOfFrame();
 
@@ -40,7 +34,7 @@ public class EnemyBehaviour_Kamikaze : A_EnemyBehaviour
     }
 
 
-    void Update()
+	protected override void UpdateBehaviour ()
     {
         if (this.fsm != null)
         {

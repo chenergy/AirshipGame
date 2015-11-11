@@ -38,6 +38,7 @@ public class FSMAction_PatrolUpdate : FSMAction
 		Transform targetPatrolPoint = this.patrolPoints [this.curPatrolPoint];
 
 		if ((targetPatrolPoint.position - this.owner.transform.position).magnitude > 1.0f) {
+			this.owner.SetHeightLevel (GameEnum.HeightLevel.LOWER);
 			this.owner.SetHeading((targetPatrolPoint.position - this.owner.transform.position).normalized);
 		} else {
 			this.curPatrolPoint++;
