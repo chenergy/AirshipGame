@@ -57,5 +57,10 @@ namespace GameEnum
 	public enum ObjectiveCondition {
 		KILL_ENEMY
 	};
+
+	public enum HeightLevel{
+		UPPER,
+		LOWER
+	};
 }
 

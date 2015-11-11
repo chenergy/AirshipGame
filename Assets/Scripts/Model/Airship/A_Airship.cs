@@ -15,6 +15,7 @@ public abstract class A_Airship : MonoBehaviour
 	private float acceleration = 1.0f;
 	private float rotationSpeed = 0.0f;
 	private float curRotateRad = 0.0f;
+	private GameEnum.HeightLevel heightLevel = GameEnum.HeightLevel.LOWER;
 	protected Vector3 headingDirection;
 
     private Vector3 startPos;
@@ -70,7 +71,10 @@ public abstract class A_Airship : MonoBehaviour
             }
 		}
 
-		this.transform.position = new Vector3 (this.transform.position.x, this.startPos.y, this.transform.position.z);
+		if (this.heightLevel == GameEnum.HeightLevel.LOWER)
+			this.transform.position = new Vector3 (this.transform.position.x, Mathf.Lerp (this.transform.position.y, this.startPos.y, Time.deltaTime * 5), this.transform.position.z);
+		else if (this.heightLevel == GameEnum.HeightLevel.UPPER)
+			this.transform.position = new Vector3 (this.transform.position.x, Mathf.Lerp (this.transform.position.y, this.startPos.y + 10, Time.deltaTime * 5), this.transform.position.z);
 	}
 
 
@@ -117,6 +121,19 @@ public abstract class A_Airship : MonoBehaviour
 	public void SetSpeed (float speedScale){
 		this.targetSpeed = Mathf.Clamp (speedScale, 0.0f, 1.0f) * this.baseMoveSpeed;
 	}
+
+
+	public void MoveToHeightLevel (GameEnum.HeightLevel heightLevel){
+		if (this.heightLevel != heightLevel) {
+			/*if (heightLevel == GameEnum.HeightLevel.LOWER) {
+				
+			} else if (heightLevel == GameEnum.HeightLevel.UPPER) {
+				
+			}*/
+			this.heightLevel = heightLevel;
+		}
+	}
+
 
 	private Vector3 RotateVector (Vector3 baseVector, float radians){
 		float x0 = baseVector.x;

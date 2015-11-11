@@ -22,7 +22,7 @@ public class CameraMovement : MonoBehaviour
         //this.cameraWorldPosition = this.target.TransformPoint (this.targetLocalOffset);
         if (this.target != null)
         {
-            Vector3 targetPos = new Vector3(this.target.position.x, this.transform.position.y, this.target.position.z);
+            Vector3 targetPos = new Vector3(this.target.position.x, this.target.position.y, this.target.position.z);
             this.transform.position = Vector3.Lerp(this.transform.position, targetPos, Time.deltaTime * this.followSpeed);
         }
 	}

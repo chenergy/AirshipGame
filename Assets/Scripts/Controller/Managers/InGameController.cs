@@ -214,6 +214,16 @@ public class InGameController : MonoBehaviour
 		System.IO.File.Delete (Application.persistentDataPath + "/savedData.gd");
 	}
 
+
+	public void GoToUpperLevel(){
+		this.airship.MoveToHeightLevel (GameEnum.HeightLevel.UPPER);
+	}
+
+
+	public void GoToLowerLevel (){
+		this.airship.MoveToHeightLevel (GameEnum.HeightLevel.LOWER);
+	}
+
     /*public void OpenMenu()
     {
         this.smc.gameObject.SetActive(true);
