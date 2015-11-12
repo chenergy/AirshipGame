@@ -61,7 +61,7 @@ public class DataObject
         A_Objective[] objectives = new A_Objective[1];
         Objective_KillEnemy kill_kamikaze = new Objective_KillEnemy("Kill the Kamikaze enemy.", "Kill the Kamikaze enemy.", GameEnum.EnemyName.ENEMY_KAMIKAZE);
         objectives[0] = kill_kamikaze;
-        Mission m0 = new Mission("Tutorial", "This is the tutorial mission.", objectives);
+		Mission m0 = new Mission("Tutorial", "This is the tutorial mission.", "Level_Prototype", objectives);
         this.missions = new Mission[1];
         this.missions[0] = m0;
 	}

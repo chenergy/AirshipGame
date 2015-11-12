@@ -6,14 +6,16 @@ public class Mission
 {
 	public string name;
 	public string desc;
+	public string levelToLoad;
 	public A_Objective[] objectives;
 	public int curObjective = 0;
 	public bool isComplete = false;
 
 
-	public Mission (string name, string desc, A_Objective[] objectives){
+	public Mission (string name, string desc, string levelToLoad, A_Objective[] objectives){
 		this.name = name;
 		this.desc = desc;
+		this.levelToLoad = levelToLoad;
 		this.objectives = objectives;
 	}
 

@@ -71,6 +71,7 @@ public class LoadoutMenuController : MonoBehaviour
 
     public void ButtonBeginMission()
     {
-        Application.LoadLevel("LevelPrototype");
+        //Application.LoadLevel("Level_Prototype");
+		Application.LoadLevel(GameManager.instance.Data.GetCurrentMission().levelToLoad);
     }
 }
