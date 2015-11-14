@@ -122,15 +122,6 @@ public abstract class A_Airship : MonoBehaviour
 	}
 
 
-	/*public void StartRotate (){
-		this.heading.TurnOn ();
-	}
-
-	public void EndRotate (){
-		this.heading.TurnOff ();
-	}*/
-
-
 	public void SetSpeed (float speedScale){
 		this.targetSpeed = Mathf.Clamp (speedScale, 0.0f, 1.0f) * this.baseMoveSpeed;
 	}
@@ -138,8 +129,18 @@ public abstract class A_Airship : MonoBehaviour
 
 	public void SetHeightLevel (GameEnum.HeightLevel heightLevel){
 		if (this.heightLevel != heightLevel && !this.isMovingHeight) {
-			this.isMovingHeight = true;
-			StartCoroutine ("MoveToHeightLevelRoutine", heightLevel);
+			if (heightLevel == GameEnum.HeightLevel.LOWER) {
+				RaycastHit hit;
+				if (Physics.Raycast (this.transform.position, Vector3.down, out hit, 10.0f, LayerMask.GetMask (new string[] { "EnvironmentCollider" }))) {
+					Debug.Log (string.Format ("cannot lower: {0}", hit.transform.name));
+				} else {
+					this.isMovingHeight = true;
+					StartCoroutine ("MoveToHeightLevelRoutine", heightLevel);
+				}
+			} else {
+				this.isMovingHeight = true;
+				StartCoroutine ("MoveToHeightLevelRoutine", heightLevel);
+			}
 		}
 	}
 
