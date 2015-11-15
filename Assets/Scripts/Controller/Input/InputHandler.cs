@@ -33,7 +33,7 @@ public class InputHandler : MonoBehaviour
 			RaycastHit hitInfo;
 			Ray r = Camera.main.ScreenPointToRay (Input.mousePosition);
 			Debug.DrawLine (r.origin, r.origin + r.direction * 100);
-			if (Physics.Raycast (r, out hitInfo, 100.0f, layerMask)) {
+			if (Physics.Raycast (r, out hitInfo, 1000.0f, layerMask)) {
                 this.ingamecontroller.SetAirshipTarget(hitInfo.point);
                 this.StartRotateAirship ();
 			}

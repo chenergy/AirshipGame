@@ -8,17 +8,17 @@ using System.Collections.Generic;
 public class DialogueText
 {
     public string text;
-    public FighterName iconName;
+    public Sprite sprite;
 
-    public DialogueText(string text, FighterName iconName)
+    public DialogueText(string text, Sprite sprite)
     {
         this.text = text;
-        this.iconName = iconName;
+        this.sprite = sprite;
     }
 }
 
 
-[System.Serializable]
+/*[System.Serializable]
 public class FighterIcons
 {
     public Sprite FIGHTER_BEET;
@@ -29,19 +29,19 @@ public class FighterIcons
     public Sprite FIGHTER_PEPPER;
     public Sprite FIGHTER_POTATO;
     public Sprite FIGHTER_RADDISH;
-}
+}*/
 
 
 public class DialogueController : MonoBehaviour
 {
     public GameObject canvasParent;
-    public FighterIcons fighterIcons;
+    //public FighterIcons fighterIcons;
     public float speed = 1.0f;
     public GameObject nextButton;
-    public Image backgroundBoxP1;
-    public Image backgroundBoxP2;
-    public Image speakerImageP1;
-    public Image speakerImageP2;
+    public Image backgroundBox;
+    //public Image backgroundBoxP2;
+    public Image speakerImage;
+    //public Image speakerImageP2;
     public Text targetDialogueText;
 
     private DialogueText[] dialogueText;
@@ -51,10 +51,10 @@ public class DialogueController : MonoBehaviour
     public delegate void DialogueEvent();
     public event DialogueEvent OnDialogueSequenceEnd;
 
-    public static DialogueController instance;
+    //public static DialogueController instance;
 
 
-    void Awake()
+    /*void Awake()
     {
         if (instance == null)
         {
@@ -69,6 +69,13 @@ public class DialogueController : MonoBehaviour
         {
             GameObject.Destroy(this.gameObject);
         }
+    }*/
+
+    void Start()
+    {
+        this.currentText = "";
+        this.nextButton.SetActive(false);
+        this.canvasParent.SetActive(false);
     }
 
 
@@ -85,17 +92,6 @@ public class DialogueController : MonoBehaviour
 
         //StartCoroutine ("SetCharacterSprites");
         StartCoroutine("PlayTextSequence", this.dialogueText[this.textIndex]);
-    }
-
-
-    // Called by ingamecontroller to start.
-    public void EndSequence()
-    {
-        //StopCoroutine ("SetCharacterSprites");
-        StopCoroutine("PlayTextSequence");
-
-        //this.gameObject.SetActive (false);
-        this.canvasParent.SetActive(false);
     }
 
 
@@ -116,6 +112,16 @@ public class DialogueController : MonoBehaviour
     }
 
 
+    private void EndSequence()
+    {
+        //StopCoroutine ("SetCharacterSprites");
+        StopCoroutine("PlayTextSequence");
+
+        //this.gameObject.SetActive (false);
+        this.canvasParent.SetActive(false);
+    }
+
+
     // Play next text sequence or quit
     private void GoToNextText()
     {
@@ -125,8 +131,8 @@ public class DialogueController : MonoBehaviour
         // Exit if end of dialogue
         if (this.textIndex >= this.dialogueText.Length)
         {
-            this.speakerImageP1.gameObject.SetActive(false);
-            this.speakerImageP2.gameObject.SetActive(false);
+            this.speakerImage.gameObject.SetActive(false);
+            //this.speakerImageP2.gameObject.SetActive(false);
             this.EndSequence();
             //GameManager.InGameController.PassFromDialogue ();
             if (this.OnDialogueSequenceEnd != null)
@@ -145,10 +151,11 @@ public class DialogueController : MonoBehaviour
         int nextCharInput = 0;
 
         // Activate the triangle depending on the speaker
-        this.speakerImageP1.sprite = this.fighterIconDict[dialogue.iconName];
+        //this.speakerImageP1.sprite = this.fighterIconDict[dialogue.iconName];
+        this.speakerImage.sprite = dialogue.sprite;
         StartCoroutine("MoveInCharacter");
-        this.backgroundBoxP1.gameObject.SetActive(true);
-        this.backgroundBoxP2.gameObject.SetActive(false);
+        this.backgroundBox.gameObject.SetActive(true);
+        //this.backgroundBoxP2.gameObject.SetActive(false);
 
         while (this.currentText != dialogue.text)
         {
@@ -168,7 +175,17 @@ public class DialogueController : MonoBehaviour
         }
 
         // Activate next text segment
-        this.nextButton.SetActive(true);
+        //this.nextButton.SetActive(true);
+        float timeDelay = 1.0f;
+        float timer = 0.0f;
+
+        while (timer < timeDelay)
+        {
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+        }
+
+        this.GoToNextText();
     }
 
 
@@ -182,7 +199,7 @@ public class DialogueController : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            this.speakerImageP1.color = new Color(this.speakerImageP1.color.r, this.speakerImageP1.color.g, this.speakerImageP1.color.b, (timer / duration));
+            this.speakerImage.color = new Color(this.speakerImage.color.r, this.speakerImage.color.g, this.speakerImage.color.b, (timer / duration));
 
             yield return new WaitForEndOfFrame();
         }

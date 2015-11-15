@@ -6,6 +6,7 @@ public class InGameController : MonoBehaviour
 	public PartyMenuController pmc;
     public CameraMovement cm;
 	public MissionController mc;
+    public DialogueController dc;
 
 	public ErrorLog errorLog;
     public Transform playerStartPoint;
@@ -69,6 +70,13 @@ public class InGameController : MonoBehaviour
         }
 
 		this.mc.SetMission (GameManager.instance.Data.GetCurrentMission ());
+
+        // Test dialogue system.
+        this.dc.StartSequence(new DialogueText[] {
+            new DialogueText ("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", GameManager.instance.Data.GetInventoryCharacterSpriteIcon(1)),
+            new DialogueText ("Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", GameManager.instance.Data.GetInventoryCharacterSpriteIcon(2)),
+        });
+
         // Disable start menu controller.
         //this.smc.gameObject.SetActive(false);
 	}
