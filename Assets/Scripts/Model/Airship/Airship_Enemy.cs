@@ -59,7 +59,7 @@ public class Airship_Enemy : A_Airship
 
         if (this.curHp <= 0)
         {
-            GameManager.instance.InGameController.mc.TriggerObjectiveCondition(GameEnum.ObjectiveCondition.KILL_ENEMY, this.enemyName.ToString());
+            //GameManager.instance.InGameController.mc.TriggerObjectiveCondition(GameEnum.ObjectiveCondition.KILL_ENEMY, this.enemyName.ToString());
             GameObject.Destroy(this.gameObject);
         }
 	}

@@ -72,10 +72,10 @@ public class InGameController : MonoBehaviour
 		this.mc.SetMission (GameManager.instance.Data.GetCurrentMission ());
 
         // Test dialogue system.
-        this.dc.StartSequence(new DialogueText[] {
+        /*this.dc.StartSequence(new DialogueText[] {
             new DialogueText ("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", GameManager.instance.Data.GetInventoryCharacterSpriteIcon(1)),
             new DialogueText ("Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", GameManager.instance.Data.GetInventoryCharacterSpriteIcon(2)),
-        });
+        });*/
 
         // Disable start menu controller.
         //this.smc.gameObject.SetActive(false);
@@ -83,10 +83,10 @@ public class InGameController : MonoBehaviour
 	
 
 	// Update is called once per frame
-	void Update ()
-	{
+	//void Update ()
+	//{
 		//this.KeepAirshipInBounds ();
-	}
+	//}
 
 
 	private void KeepAirshipInBounds (){
@@ -194,6 +194,14 @@ public class InGameController : MonoBehaviour
 	public void EndRotateAirship (){
 		this.airship.EndRotate ();
 	}
+
+
+	// Dialogue System trigger.
+	public void StartDialogueSequence (DialogueText[] dialogue){
+		if (dialogue != null)
+			this.dc.StartSequence (dialogue);
+	}
+
 
 	// Temp on-screen buttons.
 	public void SetAirshipSpeed (float newSpeed){

@@ -75,7 +75,7 @@ public class DialogueController : MonoBehaviour
     {
         this.currentText = "";
         this.nextButton.SetActive(false);
-        this.canvasParent.SetActive(false);
+        //this.canvasParent.SetActive(false);
     }
 
 
