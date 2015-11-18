@@ -192,7 +192,7 @@ public class InGameController : MonoBehaviour
 	}
 
 	public void EndRotateAirship (){
-		this.airship.EndRotate ();
+        this.airship.EndRotate ();
 	}
 
 
