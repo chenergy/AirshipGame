@@ -39,7 +39,7 @@ public class InputHandler : MonoBehaviour
 			}
 		}
 		if (Input.GetMouseButtonUp (1)){
-			this.EndRotateAirship ();
+            this.EndRotateAirship ();
 		}
 #endif
 	}
@@ -77,7 +77,8 @@ public class InputHandler : MonoBehaviour
 	public void EndRotateAirship (){
         this.isRightMouseDown = false;
         this.ingamecontroller.EndRotateAirship ();
-	}
+        this.StopAirshipMovingToTarget();
+    }
 	
 
 	public void SetAirshipSpeed (float newSpeed){
@@ -102,6 +103,15 @@ public class InputHandler : MonoBehaviour
 			this.StopAirshipMovingToTarget();
 		}
 	}
+
+
+    public void ToggleHeight()
+    {
+        if (this.ingamecontroller.Airship.HeightLevel == GameEnum.HeightLevel.LOWER)
+            this.ingamecontroller.GoToUpperLevel();
+        else
+            this.ingamecontroller.GoToLowerLevel();
+    }
 
 
 	/*private void MoveToScreenPoint (Vector3 mousePosition){

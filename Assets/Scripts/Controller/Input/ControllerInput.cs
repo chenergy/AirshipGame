@@ -54,5 +54,13 @@ public class ControllerInput : MonoBehaviour
         {
             this.input.ActivateAbility(3);
         }
+        if (Input.GetButtonDown ("Joystick4"))
+        {
+            this.input.ToggleHeight();
+        }
+        if (Input.GetButtonDown("Joystick5"))
+        {
+
+        }
     }
 }
