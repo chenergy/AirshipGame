@@ -87,7 +87,9 @@ public class Character
 	// Check multiple conditions to see if ability is allowed to be used.
 	public bool CanUseAbility (){
 		if (this.ability != null) {
-			if ((this.curCooldown >= this.maxCooldown) && (this.curMp >= this.ability.ManaCost))
+			if ((this.curCooldown >= this.maxCooldown) && 
+				(this.curMp >= this.ability.ManaCost) && 
+				(this.curHp > 0))
 				return true;
 
 			if (this.curCooldown < this.maxCooldown)
@@ -95,9 +97,20 @@ public class Character
 			
 			if (this.curMp < this.ability.ManaCost)
 				GameManager.instance.InGameController.errorLog.LogErrorText ("Not enough mana.");
+
+			if (this.curHp <= 0)
+				GameManager.instance.InGameController.errorLog.LogErrorText (string.Format("{0} is dead", this.Name));
 		}
 
 		return false;
+	}
+
+
+	public void TakeDamage (int damage){
+		this.curHp -= damage;
+
+		if (this.curHp < 0)
+			this.curHp = 0;
 	}
 
 

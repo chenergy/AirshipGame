@@ -16,7 +16,8 @@ public class Airship_Player : A_Airship
 	public override void TakeDamage (int position, int damage)
 	{
 		//throw new System.NotImplementedException ();
-		Debug.Log ("took damage: " + damage.ToString ());
+		GameManager.instance.InGameController.CharacterTakeDamage (position, damage);
+		//Debug.Log ("took damage: " + damage.ToString ());
 	}
 
     public void StartRotate (){

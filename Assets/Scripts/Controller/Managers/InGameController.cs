@@ -141,6 +141,24 @@ public class InGameController : MonoBehaviour
 	}
 
 
+	public void CharacterTakeDamage (int position, int damage){
+		if (position < this.charactersInAirship.Length) {
+			Debug.Log (string.Format ("{0} took {1} damage in location {2}",
+				this.charactersInAirship [position].Name,
+				damage.ToString (),
+				position.ToString ()));
+
+			this.charactersInAirship [position].TakeDamage (damage);
+
+			if (this.charactersInAirship [position].CurHp <= 0) {
+				Debug.Log (this.charactersInAirship [position].Name + " is dead.");
+			}
+
+			this.pmc.partyCharacters [position].UpdateCurHp ();
+		}
+	}
+
+
     public void EnableSkillTip (GameEnum.SkillTipType skillTip, float range)
     {
         // Showing the skilltip.

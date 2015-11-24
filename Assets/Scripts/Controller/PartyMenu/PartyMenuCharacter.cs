@@ -92,6 +92,13 @@ public class PartyMenuCharacter : MonoBehaviour
 	}
 
 
+	public void UpdateCurHp (){
+		foreach (DisplayProperties dp in this.displayProperties) {
+			dp.hpImage.fillAmount = this.character.CurHp * 1.0f / this.character.MaxHp;
+		}
+	}
+
+
 	IEnumerator RechargeManaRoutine (){
 		float tick = 0.0f;
 

@@ -306,7 +306,6 @@ public class DataManager
     
 
 
-
     public void SetAirshipCharacterCurHp(int airshipSlotNum, int hp)
     {
         if (airshipSlotNum < this.dataObject.charInAirshipSlotToInventory.Length)
