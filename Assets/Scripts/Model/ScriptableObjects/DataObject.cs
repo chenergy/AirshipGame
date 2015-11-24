@@ -21,6 +21,9 @@ public class DataObject
 	// Current crew on airships, positions on airship
 	public int[] charInAirshipSlotToInventory;
 
+	// Current standby crew on airship.
+	public int[] standbyInAirshipSlotToInventory;
+
 	// List of missions.
 	public Mission[] missions;
 	public int curMission = 0;
@@ -56,6 +59,12 @@ public class DataObject
 		this.charInAirshipSlotToInventory [1] = 2;
 		this.charInAirshipSlotToInventory [2] = 3;
 		this.charInAirshipSlotToInventory [3] = 4;
+
+		// Save empty standby characters.
+		int standbySlots = airshipScriptables[(int)this.currentAirship].standbySlots.Length;
+		this.standbyInAirshipSlotToInventory = new int[standbySlots];
+		this.standbyInAirshipSlotToInventory [0] = 0;
+		this.standbyInAirshipSlotToInventory [1] = 0;
 
         // Setup missions and objectives.
         A_Objective[] objectives = new A_Objective[1];

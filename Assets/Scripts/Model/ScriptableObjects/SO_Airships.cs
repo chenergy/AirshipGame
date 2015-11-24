@@ -22,6 +22,7 @@ public class SO_Airships : ScriptableObject
         public Sprite icon;
         public Sprite layout;
         public AirshipCharacterSlot[] slots;
+		public AirshipCharacterSlot[] standbySlots;
 
         // Serializable data.
         public AirshipSerialized airshipData;

@@ -243,6 +243,16 @@ public class DataManager
         this.dataObject.charInAirshipSlotToInventory[slotNum] = inventoryNum;
     }
 
+	public int[] GetCharactersStandbyInAirship()
+	{
+		return this.dataObject.standbyInAirshipSlotToInventory;
+	}
+
+	public void SetCharacterStandbyInAirship(int inventoryNum, int slotNum)
+	{
+		this.dataObject.standbyInAirshipSlotToInventory[slotNum] = inventoryNum;
+	}
+
     /*public AirshipSerialized[] GetAirshipData()
     {
         return this.dataObject.airships;
@@ -270,6 +280,11 @@ public class DataManager
         return this.airshipScriptables.airships[(int)name].slots[slotNum];
     }
 
+	public AirshipCharacterSlot GetAirshipStandbySlotInfo (GameEnum.AirshipName name, int slotNum)
+	{
+		return this.airshipScriptables.airships[(int)name].standbySlots[slotNum];
+	}
+
 
 
 
@@ -282,6 +297,11 @@ public class DataManager
     {
         return this.airshipScriptables.airships[(int)name].slots.Length;
     }
+
+	public int GetAirshipStandbySlotsNum (GameEnum.AirshipName name)
+	{
+		return this.airshipScriptables.airships[(int)name].standbySlots.Length;
+	}
 
     public GameObject GetCurrentAirshipPrefab(GameEnum.AirshipName name)
     {
