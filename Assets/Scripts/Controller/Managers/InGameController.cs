@@ -17,6 +17,7 @@ public class InGameController : MonoBehaviour
 	public SkillTip_TargetAirshipAOE skillTipAirshipAOE;
 
 	private Character[] charactersInAirship;
+    private Character[] charactersStandbyInAirship;
 	private int activatedCharNum = -1;
 	private Bounds bounds;
 
@@ -49,37 +50,56 @@ public class InGameController : MonoBehaviour
 		this.bounds = new Bounds (Vector3.zero, new Vector3 (95f, 0, 95f));
 
         // Get characters that are currently in airship.
-        //this.partyCharacters = new Character[4];
         this.charactersInAirship = new Character[GameManager.instance.Data.GetCharactersInAirship().Length];
         for (int i = 0; i < this.charactersInAirship.Length; i++)
         {
             int inventoryNum = GameManager.instance.Data.GetCharactersInAirship()[i];
+            
+            // Create character.
+            Character c = this.CreateNewCharacter(inventoryNum);
 
-            Character c = new Character(GameManager.instance.Data.GetInventoryCharacterSpriteIcon(inventoryNum),
+            // Create the ability and assign to the character.
+            GameEnum.AbilityName abilityName = GameManager.instance.Data.GetInventoryCharacterAbilityName(inventoryNum);
+            c.SetAbility(GameManager.instance.Data.CloneAbility(abilityName, airship));
+
+            // Assign character and ability to visual component.
+            this.pmc.SetPartyCharacter(c, abilityName, i);
+            this.charactersInAirship[i] = c;
+        }
+
+        // Get characters on standby in the airship.
+        this.charactersStandbyInAirship = new Character[GameManager.instance.Data.GetCharactersStandbyInAirship().Length];
+        for (int i = 0; i < this.charactersStandbyInAirship.Length; i++)
+        {
+            int inventoryNum = GameManager.instance.Data.GetCharactersStandbyInAirship()[i];
+
+            // Create character.
+            Character c = this.CreateNewCharacter(inventoryNum);
+
+            // Create the ability and assign to character.
+            GameEnum.AbilityName abilityName = GameManager.instance.Data.GetInventoryCharacterAbilityName(inventoryNum);
+            c.SetAbility(GameManager.instance.Data.CloneAbility(abilityName, airship));
+
+            // Store in standby array.
+            this.charactersStandbyInAirship[i] = c;
+        }
+
+
+        this.mc.SetMission (GameManager.instance.Data.GetCurrentMission ());
+	}
+
+
+    private Character CreateNewCharacter (int inventoryNum)
+    {
+        Character c = new Character(GameManager.instance.Data.GetInventoryCharacterSpriteIcon(inventoryNum),
             GameManager.instance.Data.GetInventoryCharacterStringName(inventoryNum),
             GameManager.instance.Data.GetInventoryCharacterBaseHp(inventoryNum),
             GameManager.instance.Data.GetInventoryCharacterBaseMp(inventoryNum),
             GameManager.instance.Data.GetInventoryCharacterCurHp(inventoryNum),
             GameManager.instance.Data.GetInventoryCharacterCurMp(inventoryNum));
 
-            GameEnum.AbilityName abilityName = GameManager.instance.Data.GetInventoryCharacterAbilityName(inventoryNum);
-            c.SetAbility(GameManager.instance.Data.CloneAbility(abilityName, airship));
-
-			this.pmc.SetPartyCharacter(c, abilityName, i);
-            this.charactersInAirship[i] = c;
-        }
-
-		this.mc.SetMission (GameManager.instance.Data.GetCurrentMission ());
-
-        // Test dialogue system.
-        /*this.dc.StartSequence(new DialogueText[] {
-            new DialogueText ("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", GameManager.instance.Data.GetInventoryCharacterSpriteIcon(1)),
-            new DialogueText ("Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", GameManager.instance.Data.GetInventoryCharacterSpriteIcon(2)),
-        });*/
-
-        // Disable start menu controller.
-        //this.smc.gameObject.SetActive(false);
-	}
+        return c;
+    }
 	
 
 	// Update is called once per frame
@@ -219,6 +239,50 @@ public class InGameController : MonoBehaviour
 		if (dialogue != null)
 			this.dc.StartSequence (dialogue);
 	}
+
+
+    // In game menu options.
+    public void SwapCharacters(int partyIndex0, bool onStandby0, int partyIndex1, bool onStandby1)
+    {
+        Character temp;
+
+        if (onStandby0)
+        {
+            if (onStandby1)
+            {
+                temp = this.charactersStandbyInAirship[partyIndex0];
+                this.charactersStandbyInAirship[partyIndex0] = this.charactersStandbyInAirship[partyIndex1];
+                this.charactersStandbyInAirship[partyIndex1] = temp;
+            }
+            else
+            {
+                temp = this.charactersStandbyInAirship[partyIndex0];
+                this.charactersStandbyInAirship[partyIndex0] = this.charactersInAirship[partyIndex1];
+                this.charactersInAirship[partyIndex1] = temp;
+            }
+        } else
+        {
+            if (onStandby1)
+            {
+                temp = this.charactersInAirship[partyIndex0];
+                this.charactersInAirship[partyIndex0] = this.charactersStandbyInAirship[partyIndex1];
+                this.charactersStandbyInAirship[partyIndex1] = temp;
+            }
+            else
+            {
+                temp = this.charactersInAirship[partyIndex0];
+                this.charactersInAirship[partyIndex0] = this.charactersInAirship[partyIndex1];
+                this.charactersInAirship[partyIndex1] = temp;
+            }
+        }
+
+        // Create the ability and assign to the character.
+        /*GameEnum.AbilityName abilityName = GameManager.instance.Data.GetInventoryCharacterAbilityName(inventoryNum);
+        c.SetAbility(GameManager.instance.Data.CloneAbility(abilityName, airship));
+
+        // Assign character and ability to visual component.
+        this.pmc.SetPartyCharacter(char0, abilityName, i);*/
+    }
 
 
 	// Temp on-screen buttons.
