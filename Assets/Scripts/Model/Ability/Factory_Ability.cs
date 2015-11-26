@@ -28,22 +28,22 @@ public class Factory_Ability
 			case GameEnum.AbilityName.NONE:
 				break;
 			case GameEnum.AbilityName.ABILITY_STRAIGHTBULLET:
-				return new Ability_StraightShot (ability.manaCost, ability.cooldown, ability.maxRange, ability.projectilePrefab, owner);
+				return new Ability_StraightShot (ability.abilityName, ability.manaCost, ability.cooldown, ability.maxRange, ability.projectilePrefab, owner);
 				break;
 			case GameEnum.AbilityName.ABILITY_TARGETAOE:
-				return new Ability_TargetAOE (ability.manaCost, ability.cooldown, ability.maxRange, ability.projectilePrefab, owner);
+				return new Ability_TargetAOE (ability.abilityName, ability.manaCost, ability.cooldown, ability.maxRange, ability.projectilePrefab, owner);
 				break;
 			case GameEnum.AbilityName.ABILITY_AUTOBULLET:
-				return new Ability_AutoBullet (ability.manaCost, ability.cooldown, ability.maxRange, ability.projectilePrefab, owner);
+				return new Ability_AutoBullet (ability.abilityName, ability.manaCost, ability.cooldown, ability.maxRange, ability.projectilePrefab, owner);
 				break;
 			case GameEnum.AbilityName.ABILITY_FRONTSWIPE:
-				return new Ability_FrontSwipe (ability.manaCost, ability.cooldown, ability.maxRange, ability.projectilePrefab, owner);
+				return new Ability_FrontSwipe (ability.abilityName, ability.manaCost, ability.cooldown, ability.maxRange, ability.projectilePrefab, owner);
 				break;
 			case GameEnum.AbilityName.ABILITY_HOMINGMISSILE:
-				return new Ability_HomingMissile (ability.manaCost, ability.cooldown, ability.maxRange, ability.projectilePrefab, owner);
+				return new Ability_HomingMissile (ability.abilityName, ability.manaCost, ability.cooldown, ability.maxRange, ability.projectilePrefab, owner);
 				break;
 			case GameEnum.AbilityName.ABILITY_BLINKFORWARD:
-				return new Ability_BlinkForward (ability.manaCost, ability.cooldown, ability.maxRange, ability.projectilePrefab, owner);
+				return new Ability_BlinkForward (ability.abilityName, ability.manaCost, ability.cooldown, ability.maxRange, ability.projectilePrefab, owner);
 				break;
 			default:
 				break;

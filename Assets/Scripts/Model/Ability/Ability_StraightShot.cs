@@ -5,7 +5,7 @@ public class Ability_StraightShot : A_Ability
 {
 	private GameObject projectilePrefab;
 
-	public Ability_StraightShot (int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (manaCost, cooldown, maxRange, owner) {
+	public Ability_StraightShot (GameEnum.AbilityName abilityname, int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (abilityname, manaCost, cooldown, maxRange, owner) {
 		this.projectilePrefab = projectilePrefab;
 	}
 

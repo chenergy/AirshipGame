@@ -32,7 +32,7 @@ public class PartyMenuCharacter : MonoBehaviour
 	public DisplayProperties[] displayProperties;
 	public TooltipProperties tooltipProperties;
 
-	private Character character;
+	private PartyCharacter character;
 	private GameEnum.DisplayType displayType;
 
 
@@ -49,7 +49,7 @@ public class PartyMenuCharacter : MonoBehaviour
 		}
 	}
 
-	public void SetPartyCharacter (Character character, GameEnum.AbilityName abilityName){
+	public void SetPartyCharacter (PartyCharacter character){
 		this.character = character;
 
 		// Update the displays
@@ -69,14 +69,23 @@ public class PartyMenuCharacter : MonoBehaviour
 		}
 			
 		// Set tooltip info.
-		this.tooltipProperties.tooltipAbilityName.text = GameManager.instance.Data.GetAbilityStringName (abilityName);
-		this.tooltipProperties.tooltipAbilityDesc.text = GameManager.instance.Data.GetAbilityDesc (abilityName);
-		this.tooltipProperties.tooltipAbilityMana.text = GameManager.instance.Data.GetAbilityStringManaCost (abilityName).ToString ();
-		this.tooltipProperties.tooltipAbilityCooldown.text = GameManager.instance.Data.GetAbilityStringCooldown (abilityName).ToString ();
-		this.tooltipProperties.tooltipParent.SetActive (false);
+		if (character.Ability != null) {
+			GameEnum.AbilityName abilityName = character.Ability.AbilityName;
+			this.tooltipProperties.tooltipAbilityName.text = GameManager.instance.Data.GetAbilityStringName (abilityName);
+			this.tooltipProperties.tooltipAbilityDesc.text = GameManager.instance.Data.GetAbilityDesc (abilityName);
+			this.tooltipProperties.tooltipAbilityMana.text = GameManager.instance.Data.GetAbilityStringManaCost (abilityName).ToString ();
+			this.tooltipProperties.tooltipAbilityCooldown.text = GameManager.instance.Data.GetAbilityStringCooldown (abilityName).ToString ();
+			this.tooltipProperties.tooltipParent.SetActive (false);
 
-		if (this.character.CurMp < this.character.MaxMp)
-			this.RechargeMana ();
+			if (this.character.CurMp < this.character.MaxMp)
+				this.RechargeMana ();
+		} else {
+			this.tooltipProperties.tooltipAbilityName.text = "";
+			this.tooltipProperties.tooltipAbilityDesc.text = "";
+			this.tooltipProperties.tooltipAbilityMana.text = "";
+			this.tooltipProperties.tooltipAbilityCooldown.text = "";
+			this.tooltipProperties.tooltipParent.SetActive (false);
+		}
 	}
 
 
@@ -153,7 +162,8 @@ public class PartyMenuCharacter : MonoBehaviour
 
 
 	public void OnPointerEnter (BaseEventData b){
-		this.tooltipProperties.tooltipParent.SetActive (true);
+		if (this.character.Ability != null)
+			this.tooltipProperties.tooltipParent.SetActive (true);
 	}
 
 

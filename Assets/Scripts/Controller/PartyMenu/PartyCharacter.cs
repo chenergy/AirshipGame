@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class Character
+public class PartyCharacter
 {
 	private Sprite icon;
 	public Sprite Icon {
@@ -47,9 +47,12 @@ public class Character
 	}
 
 	private A_Ability ability = null;
+	public A_Ability Ability {
+		get { return this.ability; }
+	}
 
 
-	public Character (Sprite icon, string name, int maxHp, int maxMp, int curHp, int curMp) {
+	public PartyCharacter (Sprite icon, string name, int maxHp, int maxMp, int curHp, int curMp) {
 		this.name = name;
 		this.icon = icon;
 		this.maxHp = maxHp;
@@ -66,21 +69,17 @@ public class Character
 
 	public void ActivateAbility () {
 		if (this.ability != null) {
-			//if (this.CanUseAbility()){
-				this.ability.Activate ();
-			//}
+			this.ability.Activate ();
 		}
 	}
 
 
 	public void UseAbility (Vector3 target){
 		if (this.ability != null) {
-			//if (this.CanUseAbility()){
-				this.curMp -= this.ability.ManaCost;
-				this.ability.Use (target);
-				this.curCooldown = 0.0f;
-				this.maxCooldown = this.ability.Cooldown;
-			//}
+			this.curMp -= this.ability.ManaCost;
+			this.ability.Use (target);
+			this.curCooldown = 0.0f;
+			this.maxCooldown = this.ability.Cooldown;
 		}
 	}
 
@@ -136,32 +135,5 @@ public class Character
 		if (this.curCooldown > this.maxCooldown)
 			this.curCooldown = this.maxCooldown;
 	}
-
-	/*public GameEnum.SkillTipType GetAbilityType (){
-		if (this.ability != null)
-			return this.ability.SkillType;
-
-		return GameEnum.SkillTipType.NONE;
-	}*/
-
-	/*public float GetAbilityMaxRange (){
-		if (this.ability != null)
-			return this.ability.MaxRange;
-
-		return 0.0f;
-	}*/
-
-	/*public int GetAbilityManaCost (){
-		if (this.ability != null)
-			return this.ability.ManaCost;
-		return 0;
-	}
-
-
-	public float GetAbilityCooldown (){
-		if (this.ability != null)
-			return this.ability.Cooldown;
-		return 0;
-	}*/
 }
 

@@ -5,7 +5,7 @@ public class Ability_AutoBullet : A_Ability
 {
     private GameObject projectilePrefab;
 
-	public Ability_AutoBullet(int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (manaCost, cooldown, maxRange, owner) {
+	public Ability_AutoBullet(GameEnum.AbilityName abilityname, int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (abilityname, manaCost, cooldown, maxRange, owner) {
         this.projectilePrefab = projectilePrefab;
     }
 

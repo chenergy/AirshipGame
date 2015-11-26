@@ -16,8 +16,8 @@ public class InGameController : MonoBehaviour
 	public SkillTip_TargetPointerAOE skillTipTargetAOE;
 	public SkillTip_TargetAirshipAOE skillTipAirshipAOE;
 
-	private Character[] charactersInAirship;
-    private Character[] charactersStandbyInAirship;
+	private PartyCharacter[] charactersInAirship;
+    private PartyCharacter[] charactersStandbyInAirship;
 	private int activatedCharNum = -1;
 	private Bounds bounds;
 
@@ -50,53 +50,51 @@ public class InGameController : MonoBehaviour
 		this.bounds = new Bounds (Vector3.zero, new Vector3 (95f, 0, 95f));
 
         // Get characters that are currently in airship.
-        this.charactersInAirship = new Character[GameManager.instance.Data.GetCharactersInAirship().Length];
+        this.charactersInAirship = new PartyCharacter[GameManager.instance.Data.GetCharactersInAirship().Length];
         for (int i = 0; i < this.charactersInAirship.Length; i++)
         {
             int inventoryNum = GameManager.instance.Data.GetCharactersInAirship()[i];
             
             // Create character.
-            Character c = this.CreateNewCharacter(inventoryNum);
-
-            // Create the ability and assign to the character.
-            GameEnum.AbilityName abilityName = GameManager.instance.Data.GetInventoryCharacterAbilityName(inventoryNum);
-            c.SetAbility(GameManager.instance.Data.CloneAbility(abilityName, airship));
+            PartyCharacter c = this.CreateNewPartyCharacter(inventoryNum);
 
             // Assign character and ability to visual component.
-            this.pmc.SetPartyCharacter(c, abilityName, i);
+            this.pmc.SetPartyCharacter(c, i);
             this.charactersInAirship[i] = c;
         }
 
         // Get characters on standby in the airship.
-        this.charactersStandbyInAirship = new Character[GameManager.instance.Data.GetCharactersStandbyInAirship().Length];
+        this.charactersStandbyInAirship = new PartyCharacter[GameManager.instance.Data.GetCharactersStandbyInAirship().Length];
         for (int i = 0; i < this.charactersStandbyInAirship.Length; i++)
         {
             int inventoryNum = GameManager.instance.Data.GetCharactersStandbyInAirship()[i];
 
             // Create character.
-            Character c = this.CreateNewCharacter(inventoryNum);
-
-            // Create the ability and assign to character.
-            GameEnum.AbilityName abilityName = GameManager.instance.Data.GetInventoryCharacterAbilityName(inventoryNum);
-            c.SetAbility(GameManager.instance.Data.CloneAbility(abilityName, airship));
+            PartyCharacter c = this.CreateNewPartyCharacter(inventoryNum);
 
             // Store in standby array.
             this.charactersStandbyInAirship[i] = c;
         }
-
-
+			
         this.mc.SetMission (GameManager.instance.Data.GetCurrentMission ());
+
+		//this.SwapCharacters (0, false, 0, true);
+		//this.SwapCharacters (0, false, 0, true);
 	}
 
 
-    private Character CreateNewCharacter (int inventoryNum)
+    private PartyCharacter CreateNewPartyCharacter (int inventoryNum)
     {
-        Character c = new Character(GameManager.instance.Data.GetInventoryCharacterSpriteIcon(inventoryNum),
+        PartyCharacter c = new PartyCharacter(GameManager.instance.Data.GetInventoryCharacterSpriteIcon(inventoryNum),
             GameManager.instance.Data.GetInventoryCharacterStringName(inventoryNum),
             GameManager.instance.Data.GetInventoryCharacterBaseHp(inventoryNum),
             GameManager.instance.Data.GetInventoryCharacterBaseMp(inventoryNum),
             GameManager.instance.Data.GetInventoryCharacterCurHp(inventoryNum),
             GameManager.instance.Data.GetInventoryCharacterCurMp(inventoryNum));
+
+		// Create the ability and assign to the character.
+		GameEnum.AbilityName abilityName = GameManager.instance.Data.GetInventoryCharacterAbilityName(inventoryNum);
+		c.SetAbility(GameManager.instance.Data.CloneAbility(abilityName, airship));
 
         return c;
     }
@@ -125,7 +123,7 @@ public class InGameController : MonoBehaviour
 
 	public void ActivateAbility (int charNum) {
 		if (charNum < this.charactersInAirship.Length) {
-			Character c = this.charactersInAirship [charNum];
+			PartyCharacter c = this.charactersInAirship [charNum];
 
 			if (c.CanUseAbility()) {
 				// Set the activated character number.
@@ -244,35 +242,71 @@ public class InGameController : MonoBehaviour
     // In game menu options.
     public void SwapCharacters(int partyIndex0, bool onStandby0, int partyIndex1, bool onStandby1)
     {
-        Character temp;
+        PartyCharacter temp;
 
         if (onStandby0)
         {
             if (onStandby1)
             {
+				Debug.Log (string.Format ("beforeswap 0: {0} | 1:{1}", 
+					this.charactersStandbyInAirship [partyIndex0].Name,
+					this.charactersStandbyInAirship [partyIndex1].Name));
+				
                 temp = this.charactersStandbyInAirship[partyIndex0];
                 this.charactersStandbyInAirship[partyIndex0] = this.charactersStandbyInAirship[partyIndex1];
                 this.charactersStandbyInAirship[partyIndex1] = temp;
+
+				Debug.Log (string.Format ("afterswap 0: {0} | 1:{1}", 
+					this.charactersStandbyInAirship [partyIndex0].Name,
+					this.charactersStandbyInAirship [partyIndex1].Name));
             }
             else
             {
+				Debug.Log (string.Format ("beforeswap 0: {0} | 1:{1}", 
+					this.charactersStandbyInAirship [partyIndex0].Name,
+					this.charactersInAirship [partyIndex1].Name));
+
                 temp = this.charactersStandbyInAirship[partyIndex0];
                 this.charactersStandbyInAirship[partyIndex0] = this.charactersInAirship[partyIndex1];
                 this.charactersInAirship[partyIndex1] = temp;
+				this.pmc.SetPartyCharacter (this.charactersInAirship [partyIndex1], partyIndex1);
+
+				Debug.Log (string.Format ("afterswap 0: {0} | 1:{1}", 
+					this.charactersStandbyInAirship [partyIndex0].Name,
+					this.charactersInAirship [partyIndex1].Name));
             }
         } else
         {
             if (onStandby1)
             {
+				Debug.Log (string.Format ("beforeswap 0: {0} | 1:{1}", 
+					this.charactersInAirship [partyIndex0].Name,
+					this.charactersStandbyInAirship [partyIndex1].Name));
+				
                 temp = this.charactersInAirship[partyIndex0];
                 this.charactersInAirship[partyIndex0] = this.charactersStandbyInAirship[partyIndex1];
                 this.charactersStandbyInAirship[partyIndex1] = temp;
+				this.pmc.SetPartyCharacter (this.charactersInAirship [partyIndex0], partyIndex0);
+
+				Debug.Log (string.Format ("afterswap 0: {0} | 1:{1}", 
+					this.charactersInAirship [partyIndex0].Name,
+					this.charactersStandbyInAirship [partyIndex1].Name));
             }
             else
             {
+				Debug.Log (string.Format ("beforeswap 0: {0} | 1:{1}", 
+					this.charactersInAirship [partyIndex0].Name,
+					this.charactersInAirship [partyIndex1].Name));
+
                 temp = this.charactersInAirship[partyIndex0];
                 this.charactersInAirship[partyIndex0] = this.charactersInAirship[partyIndex1];
                 this.charactersInAirship[partyIndex1] = temp;
+				this.pmc.SetPartyCharacter (this.charactersInAirship [partyIndex0], partyIndex0);
+				this.pmc.SetPartyCharacter (this.charactersInAirship [partyIndex1], partyIndex1);
+
+				Debug.Log (string.Format ("afterswap 0: {0} | 1:{1}", 
+					this.charactersInAirship [partyIndex0].Name,
+					this.charactersInAirship [partyIndex1].Name));
             }
         }
 

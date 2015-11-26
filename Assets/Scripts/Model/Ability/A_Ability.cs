@@ -3,6 +3,11 @@ using System.Collections;
 
 public abstract class A_Ability
 {
+	protected GameEnum.AbilityName abilityName;
+	public GameEnum.AbilityName AbilityName {
+		get { return this.abilityName; }
+	}
+
 	protected int manaCost;
 	public int ManaCost {
 		get { return this.manaCost; }
@@ -24,7 +29,8 @@ public abstract class A_Ability
 	}
 
 
-	protected A_Ability (int manaCost, float cooldown, float maxRange, A_Airship owner){
+	protected A_Ability (GameEnum.AbilityName abilityName, int manaCost, float cooldown, float maxRange, A_Airship owner){
+		this.abilityName = abilityName;
 		this.manaCost = manaCost;
 		this.cooldown = cooldown;
 		this.maxRange = maxRange;

@@ -5,7 +5,7 @@ public class Ability_HomingMissile : A_Ability
 {
 	private GameObject projectilePrefab;
 
-	public Ability_HomingMissile (int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (manaCost, cooldown, maxRange, owner) {
+	public Ability_HomingMissile (GameEnum.AbilityName abilityname, int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (abilityname, manaCost, cooldown, maxRange, owner) {
 		this.projectilePrefab = projectilePrefab;
 	}
 

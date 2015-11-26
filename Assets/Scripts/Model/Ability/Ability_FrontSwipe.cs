@@ -5,7 +5,7 @@ public class Ability_FrontSwipe : A_Ability
 {
     private GameObject swipePrefab;
 
-	public Ability_FrontSwipe(int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (manaCost, cooldown, maxRange, owner) {
+	public Ability_FrontSwipe(GameEnum.AbilityName abilityname, int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (abilityname, manaCost, cooldown, maxRange, owner) {
         this.swipePrefab = projectilePrefab;
     }
 

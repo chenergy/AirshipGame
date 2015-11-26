@@ -5,7 +5,7 @@ public class Ability_TargetAOE : A_Ability
 {
 	private GameObject projectilePrefab;
 
-	public Ability_TargetAOE (int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (manaCost, cooldown, maxRange, owner) {
+	public Ability_TargetAOE (GameEnum.AbilityName abilityname, int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (abilityname, manaCost, cooldown, maxRange, owner) {
 		this.projectilePrefab = projectilePrefab;
 	}
 
