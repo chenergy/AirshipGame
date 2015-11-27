@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class InGameMenu : MonoBehaviour
 {
-    
-    // Use this for initialization
-    void Start()
-    {
+	public IGM_CharacterSwap charSwap;
 
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
+	void Start (){
+		this.gameObject.SetActive (false);
+	}
 
-    }
+	public void SetCharOnDeck (int index, Sprite icon){
+		charSwap.SetCharOnDeck (index, icon);
+	}
+
+	public void SetCharOnStandby (int index, Sprite icon){
+		charSwap.SetCharOnStandby (index, icon);
+	}
 }

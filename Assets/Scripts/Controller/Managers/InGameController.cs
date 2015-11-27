@@ -7,6 +7,7 @@ public class InGameController : MonoBehaviour
     public CameraMovement cm;
 	public MissionController mc;
     public DialogueController dc;
+	public InGameMenu igm;
 
 	public ErrorLog errorLog;
     public Transform playerStartPoint;
@@ -61,6 +62,7 @@ public class InGameController : MonoBehaviour
             // Assign character and ability to visual component.
             this.pmc.SetPartyCharacter(c, i);
             this.charactersInAirship[i] = c;
+			this.igm.SetCharOnDeck (i, c.Icon);
         }
 
         // Get characters on standby in the airship.
@@ -74,6 +76,7 @@ public class InGameController : MonoBehaviour
 
             // Store in standby array.
             this.charactersStandbyInAirship[i] = c;
+			this.igm.SetCharOnStandby (i, c.Icon);
         }
 			
         this.mc.SetMission (GameManager.instance.Data.GetCurrentMission ());
@@ -354,6 +357,15 @@ public class InGameController : MonoBehaviour
 
 	public void GoToLowerLevel (){
 		this.airship.SetHeightLevel (GameEnum.HeightLevel.LOWER);
+	}
+
+
+	public void OpenInGameMenu (){
+		this.igm.gameObject.SetActive (true);
+	}
+
+	public void CloseInGameMenu (){
+		this.igm.gameObject.SetActive (false);
 	}
 
     /*public void OpenMenu()
