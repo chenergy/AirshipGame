@@ -35,27 +35,33 @@ public class IGM_CharacterSwap : MonoBehaviour
 	}
 
 	public void OnDrag (BaseEventData bed){
-		PointerEventData ped = (PointerEventData)bed;
-		this.onDragIcon.transform.position = ped.position;
-		this.onDragIcon.gameObject.SetActive (true);
+		if (fromTouchImage != null) {
+			PointerEventData ped = (PointerEventData)bed;
+			this.onDragIcon.transform.position = ped.position;
+			this.onDragIcon.gameObject.SetActive (true);
+		}
 	}
 
 	public void OnBeginDragOnDeck (int index){
-		this.fromTouchImage = onDeck [index];
-		this.onDragIcon.sprite = this.fromTouchImage.sprite;
-		this.fromTouchImage.gameObject.SetActive (false);
+		if (GameManager.instance.Data.GetCharactersInAirship ()[index] != 0) {
+			this.fromTouchImage = onDeck [index];
+			this.onDragIcon.sprite = this.fromTouchImage.sprite;
+			this.fromTouchImage.gameObject.SetActive (false);
 
-		this.fromIndex = index;
-		this.fromStandby = false;
+			this.fromIndex = index;
+			this.fromStandby = false;
+		}
 	}
 
 	public void OnBeginDragOnStandby (int index){
-		this.fromTouchImage = onStandby [index];
-		this.onDragIcon.sprite = this.fromTouchImage.sprite;
-		this.fromTouchImage.gameObject.SetActive (false);
+		if (GameManager.instance.Data.GetCharactersStandbyInAirship () [index] != 0) {
+			this.fromTouchImage = onStandby [index];
+			this.onDragIcon.sprite = this.fromTouchImage.sprite;
+			this.fromTouchImage.gameObject.SetActive (false);
 
-		this.fromIndex = index;
-		this.fromStandby = true;
+			this.fromIndex = index;
+			this.fromStandby = true;
+		}
 	}
 
 	public void OnDropOnDeck (int index){
