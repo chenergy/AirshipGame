@@ -38,6 +38,13 @@ namespace GameEnum
 		ABILITY_BLINKFORWARD
 	};
 
+    public enum RoleName
+    {
+        WANDERER,
+        SWORDSMAN,
+        SNIPER
+    };
+
 	public enum SkillTipType {
 		NONE,
 		SKILL_STRAIGHT,

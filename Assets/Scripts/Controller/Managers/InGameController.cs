@@ -80,6 +80,9 @@ public class InGameController : MonoBehaviour
         }
 			
         this.mc.SetMission (GameManager.instance.Data.GetCurrentMission ());
+        this.mc.CloseMenu();
+
+        this.igm.gameObject.SetActive(false);
 
 		//this.SwapCharacters (0, false, 0, true);
 		//this.SwapCharacters (0, false, 0, true);
@@ -88,12 +91,7 @@ public class InGameController : MonoBehaviour
 
     private PartyCharacter CreateNewPartyCharacter (int inventoryNum)
     {
-        PartyCharacter c = new PartyCharacter(GameManager.instance.Data.GetInventoryCharacterSpriteIcon(inventoryNum),
-            GameManager.instance.Data.GetInventoryCharacterStringName(inventoryNum),
-            GameManager.instance.Data.GetInventoryCharacterBaseHp(inventoryNum),
-            GameManager.instance.Data.GetInventoryCharacterBaseMp(inventoryNum),
-            GameManager.instance.Data.GetInventoryCharacterCurHp(inventoryNum),
-            GameManager.instance.Data.GetInventoryCharacterCurMp(inventoryNum));
+        PartyCharacter c = new PartyCharacter(inventoryNum);
 
 		// Create the ability and assign to the character.
 		GameEnum.AbilityName abilityName = GameManager.instance.Data.GetInventoryCharacterAbilityName(inventoryNum);
@@ -178,6 +176,12 @@ public class InGameController : MonoBehaviour
 			this.pmc.partyCharacters [position].UpdateCurHp ();
 		}
 	}
+
+
+    public void AddExp (int exp)
+    {
+
+    }
 
 
     public void EnableSkillTip (GameEnum.SkillTipType skillTip, float range)

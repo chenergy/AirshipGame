@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[System.Serializable]
 public class PartyCharacter
 {
 	private Sprite icon;
@@ -34,8 +33,20 @@ public class PartyCharacter
 	public int CurMp {
 		get { return this.curMp; }
 	}
-	
-	private float curCooldown = 1.0f;
+
+    private int exp = 0;
+    public int Exp
+    {
+        get { return this.exp; }
+    }
+
+    private GameEnum.RoleName role;
+    public GameEnum.RoleName Role
+    {
+        get { return this.role; }
+    }
+
+    private float curCooldown = 1.0f;
 	public float CurCooldown {
 		get { return this.curCooldown; }
 		//set { this.curCooldown = value; }
@@ -51,14 +62,22 @@ public class PartyCharacter
 		get { return this.ability; }
 	}
 
+    private PartyCharacterBonus bonus;
+    public PartyCharacterBonus Bonus
+    {
+        get { return this.bonus; }
+    }
 
-	public PartyCharacter (Sprite icon, string name, int maxHp, int maxMp, int curHp, int curMp) {
-		this.name = name;
-		this.icon = icon;
-		this.maxHp = maxHp;
-		this.maxMp = maxMp;
-		this.curHp = curHp;
-		this.curMp = curMp;
+
+	public PartyCharacter (int inventoryNum) {
+        this.icon = GameManager.instance.Data.GetInventoryCharacterSpriteIcon(inventoryNum);
+        this.name = GameManager.instance.Data.GetInventoryCharacterStringName(inventoryNum);
+        this.maxHp = GameManager.instance.Data.GetInventoryCharacterBaseHp(inventoryNum);
+        this.maxMp = GameManager.instance.Data.GetInventoryCharacterBaseMp(inventoryNum);
+        this.curHp = GameManager.instance.Data.GetInventoryCharacterCurHp(inventoryNum);
+        this.curMp = GameManager.instance.Data.GetInventoryCharacterCurMp(inventoryNum);
+        this.role = GameManager.instance.Data.GetInventoryCharacterCurRole(inventoryNum);
+        this.exp = GameManager.instance.Data.GetInventoryCharacterCurRoleExp(inventoryNum);
     }
 
 

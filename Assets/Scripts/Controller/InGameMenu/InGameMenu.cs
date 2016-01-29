@@ -8,7 +8,7 @@ public class InGameMenu : MonoBehaviour
 
 
 	void Start (){
-		this.gameObject.SetActive (false);
+
 	}
 
 	public void SetCharOnDeck (int index, Sprite icon){

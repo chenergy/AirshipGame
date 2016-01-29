@@ -29,8 +29,10 @@ public class DataManager
 	public const float HEIGHT_LEVEL_LOWER = 10.0f;
 	public const float HEIGHT_LEVEL_UPPER = 20.0f;
 
+    private int[] requiredExperiencePerLevel;
 
-	public DataManager (SO_Characters characterScriptables, SO_Abilities abilityScriptables, SO_Airships airshipScriptables){
+
+    public DataManager (SO_Characters characterScriptables, SO_Abilities abilityScriptables, SO_Airships airshipScriptables){
 		// Forces a different code path in the BinaryFormatter that doesn't rely on run-time code generation (which would break on iOS).
 		//http://answers.unity3d.com/questions/30930/why-did-my-binaryserialzer-stop-working.html
 		Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
@@ -50,6 +52,15 @@ public class DataManager
 		this.abilityFactory = new Factory_Ability (abilityScriptables);
 
         this.dataObject = new DataObject (this.characterScriptables.characters, this.airshipScriptables.airships);
+
+        // Calculate and init each experience required per level.
+        this.requiredExperiencePerLevel = new int[99];
+        for (int i = 0; i < 99; i++)
+        {
+            int value = (i * i + i + 3) * 4;
+            this.requiredExperiencePerLevel[i] = value;
+        }
+    
 
 		// Deserialize data from binary.
 		this.Load ();
@@ -164,20 +175,100 @@ public class DataManager
         Debug.Log ("cannot find character base mp");
 		return 0;
 	}
-	
-	public int GetInventoryCharacterExp (int inventoryNum)
+
+    public GameEnum.RoleName GetInventoryCharacterCurRole (int inventoryNum)
     {
         if (inventoryNum < this.dataObject.characterInventory.Count)
         {
             CharacterSerialized cp = this.dataObject.characterInventory[inventoryNum];
-            return cp.exp;
+            return cp.curRole;
+        }
+
+        Debug.Log("cannot find character exp");
+        return GameEnum.RoleName.WANDERER;
+    }
+
+    public int[] GetInventoryCharacterRoleExp (int inventoryNum)
+    {
+        if (inventoryNum < this.dataObject.characterInventory.Count)
+        {
+            CharacterSerialized cp = this.dataObject.characterInventory[inventoryNum];
+            return cp.roleExp;
+        }
+
+        Debug.Log("cannot find character exp");
+        return null;
+	}
+
+    public int GetInventoryCharacterCurRoleExp(int inventoryNum)
+    {
+        if (inventoryNum < this.dataObject.characterInventory.Count)
+        {
+            CharacterSerialized cp = this.dataObject.characterInventory[inventoryNum];
+            return cp.roleExp[(int)cp.curRole];
         }
 
         Debug.Log("cannot find character exp");
         return 0;
-	}
-	
-	public int GetInventoryCharacterCurHp (int inventoryNum)
+    }
+
+    /*
+    public int GetInventoryCharacterLevel (int inventoryNum)
+    {
+        int level = 1;
+
+        if (inventoryNum < this.dataObject.characterInventory.Count)
+        {
+            int totalExp = this.GetInventoryCharacterCurRoleExp(inventoryNum);
+
+            for (int i = 0; i < this.requiredExperiencePerLevel.Length; i++)
+            {
+                if (totalExp >= this.requiredExperiencePerLevel[i])
+                {
+                    totalExp -= this.requiredExperiencePerLevel[i];
+                    level++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        return level;
+    }
+
+    public int GetInventoryCharacterLevelExperience (int inventoryNum)
+    {
+        int totalExp = 0;
+
+        if (inventoryNum < this.dataObject.characterInventory.Count)
+        {
+            totalExp = this.GetInventoryCharacterCurRoleExp(inventoryNum);
+
+            for (int i = 0; i < this.requiredExperiencePerLevel.Length; i++)
+            {
+                if (totalExp >= this.requiredExperiencePerLevel[i])
+                {
+                    totalExp -= this.requiredExperiencePerLevel[i];
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        return totalExp;
+    }
+
+    public int GetInventoryCharacterLevelRequiredExperience (int inventoryNum)
+    {
+        return this.requiredExperiencePerLevel[this.GetInventoryCharacterLevel (inventoryNum) - 1];
+    }
+    */
+
+    public int GetInventoryCharacterCurHp (int inventoryNum)
     {
         if (inventoryNum < this.dataObject.characterInventory.Count)
         {
@@ -344,12 +435,12 @@ public class DataManager
         }
     }
 
-    public void SetAirshipCharacterExp (int airshipSlotNum, int exp)
+    public void AddAirshipCharacterExp (int airshipSlotNum, int exp)
     {
         if (airshipSlotNum < this.dataObject.charInAirshipSlotToInventory.Length)
         {
             CharacterSerialized cp = this.dataObject.characterInventory[this.dataObject.charInAirshipSlotToInventory[airshipSlotNum]];
-            cp.exp = exp;
+            cp.roleExp[(int)cp.curRole] += exp;
         }
     }
 
