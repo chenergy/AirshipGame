@@ -16,6 +16,7 @@ public class PartyMenuCharacter : MonoBehaviour
 		public Image mpImage;
 		public Text mpText;
 		public Image cdImage;
+        public Text roleName;
 	}
 
 	[System.Serializable]
@@ -59,7 +60,9 @@ public class PartyMenuCharacter : MonoBehaviour
 			dp.hpImage.fillAmount = 1.0f;
 			dp.mpImage.fillAmount = 1.0f;
 
-			if (this.displayType == GameEnum.DisplayType.CIRCLE)
+            dp.roleName.text = string.Format ("Lv. {0} {1}", GameHelper.ConvertExpToLevel(character.Exp).ToString(), character.Role.ToString());
+
+            if (this.displayType == GameEnum.DisplayType.CIRCLE)
 				dp.cdImage.fillAmount = 0.0f;
 			else
 				dp.cdImage.fillAmount = 1.0f;

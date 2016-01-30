@@ -49,7 +49,7 @@ public class LoadoutCharacters : MonoBehaviour
                 Sprite imageSprite = GameManager.instance.Data.GetInventoryCharacterSpriteIcon(i);
                 int hp = GameManager.instance.Data.GetInventoryCharacterBaseHp(i);
                 int mp = GameManager.instance.Data.GetInventoryCharacterBaseMp(i);
-                int exp = GameManager.instance.Data.GetInventoryCharacterExp(i);
+                int exp = GameManager.instance.Data.GetInventoryCharacterCurRoleExp(i);
 
                 // Allow infinite equipping of empty.
                 if (i == 0)

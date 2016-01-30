@@ -4,6 +4,7 @@ using System.Collections;
 
 public class MissionController : MonoBehaviour
 {
+    public GameObject uiParent;
     public Transform missionParent;
     public Text missionName;
     public Text missionDesc;
@@ -57,6 +58,18 @@ public class MissionController : MonoBehaviour
 
         this.UpdateMissionObjectives();
 	}
+
+
+    public void OpenMenu()
+    {
+        this.uiParent.SetActive(true);
+    }
+
+
+    public void CloseMenu ()
+    {
+        this.uiParent.SetActive(false);
+    }
 
 
     private void UpdateMissionObjectives()

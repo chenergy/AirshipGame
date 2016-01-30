@@ -18,15 +18,20 @@ public class InputHandler : MonoBehaviour
 	void Update ()
 	{
 #if UNITY_STANDALONE || UNITY_WEBGL
-		if (Input.GetKeyDown (KeyCode.Q)){
+		if (Input.GetKeyDown (KeyCode.Alpha1)){
 			this.ingamecontroller.ActivateAbility (0);
-		} else if (Input.GetKeyDown (KeyCode.W)){
+		} else if (Input.GetKeyDown (KeyCode.Alpha2)){
 			this.ingamecontroller.ActivateAbility (1);
-		} else if (Input.GetKeyDown (KeyCode.E)){
+		} else if (Input.GetKeyDown (KeyCode.Alpha3)){
 			this.ingamecontroller.ActivateAbility (2);
-		} else if (Input.GetKeyDown (KeyCode.R)){
+		} else if (Input.GetKeyDown (KeyCode.Alpha4)){
 			this.ingamecontroller.ActivateAbility (3);
 		}
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            this.ToggleHeight();
+        }
 
 		// Right click on location.
 		if (Input.GetMouseButton (1)) {

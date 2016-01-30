@@ -9,28 +9,37 @@ public class CharacterSerialized {
 	public int baseHp;
 	public int baseMp;
     public GameEnum.AbilityName ability;
+    public GameEnum.RoleName curRole;
 
     // Do not set.
-    public int exp;
-	public int curHp;
+    public int curHp;
     public int curMp;
+    public int[] roleExp;
 
 
-    public CharacterSerialized (GameEnum.CharacterName charName, string name, string desc, int baseHp, int baseMp, GameEnum.AbilityName ability){
+    public CharacterSerialized (GameEnum.CharacterName charName, string name, string desc, int baseHp, int baseMp, GameEnum.AbilityName ability, GameEnum.RoleName role){
 		this.charName = charName;
 		this.name = name;
 		this.desc = desc;
 		this.baseHp = baseHp;
 		this.baseMp = baseMp;
         this.ability = ability;
-        this.exp = 0;
+        this.curRole = role;
+        
         this.curHp = baseHp;
         this.curMp = baseMp;
+
+        // Initialize exp for each role to 0;
+        this.roleExp = new int[2];
+        for (int i = 0; i < 2; i++)
+        {
+            this.roleExp[i] = 0;
+        }
 	}
 
 
     public CharacterSerialized Clone (){
-		return new CharacterSerialized (this.charName, this.name, this.desc, this.baseHp, this.baseMp, this.ability);
+		return new CharacterSerialized (this.charName, this.name, this.desc, this.baseHp, this.baseMp, this.ability, this.curRole);
 	}
 }
 
