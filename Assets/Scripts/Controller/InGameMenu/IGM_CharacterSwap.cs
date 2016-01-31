@@ -61,6 +61,8 @@ public class IGM_CharacterSwap : MonoBehaviour
 
 			this.fromIndex = index;
 			this.fromStandby = true;
+		} else {
+			Debug.Log ("no char in standby");
 		}
 	}
 
@@ -72,7 +74,7 @@ public class IGM_CharacterSwap : MonoBehaviour
 			this.onDeck [index].sprite = this.onDragIcon.sprite;
 		}
 
-		Debug.Log ("swap on deck: " + fromIndex.ToString () + " | " + index.ToString());
+		Debug.Log ("swap onto deck: " + fromIndex.ToString () + " | " + index.ToString());
 	}
 
 	public void OnDropOnStandby (int index){
@@ -83,7 +85,7 @@ public class IGM_CharacterSwap : MonoBehaviour
 			this.onStandby [index].sprite = this.onDragIcon.sprite;
 		}
 
-		Debug.Log ("swap on deck: " + fromIndex.ToString () + " | " + index.ToString());
+		Debug.Log ("swap onto standby: " + fromIndex.ToString () + " | " + index.ToString());
 	}
 
 	public void OnEndDrag (){

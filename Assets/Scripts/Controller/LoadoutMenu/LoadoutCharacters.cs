@@ -22,7 +22,7 @@ public class LoadoutCharacters : MonoBehaviour
     }*/
 
 
-    public void OpenMenu(LoadoutMenuController controller)
+	public void OpenMenu (LoadoutMenuController controller, bool isStandby = false)
     {
         this.charButtons = new List<LoadoutCharacterButton>();
 
@@ -60,16 +60,18 @@ public class LoadoutCharacters : MonoBehaviour
 
                 // Set button behaviour.
                 int j = i;
-                lcb.selectButton.onClick.AddListener(delegate
-                {
-                    foreach (LoadoutCharacterButton b in this.charButtons)
-                    {
-                        GameObject.Destroy(b.gameObject);
-                    }
+				lcb.selectButton.onClick.AddListener (delegate {
+					foreach (LoadoutCharacterButton b in this.charButtons) {
+						GameObject.Destroy (b.gameObject);
+					}
 
-                    this.charButtons.Clear();
-                    controller.SelectCharacterInventoryIndex(j);
-                });
+					this.charButtons.Clear ();
+
+					if (isStandby)
+						controller.SelectStandbyCharacterInventoryIndex (j);
+					else
+						controller.SelectCharacterInventoryIndex (j);
+				});
                 this.charButtons.Add(lcb);
             }
         }
