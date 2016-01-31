@@ -243,6 +243,14 @@ public class InGameController : MonoBehaviour
 			this.dc.StartSequence (dialogue);
 	}
 
+	/// <summary>
+	/// Pickup a character crew from the ground.
+	/// </summary>
+	/// <param name="character">Character.</param>
+	/*public void PickupCrew (GameEnum.CharacterName character){
+		GameManager.instance.Data.AddNewCharacterToInventory (character);
+		GameManager.instance.Data.Save ();
+	}*/
 
     // In game menu options.
     public void SwapCharacters(int slotNum0, bool onStandby0, int slotNum1, bool onStandby1)

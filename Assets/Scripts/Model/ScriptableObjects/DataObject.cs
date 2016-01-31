@@ -58,7 +58,7 @@ public class DataObject
 		this.charInAirshipSlotToInventory [0] = 1;
 		this.charInAirshipSlotToInventory [1] = 2;
 		this.charInAirshipSlotToInventory [2] = 3;
-		this.charInAirshipSlotToInventory [3] = 4;
+		//this.charInAirshipSlotToInventory [3] = 4;
 
 		// Save empty standby characters.
 		int standbySlots = airshipScriptables[(int)this.currentAirship].standbySlots.Length;
@@ -70,7 +70,7 @@ public class DataObject
         A_Objective[] objectives = new A_Objective[1];
         Objective_KillEnemy kill_kamikaze = new Objective_KillEnemy("Kill the Kamikaze enemy.", "Kill the Kamikaze enemy.", GameEnum.EnemyName.ENEMY_KAMIKAZE);
         objectives[0] = kill_kamikaze;
-		Mission m0 = new Mission("Tutorial", "This is the tutorial mission.", "Level_Prototype", objectives);
+		Mission m0 = new Mission("Tutorial", "This is the tutorial mission.", "Level_LayerTest", objectives);
         this.missions = new Mission[1];
         this.missions[0] = m0;
 	}

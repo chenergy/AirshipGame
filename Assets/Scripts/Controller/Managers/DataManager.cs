@@ -464,7 +464,6 @@ public class DataManager
 		int newChar = (int)character;
 		if (newChar < this.characterScriptables.characters.Length) {
 			this.dataObject.characterInventory.Add (this.characterScriptables.characters [newChar].characterData.Clone ());
-			Save ();
 		}
 	}
 
