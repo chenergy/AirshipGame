@@ -27,6 +27,9 @@ public class EventTrigger_OnCrewPickup : A_EventTrigger
 			GameManager.instance.Data.AddNewCharacterToInventory (m_character);
 			GameManager.instance.Data.Save ();
 
+			//if (
+			//GameManager.instance.InGameController.errorLog.LogErrorText (string.Format ("{0} added to standby.", m_character.ToString ()));
+
 			/*
 			if (m_onDestroyParticle != null) {
 				GameObject newParticle = GameObject.Instantiate (m_onDestroyParticle, this.transform.position, Quaternion.identity) as GameObject;

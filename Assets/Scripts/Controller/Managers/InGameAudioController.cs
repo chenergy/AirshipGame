@@ -14,7 +14,7 @@ public class InGameAudioController : MonoBehaviour
 	public AudioClip m_bgm;
 
 	void Start (){
-		PlayMusic (m_bgm, 1.0f, true);
+		PlayMusic (m_bgm, 0.25f, true);
 	}
 
 	/// <summary>

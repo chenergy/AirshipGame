@@ -32,6 +32,7 @@ public class PartyMenuCharacter : MonoBehaviour
 	
 	public DisplayProperties[] displayProperties;
 	public TooltipProperties tooltipProperties;
+	public float m_maxFill = 0.5f;
 
 	private PartyCharacter character;
 	private GameEnum.DisplayType displayType;
@@ -57,15 +58,15 @@ public class PartyMenuCharacter : MonoBehaviour
 		foreach (DisplayProperties dp in this.displayProperties) {
 			dp.iconImage.sprite = character.Icon;
 			dp.nameText.text = character.Name;
-			dp.hpImage.fillAmount = 1.0f;
-			dp.mpImage.fillAmount = 1.0f;
+			dp.hpImage.fillAmount = m_maxFill;
+			dp.mpImage.fillAmount = m_maxFill;
 
             dp.roleName.text = string.Format ("Lv. {0} {1}", GameHelper.ConvertExpToLevel(character.Exp).ToString(), character.Role.ToString());
 
             if (this.displayType == GameEnum.DisplayType.CIRCLE)
 				dp.cdImage.fillAmount = 0.0f;
 			else
-				dp.cdImage.fillAmount = 1.0f;
+				dp.cdImage.fillAmount = m_maxFill;
 
 			dp.hpText.text = string.Format ("{0} / {1}", character.CurHp.ToString (), character.MaxHp.ToString ());
 			dp.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
@@ -106,7 +107,7 @@ public class PartyMenuCharacter : MonoBehaviour
 
 	public void UpdateCurHp (){
 		foreach (DisplayProperties dp in this.displayProperties) {
-			dp.hpImage.fillAmount = this.character.CurHp * 1.0f / this.character.MaxHp;
+			dp.hpImage.fillAmount = this.character.CurHp * m_maxFill / this.character.MaxHp;
 		}
 	}
 
@@ -119,7 +120,7 @@ public class PartyMenuCharacter : MonoBehaviour
 
 			// Display updated mana amount.
 			foreach (DisplayProperties dt in this.displayProperties) {
-				dt.mpImage.fillAmount = (1.0f * this.character.CurMp / this.character.MaxMp);
+				dt.mpImage.fillAmount = (m_maxFill * this.character.CurMp / this.character.MaxMp);
 				dt.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
 			}
 
@@ -133,7 +134,7 @@ public class PartyMenuCharacter : MonoBehaviour
 
 		foreach (DisplayProperties dt in this.displayProperties) {
 			dt.mpText.text = string.Format ("{0} / {1}", character.CurMp.ToString (), character.MaxMp.ToString ());
-			dt.mpImage.fillAmount = 1.0f;
+			dt.mpImage.fillAmount = m_maxFill;
 		}
 	}
 
@@ -145,9 +146,9 @@ public class PartyMenuCharacter : MonoBehaviour
 			// Display updated cooldown amount.
 			foreach (DisplayProperties dp in this.displayProperties) {
 				if (this.displayType == GameEnum.DisplayType.CIRCLE)
-					dp.cdImage.fillAmount = (1.0f - this.character.CurCooldown / this.character.MaxCooldown);
+					dp.cdImage.fillAmount = (m_maxFill - this.character.CurCooldown / this.character.MaxCooldown);
 				else
-					dp.cdImage.fillAmount = (1.0f * this.character.CurCooldown / this.character.MaxCooldown);
+					dp.cdImage.fillAmount = (m_maxFill * this.character.CurCooldown / this.character.MaxCooldown);
 			}
 
 			this.character.RechargeCooldown (Time.deltaTime);
@@ -157,7 +158,7 @@ public class PartyMenuCharacter : MonoBehaviour
 			if (this.displayType == GameEnum.DisplayType.CIRCLE)
 				dt.cdImage.fillAmount = 0.0f;
 			else
-				dt.cdImage.fillAmount = 1.0f;
+				dt.cdImage.fillAmount = m_maxFill;
 		}
 
 		this.character.RechargeCooldown (Time.deltaTime);

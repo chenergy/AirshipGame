@@ -12,6 +12,7 @@ public class Airship_Enemy : A_Airship
 	public Image hpImage;
     public A_EnemyBehaviour behaviour;
 	public GameEnum.AbilityName abilityName;
+	public GameObject m_deathParticle;
 
 	private int curHp = 10;
 	private A_Ability ability;
@@ -51,6 +52,12 @@ public class Airship_Enemy : A_Airship
         {
             //GameManager.instance.InGameController.mc.TriggerObjectiveCondition(GameEnum.ObjectiveCondition.KILL_ENEMY, this.enemyName.ToString());
             GameManager.instance.InGameController.AddExp(this.expReward);
+
+			if (m_deathParticle != null) {
+				GameObject newParticle = GameObject.Instantiate (m_deathParticle, this.transform.position, Quaternion.identity) as GameObject;
+				GameObject.Destroy (newParticle, 1.0f);
+			}
+
             GameObject.Destroy(this.gameObject);
         }
 	}
