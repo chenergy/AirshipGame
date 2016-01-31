@@ -4,7 +4,7 @@ using System.Collections;
 public abstract class A_Airship : MonoBehaviour
 {
 	public GameObject model;
-
+	public Animator animator;
 	public CharacterController cc;
 	public float baseMoveSpeed = 1.0f;
 	public float baseRotationSpeed = 1.0f;
@@ -83,6 +83,7 @@ public abstract class A_Airship : MonoBehaviour
             }
 		}
 
+		animator.SetFloat ("Speed", curSpeed / baseMoveSpeed);
 		/*if (this.heightLevel == GameEnum.HeightLevel.LOWER)
 			this.transform.position = new Vector3 (this.transform.position.x, Mathf.Lerp (this.transform.position.y, this.startPos.y, Time.deltaTime * 5), this.transform.position.z);
 		else if (this.heightLevel == GameEnum.HeightLevel.UPPER)

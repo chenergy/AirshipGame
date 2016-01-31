@@ -353,11 +353,17 @@ public class DataManager
         return this.dataObject.airships.Length;
     }
 
-	public bool IsInventoryCharacterInAirship (int inventoryNum){
+	public bool IsInventoryCharacterAssigned (int inventoryNum){
 		foreach (int character in this.dataObject.charInAirshipSlotToInventory) {
 			if (character == inventoryNum)
 				return true;
 		}
+
+		foreach (int character in this.dataObject.standbyInAirshipSlotToInventory) {
+			if (character == inventoryNum)
+				return true;
+		}
+
 		return false;
 	}
 
@@ -449,6 +455,18 @@ public class DataManager
 			this.dataObject.charactersInAirship[savedSlotNum] = charInt;
 		}
 	}*/
+
+	/// <summary>
+	/// Adds the new character to inventory.
+	/// </summary>
+	/// <param name="character">Name of character to add.</param>
+	public void AddNewCharacterToInventory (GameEnum.CharacterName character){
+		int newChar = (int)character;
+		if (newChar < this.characterScriptables.characters.Length) {
+			this.dataObject.characterInventory.Add (this.characterScriptables.characters [newChar].characterData.Clone ());
+			Save ();
+		}
+	}
 
 
 

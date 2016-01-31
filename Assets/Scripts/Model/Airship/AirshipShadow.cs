@@ -52,13 +52,14 @@ public class AirshipShadow : MonoBehaviour
 		Ray r = Camera.main.ScreenPointToRay (new Vector3(Screen.width/2.0f, Screen.height/2.0f, 0.0f));
 		RaycastHit cameraHit;
 		if (Physics.Raycast (this.transform.position, -r.direction, out cameraHit, 100.0F, this.m_layerMask)) {
-			EnvironmentCollider ec = hit.collider.GetComponent <EnvironmentCollider> ();
+			EnvironmentCollider ec = cameraHit.transform.GetComponent <EnvironmentCollider> ();
 			if (ec != null) {
-				m_spriteRenderer.sortingOrder = ec.m_linked2DLayer.m_sortingLayer - 2;
-				Debug.Log (m_spriteRenderer.sortingOrder.ToString ());
+				if (ec.m_linked2DLayer != null) {
+					m_spriteRenderer.sortingOrder = ec.m_linked2DLayer.m_sortingLayer - 2;
+				}
 			}
 		} else {
-			m_spriteRenderer.sortingOrder = 1;
+			m_spriteRenderer.sortingOrder = 10;
 		}
 
 		/*foreach (RaycastHit h in hits) {

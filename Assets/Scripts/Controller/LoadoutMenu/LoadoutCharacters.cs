@@ -43,7 +43,7 @@ public class LoadoutCharacters : MonoBehaviour
 			LoadoutCharacterButton lcb = gobj.GetComponent<LoadoutCharacterButton> ();
             if (lcb != null)
             {
-                bool isEquipped = GameManager.instance.Data.IsInventoryCharacterInAirship(i);
+				bool isAssigned = GameManager.instance.Data.IsInventoryCharacterAssigned(i);
                 string charName = GameManager.instance.Data.GetInventoryCharacterStringName(i);
                 string desc = GameManager.instance.Data.GetInventoryCharacterDescription(i);
                 Sprite imageSprite = GameManager.instance.Data.GetInventoryCharacterSpriteIcon(i);
@@ -53,10 +53,10 @@ public class LoadoutCharacters : MonoBehaviour
 
                 // Allow infinite equipping of empty.
                 if (i == 0)
-                    isEquipped = false;
+                    isAssigned = false;
 
                 // Initialize button info.
-                lcb.Init(isEquipped, charName, desc, imageSprite, 1, hp, mp, exp, 100);
+                lcb.Init(isAssigned, charName, desc, imageSprite, 1, hp, mp, exp, 100);
 
                 // Set button behaviour.
                 int j = i;

@@ -84,9 +84,6 @@ public class InGameController : MonoBehaviour
         this.mc.CloseMenu();
 
         this.igm.gameObject.SetActive(false);
-
-		//this.SwapCharacters (0, false, 0, true);
-		//this.SwapCharacters (0, false, 0, true);
 	}
 
 
