@@ -55,7 +55,6 @@ public class RoomController : MonoBehaviour
 	/// </summary>
 	void Awake (){
 		if (instance == null) {
-			DontDestroyOnLoad (gameObject);
 			instance = this;
 		} else {
 			Destroy (gameObject);

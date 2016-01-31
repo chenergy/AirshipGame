@@ -55,13 +55,29 @@ public class LoadoutMenuController : MonoBehaviour
         this.charactersUI.OpenMenu(this);
     }
 
+	public void OpenCharacterMenuForStandby(int slotNum)
+	{
+		this.selectedAirshipSlotNum = slotNum;
 
+		this.charactersUI.gameObject.SetActive(true);
+		this.airshipLayoutUI.gameObject.SetActive(true);
+		this.airshipSelectUI.gameObject.SetActive(false);
+
+		this.charactersUI.OpenMenu(this, true);
+	}
+		
     public void SelectCharacterInventoryIndex(int inventoryNum)
     {
         GameManager.instance.Data.SetCharacterInAirship(inventoryNum, this.selectedAirshipSlotNum);
         GameManager.instance.Data.Save();
         this.OpenAirshipLayoutForNum(this.selectedAirshipNum);
     }
+
+	public void SelectStandbyCharacterInventoryIndex (int inventoryNum){
+		GameManager.instance.Data.SetCharacterStandbyInAirship (inventoryNum, this.selectedAirshipSlotNum);
+		GameManager.instance.Data.Save();
+		this.OpenAirshipLayoutForNum (this.selectedAirshipNum);
+	}
 
 
 	public void ButtonCloseCharacterInventory (){
