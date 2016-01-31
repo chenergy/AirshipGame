@@ -66,11 +66,11 @@ public class RoomController : MonoBehaviour
 	/// Start this instance.
 	/// </summary>
 	void Start (){
-		Room left = new Room (m_basicFloor1);
+		Room down = new Room (m_basicFloor1);
 		Room root = new Room (m_basicFloor0);
 
-		root.m_left = left;
-		left.m_right = root;
+		root.m_down = down;
+		down.m_up = root;
 
 		InitRootRoom (root);
 	}

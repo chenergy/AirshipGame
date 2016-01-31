@@ -5,7 +5,7 @@ public class Ability_BlinkForward : A_Ability
 {
 	private GameObject projectilePrefab;
 
-	public Ability_BlinkForward (GameEnum.AbilityName abilityname, int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (abilityname, manaCost, cooldown, maxRange, owner) {
+	public Ability_BlinkForward (GameEnum.AbilityName abilityname, int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, AudioClip clip, A_Airship owner) : base (abilityname, manaCost, cooldown, maxRange, clip, owner) {
 		this.projectilePrefab = projectilePrefab;
 	}
 
@@ -26,6 +26,8 @@ public class Ability_BlinkForward : A_Ability
 		this.owner.cc.Move (this.owner.transform.forward.normalized * this.maxRange);
 		Debug.Log("used BLINK_FORWARD");
 
+		if (this.clip != null)
+			GameManager.instance.InGameController.audio.PlayClipAtPoint (this.clip, this.owner.transform.position);
 		/*GameObject newProjectile = GameObject.Instantiate(this.projectilePrefab, airshipPos, Quaternion.identity) as GameObject;
 		newProjectile.GetComponent<Projectile_Homing> ().SetOwner (this.owner);
 		newProjectile.GetComponent<Projectile_Homing> ().SetDirection(airshipForward);

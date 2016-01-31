@@ -8,6 +8,7 @@ public class InGameController : MonoBehaviour
 	public MissionController mc;
     public DialogueController dc;
 	public InGameMenu igm;
+	public InGameAudioController audio;
 
 	public ErrorLog errorLog;
     public Transform playerStartPoint;

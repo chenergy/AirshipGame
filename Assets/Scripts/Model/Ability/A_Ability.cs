@@ -28,12 +28,18 @@ public abstract class A_Ability
 		get { return this.owner; }
 	}
 
+	protected AudioClip clip;
+	public AudioClip Clip {
+		get { return this.clip; }
+	}
 
-	protected A_Ability (GameEnum.AbilityName abilityName, int manaCost, float cooldown, float maxRange, A_Airship owner){
+
+	protected A_Ability (GameEnum.AbilityName abilityName, int manaCost, float cooldown, float maxRange, AudioClip clip, A_Airship owner){
 		this.abilityName = abilityName;
 		this.manaCost = manaCost;
 		this.cooldown = cooldown;
 		this.maxRange = maxRange;
+		this.clip = clip;
 		this.owner = owner;
 	}
 		

@@ -13,6 +13,7 @@ public class SO_Abilities : ScriptableObject
 		public int manaCost;
 		public float cooldown;
 		public float maxRange;
+		public AudioClip clip;
 	}
 
 	[System.Serializable]

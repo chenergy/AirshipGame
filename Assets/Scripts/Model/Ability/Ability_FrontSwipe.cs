@@ -5,7 +5,7 @@ public class Ability_FrontSwipe : A_Ability
 {
     private GameObject swipePrefab;
 
-	public Ability_FrontSwipe(GameEnum.AbilityName abilityname, int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (abilityname, manaCost, cooldown, maxRange, owner) {
+	public Ability_FrontSwipe(GameEnum.AbilityName abilityname, int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, AudioClip clip, A_Airship owner) : base (abilityname, manaCost, cooldown, maxRange, clip, owner) {
         this.swipePrefab = projectilePrefab;
     }
 
@@ -29,6 +29,9 @@ public class Ability_FrontSwipe : A_Ability
         newSwipe.GetComponent<Projectile_Swipe>().SetAngle(360.0f);
         //newSwipe.GetComponent<Projectile>().SetDirection(airshipForward);
         Debug.Log("used front swipe");
+
+		if (this.clip != null)
+			GameManager.instance.InGameController.audio.PlayClipAtPoint (this.clip, this.owner.transform.position);
     }
 
 	/*public override A_Ability Clone(A_Airship owner)

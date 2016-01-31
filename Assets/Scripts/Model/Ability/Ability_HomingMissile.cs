@@ -5,7 +5,7 @@ public class Ability_HomingMissile : A_Ability
 {
 	private GameObject projectilePrefab;
 
-	public Ability_HomingMissile (GameEnum.AbilityName abilityname, int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, A_Airship owner) : base (abilityname, manaCost, cooldown, maxRange, owner) {
+	public Ability_HomingMissile (GameEnum.AbilityName abilityname, int manaCost, float cooldown, float maxRange, GameObject projectilePrefab, AudioClip clip, A_Airship owner) : base (abilityname, manaCost, cooldown, maxRange, clip, owner) {
 		this.projectilePrefab = projectilePrefab;
 	}
 
@@ -26,6 +26,9 @@ public class Ability_HomingMissile : A_Ability
 		newProjectile.GetComponent<Projectile_Homing> ().SetOwner (this.owner);
 		newProjectile.GetComponent<Projectile_Homing> ().SetDirection(airshipForward);
 		Debug.Log("used HOMING_MISSILE");
+
+		if (this.clip != null)
+			GameManager.instance.InGameController.audio.PlayClipAtPoint (this.clip, this.owner.transform.position);
 	}
 
 	/*public override A_Ability Clone(A_Airship owner)
